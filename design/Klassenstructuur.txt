@@ -1,0 +1,46 @@
+Login: 
+	Username
+	Password
+
+Student:
+	Username
+	Modules
+
+Docent:
+	Username
+	Modules
+
+Module:
+	Vereist-resultaten 
+	Coordinator
+
+Student-Module koppeling:
+	Student
+	Module
+
+Docent-Module koppeling:
+	Docent
+	Module
+
+Vereist-resultaat:
+	Opdrachtgroep
+	verwacht resultaat (String)
+
+Opdrachtgroep:
+	getResult ->String geeft het resultaat van de groep als een string code
+	Weging (float) ?? In sommige gevallen zal er een deel van de opdrachten
+	afgevinkt moeten worden, en een deel van de opdrachten moet aftekend worden.
+	Dat kan moeilijk zijn met de weging, al is een (lelijke) oplossing om de weging
+	0 te maken in het geval van alleen maar aftekenopdrachten.
+	Opdrachten
+
+Opdracht: abstract
+	Titel (String)
+
+Afvinkopdracht:
+	Afgevinkt (boolean)
+
+Cijferopdracht:
+	Cijfer (float)
+	Weging (float)
+	Vereist resultaat (float)
