@@ -3,35 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CAS Log-in</title>
+    <title>TOSTi inlog</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
   <body>
 	<div style="text-align: right; ">
-	<button type="button" onclick="Javascript:alert('Jeetje, kan je niet eens je wachtwoord invoeren?')">
+	<button type="button" style="background-color:transparent; border-color:transparent;" onclick="Javascript:alert('Hier komt hulp voor het inloggen te staan')">
 	<img src="help.png"" />
 	</button>
-
-
-
-
-
 	</div>
-	<div style="text-align: center;">
-	<div style="box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 250px auto auto; padding: 20px;">
-	<form name="login" action="index_submit" method="get" accept-charset="utf-8">  
-  	<ul>  
-        <li><label for="usermail">Student of medewerkernummer</label>  
-        <input type="email" name="usermail" placeholder="s0000000" required></li>  
-        <li><label for="password">Wachtwoord</label>  
-        <input type="password" name="password" placeholder="Wachtwoord" required></li>  
-        <li>  
-        <input type="submit" value="Login"></li>  
-        </ul>  
 
-</form>
-</div></div>  
+
+
+
+	
+	<div style="text-align: center;">
+		<div style="box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 200px auto auto; padding: 20px;">
+			<form name="login" action="index_submit" method="get" accept-charset="utf-8">  
+	
+			<label for="userid"><b>Student of medewerkernummer</b></label>  
+			
+       			<input type="text" name="userid" size="15" placeholder="s0000000" required> 
+       			<label for="password"><b>Wachtwoord<b></label>  
+			
+       			<input type="password" name="password" placeholder="Wachtwoord" required> 
+        		<input type="submit" value="Login">
+         
+
+		</form>
+	</div></div>  
+	
+	<br><br>
+	<img src="UT_Logo.png" width="40%" height="40%" /> 
 </section>
 	
 
