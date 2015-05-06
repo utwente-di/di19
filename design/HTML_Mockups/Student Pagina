@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Pagina</title>
+	<link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+  <div class = 'container'>
+    <div class = 'module-header'>
+		<div class = 'module-list'>
+			<div class = 'module'>
+				Module 1
+			</div>
+			<div class = 'module'>
+				Module 2
+			</div>
+			<div class = 'module'>
+				Module 3
+			</div>
+		</div>
+	</div>
+	<div class = 'module-container'>
+	  <div class = 'detail-view'>
+		Lalala weet ik niet wat hier hoort
+	  </div>
+	  <div class = 'subject-list'>
+		<div class = 'subject'>
+			<div class = 'subject-header'>
+				Vak 1: 7.5
+			</div>
+			<div class = 'subject-grades-list'>
+				<div class = 'subject-grade'>
+					Toets 1: 7
+				</div>
+				<div class = 'subject-grade'>
+					Toets 2: 6
+				</div>
+				<div class = 'subject-grade'>
+					Toets 3: 9
+				</div>
+			</div>
+		</div>
+		<div class = 'subject'>
+			<div class = 'subject-header'>
+				Vak 2
+			</div>
+		</div>
+		<div class = 'subject'>
+			<div class = 'subject-header'>
+				Vak 3
+			</div>
+		</div>
+	  </div>
+	  <div class = 'module-grade'>
+		Module cijfer: 7
+	  </div>
+	</div>
+  </div>
+ </body>
