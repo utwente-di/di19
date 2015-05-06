@@ -6182,7 +6182,7 @@ th.hide-for-touch {
   .hide-for-print {
     display: none; }
 
-  table.show-for-print {
+  table.show-for-print left: 0;{
     display: table !important; }
 
   thead.show-for-print {
@@ -6199,3 +6199,9 @@ th.hide-for-touch {
 
   th.show-for-print {
     display: table-cell !important; } }
+
+.NaamOnderaan { 
+    position: absolute; 
+    bottom: 0; 
+    right: 0;
+}​
