@@ -1,58 +1,47 @@
 <!doctype html>
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>TOSTi inlog</title>
-    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/foundation.css"/>
     <script src="js/vendor/modernizr.js"></script>
-  </head>
-  <body>
-	<div style="text-align: right; ">
-	<button type="button" style="background-color:transparent; border-color:transparent;" onclick="Javascript:alert('Hier komt hulp voor het inloggen te staan')">
-	<img src="help.png"" />
-	</button>
-	</div>
+</head>
+<body>
+<div style="text-align: right; ">
+    <button type="button" style="background-color:transparent; border-color:transparent;"
+            onclick="alert('Hier komt hulp voor het inloggen te staan')">
+        <img src="help.png"/>
+    </button>
+</div>
 
+<div style="text-align: center; ">
+    <div style="box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 200px auto auto; padding: 20px; background-color: #E2C800;"
+        <form name="login" action="index_submit" method="post" accept-charset="utf-8">
+            <div class="row">
+                <div class="large-12 columns">
+		    <label for="userid"><b>Student of medewerkernummer</b></label>
+                    <input id="userid" type="text" name="userid" size="15" placeholder="s0000000" required>
+		    <label for="password"><b>Wachtwoord</b></label>
+		    <input id="password" type="password" name="password" placeholder="Wachtwoord" required>
+                    <input type="submit" value="Login">
+		 </div>	
+	     </div>
+        </form>
+    </div>
+</div>
 
+<br><br><br><br>
+<img src="UT_Logo.png" width="40%" height="40%"/>
 
+<div class="NaamOnderaan">
+    Gemaakt door groep 19
+</div>
 
-	
-	<div style="text-align: center; ">
-		<div style="box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 175px auto auto; padding: 20px; background-color: #E2C800;">
-		<div class="row">
-   		 <div class="large-12 columns">
-			<form name="login" action="index_submit" method="get" accept-charset="utf-8">  
-	
-			<label for="userid"><b><h5>Student of medewerkernummer</b></h5></label>  
-			
-       			<input type="text" name="userid" size="15" placeholder="s0000000" required> 
-       			<label for="password"><b><h5>Wachtwoord</b></h5></label>  
-			
-       			<input type="password" name="password" placeholder="Wachtwoord" required> 
-        		<input type="submit" class="button expand" value="Login">
-         
-
-		</form>
-	</div></div></div></div> 
-	
-	<br><br><br><br>
-	<img src="UT_Logo.png" width="40%" height="40%" /> 
-
-	<div class="NaamOnderaan">
-        	Gemaakt door groep 19    
-    	</div></div>
-
-</section>
-	
-
-
-
-	
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
-  </body>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
 </html>
