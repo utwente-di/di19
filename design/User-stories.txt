@@ -1,0 +1,40 @@
+User stories for grade management system
+
+Teacher
+
+	As a teacher, I want to put grades into the system, so that the database will store them.
+	As a teacher, I want to modify grades, so that I can fix errors.
+	As a teacher, I want to be able to see the grades of all students for each subject, so that I can get a view of how all the students are doing.
+
+Coordinator
+	
+	As a coordinator, I want to add grades into the system, so that the database will store them.
+	As a coordinator, I want to publish grades, so that the students are able to see them.
+	As a coordinator, I want to see who the teachers and students of this module are, so that I can contact them.
+	As a coordinator, I want to be able to be notified by students in time, in case of error.
+	As a coordinator, I want to be able to modify already entered grades, so that I can fix errors made when adding them
+	As a coordinator, I want to be able to see the grades of all students for each subject, so that I can get a view of how all the students are doing.
+
+Student
+
+	As a student, I want access to my own grades, so that I can see the results of my own tests.
+	As a student, I want to see which assignments have which requirements, so that I know whether I passed it or how a grade should improve in a repair attempt.
+	As a student, I want to see who my teacher is for a certain subject, so that I can contact him/her.
+	As a student, I want to be notified about changes in results of assignments I made, so that I am aware of changes.
+	As a student, I want to see who my coordinator is, as well as being able to see their contact information, so that I can contact them.
+	As a student, I want to see which assignments are signed off, so that I am aware of which assignments I have signed off, as well as assignments which happened in the past but have not been signed off yet.
+	Student assistant
+	As a student assistant, I want to sign off assignments, so everyone can see whether students have completed the assignment or not.
+	As a student assistant, I want to know which students have signed off their assignments (or not) so that I can ask certain students to sign off.
+
+System Administrator
+
+	As a system administrator, I want to be able to add persons to the login system, so that the person is able to access the grade manager.
+	As a system administrator, I want to be able to delete persons from the login system, so that they have no longer access to the grade manager.
+	As a system administrator, I want to be able to add/delete/modify permissions of persons, so that it is possible to make a student a student assistant, without having to make a new account for the login system.
+	As a system administrator, I want to clearly distinguish for which modules a student is a student assistant and where the student is a normal student, so that a student who is an assistant in one module is not able to sign off his own assignments in another module.
+	As a system administrator, I want to add modules to the system, so that new modules can be formed.
+	As a system administrator, I want to update modules in the system, so that I can fix any errors in that module.
+	As a system administrator, I want to delete modules from the system, so that the system does not overflow.
+	As a system administrator, I want to make sure that student assistants are not able to sign off assignments have not occurred yet, because that makes no sense.
+	As a system administrator, I want to create/modify/delete subjects, as well as add/remove them to/from modules.
