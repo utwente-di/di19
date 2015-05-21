@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager.core;
+package nl.utwente.di.gradeManager.model;
 
 /**
  * Combination class for a subject and a 

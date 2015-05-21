@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="nl.utwente.di.gradeManager.core.Assignment" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/Assignment.java" binary="false" 
+  <class id="1" language="java" name="nl.utwente.di.gradeManager.model.Assignment" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/Assignment.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="189" width="144" x="38" y="169"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="nl.utwente.di.gradeManager.core.GradedAssignment" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/GradedAssignment.java" binary="false" 
+  <class id="2" language="java" name="nl.utwente.di.gradeManager.model.GradedAssignment" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/GradedAssignment.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="307" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -21,8 +21,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="nl.utwente.di.gradeManager.core.SignOffAssignment" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/SignOffAssignment.java" binary="false" 
+  <class id="3" language="java" name="nl.utwente.di.gradeManager.model.SignOffAssignment" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/SignOffAssignment.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="96" y="-17"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -31,8 +31,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="nl.utwente.di.gradeManager.core.Student" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/Student.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="nl.utwente.di.gradeManager.model.Student" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/Student.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="704" y="148"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -40,8 +41,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="nl.utwente.di.gradeManager.core.Subject" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/Subject.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="nl.utwente.di.gradeManager.model.Subject" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/Subject.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="357" y="403"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -49,8 +51,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="nl.utwente.di.gradeManager.core.Teacher" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/Teacher.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="nl.utwente.di.gradeManager.model.Teacher" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/Teacher.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="537" y="-50"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -58,8 +61,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="nl.utwente.di.gradeManager.core.StudentModule" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/StudentModule.java" binary="false" 
+  <class id="7" language="java" name="nl.utwente.di.gradeManager.model.StudentModule" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/StudentModule.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="681" y="256"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -68,8 +71,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="nl.utwente.di.gradeManager.core.Module" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/Module.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="nl.utwente.di.gradeManager.model.Module" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/Module.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="350" y="248"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -77,8 +80,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="nl.utwente.di.gradeManager.core.RequiredResult" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/RequiredResult.java" binary="false" 
+  <class id="9" language="java" name="nl.utwente.di.gradeManager.model.RequiredResult" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/RequiredResult.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="636" y="418"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -87,8 +90,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="nl.utwente.di.gradeManager.core.TeacherModule" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/TeacherModule.java" binary="false" 
+  <class id="10" language="java" name="nl.utwente.di.gradeManager.model.TeacherModule" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/TeacherModule.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="536" y="100"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -97,8 +100,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="nl.utwente.di.gradeManager.core.Login" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/Login.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="nl.utwente.di.gradeManager.model.Login" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/Login.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="876" y="11"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -106,8 +109,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="nl.utwente.di.gradeManager.core.Person" project="gradeManager" 
-    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/core/Person.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="nl.utwente.di.gradeManager.model.Person" project="gradeManager" 
+    file="/gradeManager/src/main/java/nl/utwente/di/gradeManager/model/Person.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="695" y="2"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

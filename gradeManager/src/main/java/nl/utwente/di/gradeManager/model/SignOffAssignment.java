@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager.core;
+package nl.utwente.di.gradeManager.model;
 
 import java.util.Date;
 

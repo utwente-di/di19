@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager.core;
+package nl.utwente.di.gradeManager.model;
 
 /**
  * Abstract class for persons (teachers and students.)
@@ -7,14 +7,16 @@ package nl.utwente.di.gradeManager.core;
 public abstract class Person {
 
 	private String username;
+	private String password;
 	private String realname;
 	
 	/**
 	 * 
 	 * @param argUsername the username of the person.
 	 */
-	public Person(String argUsername){
+	public Person(String argUsername, String argPassword){
 		this.username = argUsername;
+		this.password = argPassword;
 	}
 	
 	/**
@@ -31,6 +33,21 @@ public abstract class Person {
 	 */
 	public void setUsername(String argUsername){
 		this.username = argUsername;
+	}
+	
+	/**
+	 * Gets the password.
+	 * @return the password.
+	 */
+	public String getPassword(){
+		return password;
+	}
+	/**
+	 * Sets a new password
+	 * @param argPassword the new password 
+	 */
+	public void setPassword(String argPassword){
+		this.password = argPassword;
 	}
 	
 	/**
