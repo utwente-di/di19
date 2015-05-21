@@ -33,7 +33,7 @@ CREATE TABLE Teaches(
 	docentID	INTEGER,
 	moduleCode	INTEGER,
 	year		INTEGER,
-	type		INTEGER NOT NULL,
+	type		TEXT NOT NULL,
 	FOREIGN KEY	(docentID) REFERENCES Docent(docentID),
 	FOREIGN KEY	(moduleCode, year) REFERENCES Module(moduleCode, year),
 	PRIMARY KEY	(docentID, moduleCode, year));
@@ -42,26 +42,28 @@ CREATE TABLE Course(
 	courseCode	INTEGER,
 	name		TEXT NOT NULL,
 	weight		INTEGER NOT NULL,
-	PRIMARY KEY	(courseCode));
+	year		INTEGER,
+	PRIMARY KEY	(courseCode, year));
 
 CREATE TABLE hasCourses(
 	moduleCode	INTEGER,
-	year		INTEGER,
+	moduleYear	INTEGER,
 	courseCode	INTEGER,
-	PRIMARY KEY	(moduleCode, year, courseCode),
-	FOREIGN KEY	(moduleCode, year) REFERENCES Module(moduleCode, year),
-	FOREIGN KEY	(courseCode) REFERENCES Course(courseCode));
+	courseYear	INTEGER,
+	PRIMARY KEY	(moduleCode, moduleYear, courseCode, courseYear),
+	FOREIGN KEY	(moduleCode, moduleYear) REFERENCES Module(moduleCode, year),
+	FOREIGN KEY	(courseCode, courseYear) REFERENCES Course(courseCode, year));
 
 CREATE TABLE Assignment(
 	assignmentID	INTEGER,
 	courseCode	INTEGER,
-	year		INTEGER,
+	courseyear	INTEGER,
 	name		TEXT NOT NULL,
 	isGradedAssignment
 			BIT NOT NULL,
 	weight		INTEGER NOT NULL,
-	PRIMARY KEY	(assignmentID, courseCode, year),
-	FOREIGN KEY	(courseCode) REFERENCES Course(courseCode),
+	PRIMARY KEY	(assignmentID, courseCode, courseYear),
+	FOREIGN KEY	(courseCode, courseYear) REFERENCES Course(courseCode, year),
 	UNIQUE		(assignmentID));
 
 CREATE TABLE AssignmentOccasion(
