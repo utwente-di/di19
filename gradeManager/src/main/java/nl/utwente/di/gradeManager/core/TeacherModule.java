@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager;
+package nl.utwente.di.gradeManager.core;
 
 /**
  * Combination class for a teacher and a module.
