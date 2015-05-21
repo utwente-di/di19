@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager;
+package nl.utwente.di.gradeManager.model;
 
 
 /**
@@ -12,8 +12,8 @@ public class Student extends Person {
 	 * Constructs the student.
 	 * @param argUsername the s-number of the student.
 	 */
-	public Student(String argUsername) {
-		super(argUsername);
+	public Student(String argUsername, String argPassword) {
+		super(argUsername,argPassword);
 		// TODO Auto-generated constructor stub
 	}
 	
