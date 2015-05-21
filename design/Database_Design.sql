@@ -18,36 +18,83 @@ CREATE TABLE Docent(
 	PRIMARY KEY	(docentID),
 	FOREIGN KEY	(docentID) REFERENCES Person(personID));
 
+CREATE TABLE SuperModule(
+	moduleCode	INTEGER,
+	name		TEXT NOT NULL,	
+	PRIMARY KEY	(ModuleCode));
+	
+CREATE TABLE Module(
+	moduleCode	INTEGER,
+	year		INTEGER NOT NULL,
+	PRIMARY KEY	(ModuleCode, year), 	
+	FOREIGN KEY	(moduleCode) REFERENCES SuperModule(moduleCode));
+
+CREATE TABLE Teaches(
+	docentID	INTEGER,
+	moduleCode	INTEGER,
+	year		INTEGER,
+	type		INTEGER NOT NULL,
+	FOREIGN KEY	(docentID) REFERENCES Docent(docentID),
+	FOREIGN KEY	(moduleCode, year) REFERENCES Module(moduleCode, year),
+	PRIMARY KEY	(docentID, moduleCode, year));
+	
+CREATE TABLE Course(
+	courseCode	INTEGER,
+	name		TEXT NOT NULL,
+	weight		INTEGER NOT NULL,
+	PRIMARY KEY	(courseCode));
+
+CREATE TABLE hasCourses(
+	moduleCode	INTEGER,
+	year		INTEGER,
+	courseCode	INTEGER,
+	PRIMARY KEY	(moduleCode, year, courseCode),
+	FOREIGN KEY	(moduleCode, year) REFERENCES Module(moduleCode, year),
+	FOREIGN KEY	(courseCode) REFERENCES Course(courseCode));
+
+CREATE TABLE Assignment(
+	assignmentID	INTEGER,
+	courseCode	INTEGER,
+	year		INTEGER,
+	name		TEXT NOT NULL,
+	isGradedAssignment
+			BIT NOT NULL,
+	weight		INTEGER NOT NULL,
+	PRIMARY KEY	(assignmentID, courseCode, year),
+	FOREIGN KEY	(courseCode) REFERENCES Course(courseCode),
+	UNIQUE		(assignmentID));
+
+CREATE TABLE AssignmentOccasion(
+	assignmentID	INTEGER,
+	occasionDate	DATE,
+	PRIMARY KEY	(assignmentID, occasionDate),
+	FOREIGN KEY	(assignmentID) references Assignment(assignmentID));
+
+CREATE TABLE AssignmentResult(
+	assignmentID	INTEGER,
+	occasionDate	DATE,
+	studentID	INTEGER,
+	result		DECIMAL(2,1),
+	PRIMARY KEY 	(assignmentID, occasionDate, studentID),
+	FOREIGN KEY	(assignmentID, occasionDate) REFERENCES AssignmentOccasion(assignmentID, occasionDate),
+	FOREIGN KEY	(studentID) REFERENCES Student(studentID));
+
+CREATE TABLE ModuleResult(
+	studentID	INTEGER,
+	moduleCode	INTEGER,
+	year		INTEGER,
+	result		DECIMAL(2,1),
+	PRIMARY KEY	(studentID, moduleCode, year),
+	FOREIGN KEY	(studentID) REFERENCES Student(studentID),
+	FOREIGN KEY	(moduleCode, year) REFERENCES Module(moduleCode, year));
+
+
+/*
 CREATE TABLE RequiredResult(
 	requiredResultID
 			INTEGER,
 	minimumResult	DECIMAL(2,1),
 	PRIMARY KEY	(requiredResultID));
-
-CREATE TABLE SuperModule(
-	superModuleID	INTEGER,
-	name		TEXT NOT NULL,
-	moduleCode	TEXT NOT NULL,
-	requiredResultID
-			INTEGER,
-	PRIMARY KEY	(superModuleID),
-	FOREIGN KEY	(requiredResultID) REFERENCES RequiredResult(requiredResultID));
-
-CREATE TABLE Module(
-	moduleID	INTEGER,
-	superModuleID	INTEGER NOT NULL,
-	year		INTEGER NOT NULL,
-	PRIMARY KEY	(moduleID), 	
-	FOREIGN KEY	(superModuleID) REFERENCES SuperModule(superModuleID));
-	
-
-CREATE TABLE ModuleAttendant(
-	personID	INTEGER,
-	moduleID	INTEGER,
-	type		TEXT NOT NULL,
-	PRIMARY KEY	(personID, moduleID),
-	FOREIGN KEY	(personID) REFERENCES Person(personID),
-	FOREIGN KEY	(moduleID) REFERENCES Module(moduleID));
 
 CREATE TABLE ModuleParticipation(
 	studentID	INTEGER,
@@ -84,14 +131,7 @@ CREATE TABLE CourseRequiredResult(
 	FOREIGN KEY	(courseRequiredResultID) REFERENCES RequiredResult(requiredResultID),
 	FOREIGN KEY	(superModuleID) REFERENCES SuperModule(superModuleID));
 
-CREATE TABLE Course(
-	courseID	INTEGER,
-	name		TEXT NOT NULL,
-	weight		INTEGER NOT NULL,
-	courseRequiredResultID
-			INTEGER NOT NULL,
-	PRIMARY KEY	(courseID),
-	FOREIGN KEY	(courseID) REFERENCES CourseRequiredResult(courseRequiredResultID));
+
 	
 CREATE TABLE AssignmentRequiredResult(
 	assignmentRequiredResultID
@@ -101,20 +141,7 @@ CREATE TABLE AssignmentRequiredResult(
 	FOREIGN KEY	(assignmentRequiredResultID) REFERENCES RequiredResult(requiredResultID),
 	FOREIGN KEY	(courseID) REFERENCES Course(courseID));
 
-CREATE TABLE Assignment(
-	assignmentID	INTEGER,
-	name		TEXT NOT NULL,
-	assignmentDate	DATE NOT NULL,
-	assignmentRequiredResultID
-			INTEGER NOT NULL,
-	isGradedAssignment
-			BIT NOT NULL,
-	weight		INTEGER NOT NULL,
-	PRIMARY KEY	(assignmentID),
-	FOREIGN KEY	(assignmentID) REFERENCES AssignmentRequiredResult(assignmentRequiredResultID));
-	
-
-
+*/
 
 
 	
