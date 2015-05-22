@@ -14,8 +14,9 @@ public class Hello {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public String sayHtmlHello() {
+		int depth = 1;
 		System.out.println("A user accessed the hello world page!");
-		return "<html> <head> " + Style.CSSLink + "</head> <h1> Hello ! </h1> </html>";
+		return "<html> <head> " + Style.generateCSSLink(depth) + "</head> <h1> Hello ! </h1> </html>";
 	}
 	
 }

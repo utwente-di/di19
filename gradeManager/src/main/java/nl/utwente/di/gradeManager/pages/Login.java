@@ -10,6 +10,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBElement;
 
 import nl.utwente.di.gradeManager.model.Person;
 import nl.utwente.di.gradeManager.pages.login.dao.LoginDao;
@@ -36,6 +38,7 @@ public class Login {
 	 * @return
 	 */
 	public List<Person> getLoginsBrowser(){
+		System.out.println("/pages/login accessed.");
 		List<Person> persons = new ArrayList<Person>();
 		persons.addAll(LoginDao.instance.getMap().values());
 		return persons;
@@ -49,8 +52,9 @@ public class Login {
 	 * @return The count of login accounts
 	 */
 	public String getCount(){
+		int depth = 2;
 		int count = LoginDao.instance.getMap().size();
-		return "<html> <head> " + Style.CSSLink + "</head> <h1> There are " + String.valueOf(count) + " login accounts.";
+		return "<html> <head> " + Style.generateCSSLink(depth) + "</head> <h1> There are " + String.valueOf(count) + " login accounts.";
 	}
 	
 	
