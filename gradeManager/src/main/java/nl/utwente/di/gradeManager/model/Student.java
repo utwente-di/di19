@@ -1,6 +1,5 @@
 package nl.utwente.di.gradeManager.model;
 
-
 /**
  * Class for students.
  *

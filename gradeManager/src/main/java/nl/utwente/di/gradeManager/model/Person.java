@@ -1,11 +1,11 @@
 package nl.utwente.di.gradeManager.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Abstract class for persons (teachers and students.)
  *
  */
-
-import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public abstract class Person {

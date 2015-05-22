@@ -35,12 +35,20 @@ public class Login {
 	@Produces(MediaType.TEXT_XML)
 	/**
 	 * returns the list of logins to the user in the browser.
-	 * @return
+	 * @return the list of logins.
 	 */
 	public List<Person> getLoginsBrowser(){
-		System.out.println("/pages/login accessed.");
+		System.out.println("/pages/login accessed. GET");
 		List<Person> persons = new ArrayList<Person>();
-		persons.addAll(LoginDao.instance.getMap().values());
+		for(Person p : LoginDao.instance.getLogins().values()){
+			persons.add(p);
+		}
+		System.out.println("The usernames:");
+		for(Person p : persons){
+			System.out.println(p.getUsername());
+		}
+		System.out.println(persons.getClass());
+		System.out.println(persons.get(0));
 		return persons;
 	}
 	
@@ -53,7 +61,7 @@ public class Login {
 	 */
 	public String getCount(){
 		int depth = 2;
-		int count = LoginDao.instance.getMap().size();
+		int count = LoginDao.instance.getLogins().size();
 		return "<html> <head> " + Style.generateCSSLink(depth) + "</head> <h1> There are " + String.valueOf(count) + " login accounts.";
 	}
 	
