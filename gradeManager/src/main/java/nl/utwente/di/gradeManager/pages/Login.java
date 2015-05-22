@@ -44,6 +44,10 @@ public class Login {
 	@GET
 	@Path("count")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * 
+	 * @return The count of login accounts
+	 */
 	public String getCount(){
 		int count = LoginDao.instance.getMap().size();
 		return "<html> <head> " + Style.CSSLink + "</head> <h1> There are " + String.valueOf(count) + " login accounts.";

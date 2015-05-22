@@ -4,6 +4,10 @@ package nl.utwente.di.gradeManager.model;
  * Abstract class for persons (teachers and students.)
  *
  */
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public abstract class Person {
 
 	private String username;
