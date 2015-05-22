@@ -1,56 +1,112 @@
 package nl.utwente.di.gradeManager.model;
 
-import java.util.Date;
+
 
 /**
  * Abstract class for assignments.
  *
  */
-public abstract class Assignment {
+public class Assignment {
 
-	private String title;
-	public Date date;
+	private int assignmentID;
+	private Course course;
+	private String name;
+	private boolean isGraded;
+	private int weight;
 	
 	/**
 	 * Constructor for Assignment
-	 * @param argTitle The title of the assignment.
-	 * @param argDate The date of the assignment.
+	 * @param argID		The ID of the assignment.
+	 * @param argCourse The Course of the assignment.
+	 * @param argName 	The Name of the assignment.
+	 * @param argGraded Boolean whether the assignment is graded or not.
+	 * @param argWeight The Weight of the assignment.
 	 */
-	public Assignment(String argTitle, Date argDate){
-		this.title = argTitle;
-		this.date = argDate;
+	public Assignment(int argID, Course argcourse, String argname, boolean argGraded, int argWeight){
+		this.assignmentID = argID;
+		this.course = argcourse;
+		this.name = argname;
+		this.isGraded = argGraded;
+		this.weight = argWeight;
 	}
 	
 	/**
 	 * 
-	 * @return The title of the assignment.
+	 * @return	The ID of this assignment
 	 */
-	public String getTitle(){
-		return title;
+	public int getID(){
+		return assignmentID;
 	}
 	
 	/**
 	 * 
-	 * @param argTitle The new title of the assignment.
+	 * @param ID	The ID of this assignment
 	 */
-	public void setTitle(String argTitle){
-		this.title = argTitle;
+	public void setID(int argID){
+		this.assignmentID = argID;
 	}
 	
 	/**
 	 * 
-	 * @return The date of the assignment.
+	 * @return	The Course of this assignment
 	 */
-	public Date getDate(){
-		return this.date;
+	public Course getCourse(){
+		return course;
 	}
 	
 	/**
 	 * 
-	 * @param argDate The new date of the assignment.
+	 * @param course	The Course of this assignment
 	 */
-	public void setDate(Date argDate){
-		this.date = argDate;
+	public void setCourse(Course argCourse){
+		this.course = argCourse;
 	}
 	
+	/**
+	 * 
+	 * @return	The name of this Assignment
+	 */
+	public String getName(){
+		return name;
+	}
+	
+	/**
+	 * 
+	 * @param argName	The name of this assignment
+	 */
+	public void setName(String argName){
+		this.name = argName;
+	}
+	
+	/**
+	 * 
+	 * @return  True if assignment is graded, False if assignment has to be signed off
+	 */
+	public Boolean getGraded(){
+		return isGraded;
+	}
+	
+	/**
+	 * 
+	 * @param argGraded		Whether this assignment is graded or not
+	 */
+	public void setGraded(boolean argGraded){
+		this.isGraded = argGraded;
+	}
+	
+	/**
+	 * 
+	 * @return	The weight of this assignment
+	 */
+	public int getWeight(){
+		return weight;
+	}
+	
+	/**
+	 * 
+	 * @param argWeight		The weight of this assignment
+	 */
+	public void setWeight(int argWeight){
+		this.weight = argWeight;
+	}
 }

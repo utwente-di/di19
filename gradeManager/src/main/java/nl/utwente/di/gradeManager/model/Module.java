@@ -1,47 +1,47 @@
 package nl.utwente.di.gradeManager.model;
 
-import java.util.List;
-
-/**
- * Module class 
- *
- */
-public class Module {
-
-	private List<RequiredResult> requiredResults;
+public class Module extends SuperModule{
+	
+	private int year;
 	private Teacher coordinator;
 	
 	/**
-	 * Constructs the Module object.
-	 * @param argCoordinator the coordinator of this module (the main teacher) 
-	 * 
+	 * Default constructor for module
+	 * @param name  the name of this module
+	 * @param code  the code of this module
 	 */
-	public Module(Teacher argCoordinator){
-		this.coordinator = argCoordinator;
+	public Module(String name, String code) {
+		super(name, code);
+			}
+
+	/**
+	 * 
+	 * @return the year of this module
+	 */
+	public int getYear(){
+		return year;
+	}
+	/**
+	 * 
+	 * @param year  the year of this module
+	 */
+	public void setYear(int year){
+		this.year = year; 
 	}
 	
 	/**
 	 * 
-	 * @param argRequiredResult
-	 */
-	public void addRequiredResult(RequiredResult argRequiredResult){
-		this.requiredResults.add(argRequiredResult);
-	}
-	
-	/**
-	 * 
-	 * @return the required results for passing this module.
-	 */
-	public List<RequiredResult> getRequiredResults(){
-		return requiredResults;
-	}
-	
-	/**
-	 * 
-	 * @return the teacher of the module.
+	 * @return	The coordinator of this module
 	 */
 	public Teacher getCoordinator(){
 		return coordinator;
 	}
 	
+	/**
+	 * 
+	 * @param teacher	The coordinator of this module
+	 */
+	public void setCoordinator(Teacher teacher){
+		this.coordinator = teacher;
+	}
 }

@@ -7,7 +7,7 @@ package nl.utwente.di.gradeManager.model;
  */
 public class RequiredResult {
 
-	private Subject subject;
+	private Course subject;
 	private String requiredResult;
 	
 	/**
@@ -15,7 +15,7 @@ public class RequiredResult {
 	 * @param argSubject The subject
 	 * @param argRequiredResult The required result of this subject.
 	 */
-	public RequiredResult(Subject argSubject, String argRequiredResult){
+	public RequiredResult(Course argSubject, String argRequiredResult){
 		this.subject = argSubject;
 		this.requiredResult = argRequiredResult;
 	}
@@ -24,7 +24,7 @@ public class RequiredResult {
 	 * 
 	 * @return The subject.
 	 */
-	public Subject getSubject(){
+	public Course getSubject(){
 		return subject;
 	}
 	
@@ -32,7 +32,7 @@ public class RequiredResult {
 	 * 
 	 * @param argSubject the new subject.
 	 */
-	public void setSubject(Subject argSubject){
+	public void setSubject(Course argSubject){
 		this.subject = argSubject;
 	}
 	
