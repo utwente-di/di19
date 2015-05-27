@@ -22,7 +22,7 @@ CREATE TABLE SuperModule(
 	moduleCode	INTEGER,
 	name		TEXT NOT NULL,	
 	PRIMARY KEY	(ModuleCode));
-	
+
 CREATE TABLE Module(
 	moduleCode	INTEGER,
 	year		INTEGER NOT NULL,
@@ -30,13 +30,13 @@ CREATE TABLE Module(
 	FOREIGN KEY	(moduleCode) REFERENCES SuperModule(moduleCode));
 
 CREATE TABLE Teaches(
-	docentID	INTEGER,
+	personID	INTEGER,
 	moduleCode	INTEGER,
 	year		INTEGER,
 	type		TEXT NOT NULL,
-	FOREIGN KEY	(docentID) REFERENCES Docent(docentID),
+	FOREIGN KEY	(personID) REFERENCES Person(personID),
 	FOREIGN KEY	(moduleCode, year) REFERENCES Module(moduleCode, year),
-	PRIMARY KEY	(docentID, moduleCode, year));
+	PRIMARY KEY	(personID, moduleCode, year));
 	
 CREATE TABLE Course(
 	courseCode	INTEGER,
@@ -47,11 +47,10 @@ CREATE TABLE Course(
 
 CREATE TABLE hasCourses(
 	moduleCode	INTEGER,
-	moduleYear	INTEGER,
 	courseCode	INTEGER,
 	courseYear	INTEGER,
-	PRIMARY KEY	(moduleCode, moduleYear, courseCode, courseYear),
-	FOREIGN KEY	(moduleCode, moduleYear) REFERENCES Module(moduleCode, year),
+	PRIMARY KEY	(moduleCode, courseCode, courseYear),
+	FOREIGN KEY	(moduleCode) REFERENCES SuperModule(moduleCode),
 	FOREIGN KEY	(courseCode, courseYear) REFERENCES Course(courseCode, year));
 
 CREATE TABLE Assignment(
