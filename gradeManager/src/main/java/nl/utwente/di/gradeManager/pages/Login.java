@@ -32,24 +32,20 @@ public class Login {
 	}
 	
 	@GET
-	@Produces(MediaType.TEXT_XML)
+	@Produces(MediaType.TEXT_HTML)
 	/**
 	 * returns the list of logins to the user in the browser.
 	 * @return the list of logins.
 	 */
-	public List<Person> getLoginsBrowser(){
-		System.out.println("/pages/login accessed. GET");
-		List<Person> persons = new ArrayList<Person>();
-		for(Person p : LoginDao.instance.getLogins().values()){
-			persons.add(p);
+	public String getLoginsBrowser(){
+		int depth = 1;
+		String personlist = "<ul>\n";
+		for (Person p : LoginDao.instance.getLogins().values()){
+			personlist += "<li>" + p.getPersonID() + ":" + p.getPassword() + "</li>";
 		}
-		System.out.println("The usernames:");
-		for(Person p : persons){
-			System.out.println(p.getUsername());
-		}
-		System.out.println(persons.getClass());
-		System.out.println(persons.get(0));
-		return persons;
+		personlist+="</ul>";
+		return "<html> <head> " + Style.generateCSSLink(depth) + " </head> <body> <h2> The persons are : </h2>" + personlist;
+				
 	}
 	
 	@GET
