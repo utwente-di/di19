@@ -32,16 +32,17 @@ public class Login {
 	}
 	
 	@GET
+	@Path("accounts")
 	@Produces(MediaType.TEXT_HTML)
 	/**
 	 * returns the list of logins to the user in the browser.
 	 * @return the list of logins.
 	 */
 	public String getLoginsBrowser(){
-		int depth = 1;
+		int depth = 2;
 		String personlist = "<ul>\n";
 		for (Person p : LoginDao.instance.getLogins().values()){
-			personlist += "<li>" + p.getPersonID() + ":" + p.getPassword() + "</li>";
+			personlist += "<li>" + p.getPersonID() + ": " + p.getPassword() + "</li>";
 		}
 		personlist+="</ul>";
 		return "<html> <head> " + Style.generateCSSLink(depth) + " </head> <body> <h2> The persons are : </h2>" + personlist;
