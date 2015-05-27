@@ -10,15 +10,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public abstract class Person {
 
+	private int personID;
+	private String firstname;
+	private String surname;
 	private String username;
 	private String password;
-	private String realname;
 	
 	/**
 	 * 
 	 * @param argUsername the username of the person.
 	 */
-	public Person(String argUsername, String argPassword){
+	public Person(int argPersonID, String argFirstname, String argSurname, String argUsername, String argPassword){
+		this.setPersonID(argPersonID);
+		this.firstname = argFirstname;
+		this.surname = argSurname;
 		this.username = argUsername;
 		this.password = argPassword;
 	}
@@ -55,19 +60,51 @@ public abstract class Person {
 	}
 	
 	/**
-	 * 
-	 * @return the real name of the person.
+	 * Get the firstname
+	 * @return firstname
 	 */
-	public String getRealname(){
-		return realname;
+	public String getFirstname() {
+		return firstname;
 	}
-	
+
 	/**
-	 * sets the new real name of the person
-	 * @param argRealname the new real name.
+	 * Sets a new firstname
+	 * @param argPassword the new password 
 	 */
-	public void setRealname(String argRealname){
-		this.realname = argRealname;
+	public void setFirstname(String argFirstname) {
+		this.firstname = argFirstname;
+	}
+
+	/**
+	 * Get the surname
+	 * @return surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * Sets a new surname
+	 * @param argSurname the new surname 
+	 */
+	public void setSurname(String argSurname) {
+		this.surname = argSurname;
+	}
+
+	/**
+	 * Get the personID
+	 * @return personID
+	 */
+	public int getPersonID() {
+		return personID;
+	}
+
+	/**
+	 * Sets a new personID
+	 * @param argPersonID the new personID
+	 */
+	public void setPersonID(int personID) {
+		this.personID = personID;
 	}
 	
 }
