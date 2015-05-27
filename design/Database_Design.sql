@@ -61,6 +61,7 @@ CREATE TABLE Assignment(
 	isGradedAssignment
 			BIT NOT NULL,
 	weight		INTEGER NOT NULL,
+	minimunResult	INTEGER NOT NULL,
 	PRIMARY KEY	(assignmentID, courseCode, courseYear),
 	FOREIGN KEY	(courseCode, courseYear) REFERENCES Course(courseCode, year),
 	UNIQUE		(assignmentID));
