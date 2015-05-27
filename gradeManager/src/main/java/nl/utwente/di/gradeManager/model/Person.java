@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 
-@XmlRootElement
 public abstract class Person {
 
 	private int personID;

@@ -13,11 +13,9 @@ public enum LoginDao {
 	private LoginDao(){
 		
 		System.out.println("making logins..");
-		Person frank = new Student("s1581538", "wachtwoord");
-		frank.setRealname("Frank Groeneveld");
+		Person frank = new Student(1581538, "Frank", "Groeneveld", "FrankGroeneveld", "wachtwoord");
 		contentProvider.put("1", frank);
-		Person koen = new Student("s1592992", "konein");
-		koen.setRealname("Koentje");
+		Person koen = new Student(1592992, "Koen", "", "Koentjuh", "konein");
 		contentProvider.put("2", koen);
 				
 	}

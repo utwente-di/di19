@@ -11,6 +11,7 @@ import nl.utwente.di.gradeManager.style.Style;
 @Path("/hello")
 public class Hello {
 
+	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public String sayHtmlHello() {
