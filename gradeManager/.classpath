@@ -28,5 +28,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Frank/Documents/GitHub/di19/gradeManager/postgresql-9.4-1201.jdbc4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
