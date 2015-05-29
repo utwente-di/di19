@@ -29,7 +29,7 @@ public class Login {
 	@Path("dologin")
 	@Produces(MediaType.TEXT_HTML)
 	public String ShowLogin(){
-		int depth = 1;
+		int depth = 2;
 		return "<html> <head> <meta charset=\"utf-8\"/> " 
 				+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale =1.0\"/>"
 				+ "<title> TOSTi inlog</title>" + Style.generateCSSLink(depth) 
@@ -49,7 +49,7 @@ public class Login {
 				+ "<input type=\"submit\" class=\"button expand\" value=\"Login\">"
 				+ "</div></div></form></div></div>"
 				+ "<br><br><br><br>"
-				+ "<img src=\"UT_Logo.png\" width=\"40%\" height=\"40%\"/>"
+				+ "<img src=\"" + Style.generateLogoLink(depth) +"\" width=\"40%\" height=\"40%\"/>"
 				+ "<div class=\"NaamOnderaan\">Gemaakt door groep 19</div>"
 				+ "<script src=\"js/vendor/jquery.js\"></script>"
 				+ "<script src=\"js/foundation.min.js\"></script>"
