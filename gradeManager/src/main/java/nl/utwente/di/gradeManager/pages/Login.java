@@ -14,7 +14,11 @@ import javax.ws.rs.core.MediaType;
 //import javax.ws.rs.core.Response;
 //import javax.xml.bind.JAXBElement;
 
+
+
+import nl.utwente.di.gradeManager.debug.Debug;
 import nl.utwente.di.gradeManager.model.Person;
+import nl.utwente.di.gradeManager.model.Teacher;
 import nl.utwente.di.gradeManager.pages.login.dao.LoginDao;
 import nl.utwente.di.gradeManager.style.Style;
 
@@ -71,17 +75,23 @@ public class Login {
 				if(p.getPassword().equals(password)){
 					//success
 					response = "Login succesvol. Welkom " + p.getFirstname() + ".";
+					if (p instanceof Teacher){
+						if (((Teacher) p).isManager()){
+							//p is an admin
+							response = "God mode activated.";
+						}
+					}
 				} else {
 					//wrong password
 					response = "Wachtwoord komt niet overeen met de bijbehorende gebruikersnaam.";
-					System.out.println("Failed login attempt: " + userid + ":" + password);
-					System.out.println("Correct would be : " + String.valueOf(p.getPersonID()) + ":" + p.getPassword());
+					Debug.logln("Login: Failed login attempt: " + userid + ":" + password);
+					Debug.logln("Login: Correct would be : " + String.valueOf(p.getPersonID()) + ":" + p.getPassword());
 				}
 			}
 		}
 		if (response.equals("")){
 			//Geen van de usernames in de LoginDao komt overeen met de userid die in de form meegegeven is.
-			System.out.println("Failed login attempt: " + userid + ":" + password);
+			Debug.logln("Login: Failed login attempt: " + userid + ":" + password);
 			response = "De gebruiker die is opgegeven is niet bekend in het systeem.";
 		}
 		
