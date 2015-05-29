@@ -3,7 +3,10 @@ package nl.utwente.di.gradeManager.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -39,10 +42,10 @@ public class Login {
 				+ "<img src=\"help.png\"/></button></div>"
 				+ "<div style=\"text-align: center;\">"
 				+ "<div style=\"box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 200px auto auto; pdaaing: 20px; background-color: #E2C800;\">"
-				+ "<form name=\"login\" action = \"index_submit\" method = \"post\" accept-charset=\"utf-8\">"
+				+ "<form name=\"login\" action = \"try_login\" method = \"post\" accept-charset=\"utf-8\">"
 				+ "<div class=\"row\"><div class=\"large-12 columns\">"
 				+ "<label for=\"userid\"><b><h5>Student of medewerkernummer</b></h5</label>"
-				+ "<input id=\"userid\" type=\"text\" name=\"userid\" size=\"15\" placeholder=\"s0000000\" required>"
+				+ "<input id=\"userid\" type=\"text\" name=\"userid\" size=\"15\" placeholder=\"0000000\" required>"
 				+ "<label for=\"password\"><b><h5>Wachtwoord</b></h5></label>"
 				+ "<input id=\"password\" type=\"password\" name=\"password\" placeholder =\"Wachtwoord\" required>"
 				+ "<input type=\"submit\" class=\"button expand\" value=\"Login\">"
@@ -54,6 +57,38 @@ public class Login {
 				+ "<script src=\"js/foundation.min.js\"></script>"
 				+ "<script>$(document).foundation();</script>";
 				
+	}
+	
+	@Path("try_login")
+	@POST
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public String tryLogin(@FormParam("userid") String userid, @FormParam("password") String password){
+		//uses the number of the account to log in (so only numbers)
+		int id = Integer.parseInt(userid);
+		int depth = 2;
+		String response = "";
+		for(Person p : LoginDao.instance.getLogins().values()){
+			if (p.getPersonID() == id){
+				//there exists an account for which the user wants to log in
+				if(p.getPassword().equals(password)){
+					//success
+					response = "Login succesvol. Welkom " + p.getFirstname() + ".";
+				} else {
+					//wrong password
+					response = "Wachtwoord komt niet overeen met de bijbehorende gebruikersnaam.";
+					System.out.println("Failed login attempt: " + userid + ":" + password);
+					System.out.println("Correct would be : " + String.valueOf(p.getPersonID()) + ":" + p.getPassword());
+				}
+			}
+		}
+		if (response.equals("")){
+			//Geen van de usernames in de LoginDao komt overeen met de userid die in de form meegegeven is.
+			response = "De gebruiker die is opgegeven is niet bekend in het systeem.";
+		}
+		
+		return "<html> <head> " + Style.generateCSSLink(depth) + " </head> <h1> " + response + "</h1> </html>";
+
 	}
 	
 	@GET

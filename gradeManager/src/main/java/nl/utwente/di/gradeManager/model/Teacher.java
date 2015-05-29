@@ -2,7 +2,6 @@ package nl.utwente.di.gradeManager.model;
 
 import java.util.List;
 
-
 public class Teacher extends Person{
 
 	/**
