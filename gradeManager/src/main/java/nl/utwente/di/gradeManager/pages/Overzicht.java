@@ -23,7 +23,15 @@ public class Overzicht {
 					Statement st = conn.createStatement();
 					st.execute("set search_path to 'TESTi'");
 					ResultSet rs = st.executeQuery(
-						"SELECT firstname FROM \"Person\" p1, \"Student\" s1 WHERE s1.studentID = p1.PersonID "
+						"SELECT firstname, c1.name FROM \"Person\" p1, \"Student\" s1, \"ModuleResult\" mr1, \"Module\" m1, \"SuperModule\" sm1, \"hasCourses\" hc1, \"Course\" c1 WHERE "
+						+ "s1.studentID = p1.personID AND "
+						+ "s1.studentID = mr1.studentID AND "
+						+ "m1.moduleCode = mr1.ModuleCode AND "
+						+ "m1.year = mr1.year AND "
+						+ "sm1.moduleCode = hc1.moduleCode AND "
+						+ "hc1.courseCode = c1.courseCode AND "
+						+ "hc1.courseYear = c1.Year"
+						
 							);
 					
 					int i=1;					
