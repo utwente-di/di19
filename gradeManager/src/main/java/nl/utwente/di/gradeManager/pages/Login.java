@@ -32,6 +32,10 @@ public class Login {
 	@GET
 	@Path("dologin")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * Shows the Main Login page
+	 * @return HTML-form of the main login page
+	 */
 	public String ShowLogin(){
 		int depth = 2;
 		return "<html> <head> <meta charset=\"utf-8\"/> " 
