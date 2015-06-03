@@ -52,7 +52,7 @@ public class Login {
 				+ "<form name=\"login\" action = \"try_login\" method = \"post\" accept-charset=\"utf-8\">"
 				+ "<div class=\"row\"><div class=\"large-12 columns\">"
 				+ "<label for=\"userid\"><b><h5>Student of medewerkernummer</b></h5</label>"
-				+ "<input id=\"userid\" type=\"text\" name=\"userid\" size=\"15\" placeholder=\"s0000000\" required>"
+				+ "<input id=\"userid\" type=\"text\" name=\"userid\" size=\"15\" placeholder=\"s0000000\" required autofocus>"
 				+ "<label for=\"password\"><b><h5>Wachtwoord</b></h5></label>"
 				+ "<input id=\"password\" type=\"password\" name=\"password\" placeholder =\"Wachtwoord\" required>"
 				+ "<input type=\"submit\" class=\"button expand\" value=\"Login\">"
