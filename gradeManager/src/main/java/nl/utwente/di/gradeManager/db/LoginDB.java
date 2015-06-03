@@ -32,7 +32,7 @@ public class LoginDB extends DB {
 		String query = "SELECT COUNT(Person.personID) FROM testi.Person";
 		try {
 			Statement st = conn.createStatement();
-			Debug.logln("Executing query : "  + query);
+			Debug.logln("LoginDB: Executing query : "  + query);
 			ResultSet rs = st.executeQuery(query);
 			while (rs.next()){
 				//get person count from result;
@@ -41,8 +41,8 @@ public class LoginDB extends DB {
 			rs.close();
 			st.close();
 		} catch (SQLException e){
-			Debug.logln("Oops: " + e.getMessage() );
-			Debug.logln("SQLState: " + e.getSQLState() );
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState: " + e.getSQLState() );
 		}
 		
 		
@@ -63,7 +63,7 @@ public class LoginDB extends DB {
 		String studentquery = "SELECT DISTINCT Person.personid, Person.firstname, Person.surname, Person.password FROM Testi.Person, Testi.Student WHERE Person.personid IN (SELECT Student.studentid FROM Testi.Student) ORDER BY personid";
 		try {
 			Statement st = conn.createStatement();
-			Debug.logln("Executing student query : " + studentquery);
+			Debug.logln("LoginDB: Executing student query : " + studentquery);
 			ResultSet rs = st.executeQuery(studentquery);
 			while(rs.next()){
 				int studentID = rs.getInt("personid");
@@ -77,15 +77,15 @@ public class LoginDB extends DB {
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
-			Debug.logln("Oops: " + e.getMessage() );
-			Debug.logln("SQLState" + e.getSQLState() );
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
 		}
 		
 		//en nu voor de teachers
 		String teacherquery = "SELECT DISTINCT Person.personid, Person.firstname, Person.surname, Person.password FROM Testi.Person, Testi.Teacher WHERE Person.personid IN (SELECT Teacher.teacherid FROM Testi.Teacher) ORDER BY personid";
 		try { 
 			Statement st = conn.createStatement();
-			Debug.logln("Executing teacher query : " + teacherquery);
+			Debug.logln("LoginDB: Executing teacher query : " + teacherquery);
 			ResultSet rs = st.executeQuery(teacherquery);
 			while(rs.next()){
 				int teacherId = rs.getInt("personid");
@@ -98,8 +98,8 @@ public class LoginDB extends DB {
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
-			Debug.logln("Oops: " + e.getMessage() );
-			Debug.logln("SQLState: " + e.getSQLState() );
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState: " + e.getSQLState() );
 		}
 		
 		return result;
