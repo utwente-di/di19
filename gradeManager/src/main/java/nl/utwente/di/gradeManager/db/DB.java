@@ -2,9 +2,7 @@ package nl.utwente.di.gradeManager.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import nl.utwente.di.gradeManager.debug.Debug;
 
@@ -16,42 +14,36 @@ public class DB {
 
 	//Initial variables for connection to the database.
 	static final String url = "jdbc:postgresql://farm14.ewi.utwente.nl/di19";
-	static final String username = "di19";
-	static final String password = "Qyp4+D9MD";
-	static Connection conn;
+	public static final String username = "di19";
+	public static final String password = "Qyp4+D9MD";
+	public Connection conn;
 
-	/**
-	 * Returns a SQL Result set for a given query executed on the di19 database
-	 * @param query The query to be executed
-	 * @return The corresponding result set, after the query is executed.
-	 */
-	public static ResultSet executeQuery(String query){
-		ResultSet result = null;
-		Debug.logln("DB: Attempting to Execute query: " + query + " on database...");
+	public DB(){
 		try { 
-			Class.forName("org.postgresql.Driver");
+			Class.forName("org.postgresql.Driver"); 
 			try {
+				Debug.logln("DB: Setting up connection");
 				conn = DriverManager.getConnection(url,username,password);
-				try{ 
-					Statement st = conn.createStatement();
-					st.execute("set search_path to 'TESTi'");
-					result =  st.executeQuery(query);
-					
-				}	catch(SQLException e) {
-					Debug.logln("DB: Error: Oops: " + e.getMessage() );
-					Debug.logln("DB: Error: SQLState: " + e.getSQLState() );
-		  		}
-				conn.close();
-			}	catch(SQLException e) {
-				Debug.logln("DB: Error: Oops: " + e.getMessage() );
-				Debug.logln("DB: Error: SQLState: " + e.getSQLState() );
+				conn.setAutoCommit(true);
+				conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+			} catch (SQLException e) {
+				Debug.logln("DB: Oops: " + e.getMessage() );
+				Debug.logln("DB: SQLState: " + e.getSQLState() );
 			}
+		
+			
 		}	catch (ClassNotFoundException e) {
-			Debug.logln("DB: Error: JDBC driver not loaded.");
+			Debug.logln("DB: JDBC driver not loaded.");
 		}
-		if (result == null){
-			Debug.logln("DB: The query : " + query + " did not return any results.");
+	}
+	
+	public void closeConnection(){
+		Debug.logln("DB: Closing connection");
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			Debug.logln("DB: Oops: " + e.getMessage() );
+			Debug.logln("DB: SQLState: " + e.getSQLState() );
 		}
-		return result;
-	}	
+	}
 }
