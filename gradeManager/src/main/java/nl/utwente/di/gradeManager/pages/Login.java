@@ -1,6 +1,8 @@
 package nl.utwente.di.gradeManager.pages;
 
 
+import java.sql.ResultSet;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -16,10 +18,14 @@ import javax.ws.rs.core.MediaType;
 
 
 
+
+
+
+import nl.utwente.di.gradeManager.db.DB;
+import nl.utwente.di.gradeManager.db.LoginDB;
 import nl.utwente.di.gradeManager.debug.Debug;
 import nl.utwente.di.gradeManager.model.Person;
 import nl.utwente.di.gradeManager.model.Teacher;
-import nl.utwente.di.gradeManager.pages.login.dao.LoginDao;
 import nl.utwente.di.gradeManager.style.Style;
 
 @Path("/login")
@@ -69,7 +75,9 @@ public class Login {
 		//uses the number of the account to log in (so only numbers)
 		int depth = 2;
 		String response = "";
-		for(Person p : LoginDao.instance.getLogins().values()){
+		LoginDB loginDB = new LoginDB();
+		
+		for(Person p :  loginDB.getLogins()){
 			if (p.getPersonID().equals(userid)){
 				//there exists an account for which the user wants to log in
 				if(p.getPassword().equals(password)){
@@ -95,6 +103,8 @@ public class Login {
 			response = "De gebruiker die is opgegeven is niet bekend in het systeem.";
 		}
 		
+		loginDB.closeConnection();
+		
 		return "<html> <head> " + Style.generateCSSLink(depth) + " </head> <h1> " + response + "</h1> </html>";
 
 	}
@@ -109,12 +119,14 @@ public class Login {
 	public String getLoginsBrowser(){
 		int depth = 2;
 		String personlist = "<ul>\n";
-		for (Person p : LoginDao.instance.getLogins().values()){
+		LoginDB loginDB = new LoginDB();
+		for (Person p : loginDB.getLogins()){
 			personlist += "<li>" + p.getPersonID() + ": " + p.getPassword() + "</li>";
 		}
 		personlist+="</ul>";
+		loginDB.closeConnection();
 		return "<html> <head> " + Style.generateCSSLink(depth) + " </head> <body> <h2> The persons are : </h2>" + personlist;
-				
+		
 	}
 	
 	@GET
@@ -126,7 +138,11 @@ public class Login {
 	 */
 	public String getCount(){
 		int depth = 2;
-		int count = LoginDao.instance.getLogins().size();
+		LoginDB loginDB = new LoginDB(); 
+		int count = loginDB.getLoginCount();
+		
+		loginDB.closeConnection();
+		
 		return "<html> <head> " + Style.generateCSSLink(depth) + "</head> <h1> There are " + String.valueOf(count) + " login accounts.";
 	}
 	
