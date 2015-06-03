@@ -3,8 +3,7 @@ CREATE TABLE TESTi.Person(
 	firstname	TEXT NOT NULL,
 	surname		TEXT NOT NULL,
 	password	TEXT NOT NULL,	
-	PRIMARY KEY	(personID),
-	UNIQUE		(username));
+	PRIMARY KEY	(personID));
 
 
 CREATE TABLE TESTi.Student(
@@ -12,10 +11,10 @@ CREATE TABLE TESTi.Student(
 	PRIMARY KEY	(studentID),
 	FOREIGN KEY	(studentID) REFERENCES TESTi.Person(personID));
 
-CREATE TABLE TESTi.Docent(
-	docentID	INTEGER,
-	PRIMARY KEY	(docentID),
-	FOREIGN KEY	(docentID) REFERENCES TESTi.Person(personID));
+CREATE TABLE TESTi.Teacher(
+	teacherID	INTEGER,
+	PRIMARY KEY	(teacherID),
+	FOREIGN KEY	(teacherID) REFERENCES TESTi.Person(personID));
 
 CREATE TABLE TESTi.SuperModule(
 	moduleCode	INTEGER,

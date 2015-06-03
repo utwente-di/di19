@@ -21,9 +21,9 @@ public class Overzicht {
 			
 				try {
 					Statement st = conn.createStatement();
-					st.execute("set search_path to 'testi'");
+					//st.execute("set search_path to 'testi'");
 					ResultSet rs = st.executeQuery(
-						"SELECT *  FROM person p1"
+						"SELECT * FROM testi.person p1"
 							);
 					
 					int i=1;					

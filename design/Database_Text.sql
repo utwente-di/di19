@@ -13,7 +13,7 @@ VALUES	('00001'),
 	('00003'),
 	('69426');
 
-INSERT INTO TESTi.Docent
+INSERT INTO TESTi.Teacher
 VALUES	('22222'),
 	('09876'),
 	('12345');
