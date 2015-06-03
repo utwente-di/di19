@@ -46,7 +46,7 @@ public class Login {
 				+ "<body><div style=\"text-align: right; \">"
 				+ "<button type=\"button\" style=\"background-color:transparent; border-color:transparent;\""
 				+ "onclick =\"alert('Hier komt hulp voor het inloggen te staan')\">"
-				+ "<img src=\"help.png\"/></button></div>"
+				+ "<img src=\"" + Style.generateLogoLink2(depth) + "\"/></button></div>"
 				+ "<div style=\"text-align: center;\">"
 				+ "<div style=\"box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 200px auto auto; pdaaing: 20px; background-color: #E2C800;\">"
 				+ "<form name=\"login\" action = \"try_login\" method = \"post\" accept-charset=\"utf-8\">"

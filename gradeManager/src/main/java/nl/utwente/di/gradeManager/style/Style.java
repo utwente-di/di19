@@ -30,4 +30,11 @@ public class Style {
 		return logoLink;
 	}
 	
+	public static String generateLogoLink2(int argDepth){
+		String logoLink = "images/help.png";
+		for(int i = 0; i < argDepth; i++){
+			logoLink = "../" + logoLink;
+		}
+		return logoLink;
+	}
 }
