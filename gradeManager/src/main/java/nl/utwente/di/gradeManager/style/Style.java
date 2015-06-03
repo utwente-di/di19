@@ -18,23 +18,18 @@ public class Style {
 	}
 	
 	/**
-	 * Generates a link to the logo of the university, given a certain depth
+	 * Generates a link to the specified image
 	 *	@param int argDepth the depth
-	 *	@return the link to the logo
+	 *	@param string name of the image
+	 *	@return the link to the image with proper depth
 	 */
-	public static String generateLogoLink(int argDepth){
-		String logoLink = "images/UT_Logo.png";
+	public static String generateLogoLink(int argDepth, String name){
+		String link = "images/" + name;
 		for(int i = 0; i < argDepth; i++){
-			logoLink = "../" + logoLink;
+			link = "../" + link;
 		}
-		return logoLink;
+		return link;
 	}
 	
-	public static String generateLogoLink2(int argDepth){
-		String logoLink = "images/help.png";
-		for(int i = 0; i < argDepth; i++){
-			logoLink = "../" + logoLink;
-		}
-		return logoLink;
-	}
+	
 }
