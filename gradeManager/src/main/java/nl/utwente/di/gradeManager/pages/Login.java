@@ -77,7 +77,7 @@ public class Login {
 		LoginDB loginDB = new LoginDB();
 		
 		for(Person p :  loginDB.getLogins()){
-			if (p.getPersonID().equals(userid)){
+			if (p.getPersonID().toLowerCase().equals(userid.toLowerCase())){
 				//there exists an account for which the user wants to log in
 				if(p.getPassword().equals(password)){
 					//success
