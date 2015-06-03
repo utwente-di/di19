@@ -31,6 +31,7 @@ public class LoginDB extends DB {
 		int count = 0;
 		String query = "SELECT COUNT(Person.personID) FROM testi.Person";
 		try {
+			//execute the query in the connected database.
 			Statement st = conn.createStatement();
 			Debug.logln("LoginDB: Executing query : "  + query);
 			ResultSet rs = st.executeQuery(query);
@@ -38,14 +39,16 @@ public class LoginDB extends DB {
 				//get person count from result;
 				count = rs.getInt("count");
 			}
+			//close the result set and statement.
 			rs.close();
 			st.close();
 		} catch (SQLException e){
+			//something went wrong with executing the query.
 			Debug.logln("LoginDB: Oops: " + e.getMessage() );
 			Debug.logln("LoginDB: SQLState: " + e.getSQLState() );
 		}
 		
-		
+		//return the result of the query (the number of login accounts)
 		return count;
 		
 	}
@@ -62,6 +65,7 @@ public class LoginDB extends DB {
 		//Eerste query, voor de studenten
 		String studentquery = "SELECT DISTINCT Person.personid, Person.firstname, Person.surname, Person.password FROM Testi.Person, Testi.Student WHERE Person.personid IN (SELECT Student.studentid FROM Testi.Student) ORDER BY personid";
 		try {
+			//execute the query in the connected database.
 			Statement st = conn.createStatement();
 			Debug.logln("LoginDB: Executing student query : " + studentquery);
 			ResultSet rs = st.executeQuery(studentquery);
@@ -74,9 +78,11 @@ public class LoginDB extends DB {
 				result.add(p);
 				
 			}
+			//close resultset and statement.
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
+			//something went wrong with executing the query.s
 			Debug.logln("LoginDB: Oops: " + e.getMessage() );
 			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
 		}
@@ -84,6 +90,7 @@ public class LoginDB extends DB {
 		//en nu voor de teachers
 		String teacherquery = "SELECT DISTINCT Person.personid, Person.firstname, Person.surname, Person.password FROM Testi.Person, Testi.Teacher WHERE Person.personid IN (SELECT Teacher.teacherid FROM Testi.Teacher) ORDER BY personid";
 		try { 
+			//execute the query in the connected database.
 			Statement st = conn.createStatement();
 			Debug.logln("LoginDB: Executing teacher query : " + teacherquery);
 			ResultSet rs = st.executeQuery(teacherquery);
@@ -95,13 +102,16 @@ public class LoginDB extends DB {
 				Person p = new Teacher(teacherId, firstname, surname, password);
 				result.add(p);
 			}
+			//close the resultset and statement.
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
+			//something went wrong with executing the query.
 			Debug.logln("LoginDB: Oops: " + e.getMessage() );
 			Debug.logln("LoginDB: SQLState: " + e.getSQLState() );
 		}
 		
+		//return the list of persons who are in the database.
 		return result;
 	}
 	
