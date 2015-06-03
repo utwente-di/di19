@@ -1,6 +1,8 @@
 package nl.utwente.di.gradeManager.debug;
 
-import java.time.LocalTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Debug {
 
@@ -8,8 +10,12 @@ public class Debug {
 	 * Logs a message to be used for debugging.
 	 * @param out the message to be logged
 	 */	
+
+	
 	public static void logln(String out){
-		System.out.println("Debug: " + "(" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":" + LocalTime.now().getSecond() + "): " + out);
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		Date date = new Date();
+		System.out.println("Debug: " + "(" + dateFormat.format(date) + ") " + out);
 	}
 	
 	

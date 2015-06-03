@@ -21,7 +21,6 @@ import javax.ws.rs.core.MediaType;
 
 
 
-import nl.utwente.di.gradeManager.db.DB;
 import nl.utwente.di.gradeManager.db.LoginDB;
 import nl.utwente.di.gradeManager.debug.Debug;
 import nl.utwente.di.gradeManager.model.Person;

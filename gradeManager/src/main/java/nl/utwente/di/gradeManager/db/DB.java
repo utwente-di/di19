@@ -22,28 +22,28 @@ public class DB {
 		try { 
 			Class.forName("org.postgresql.Driver"); 
 			try {
-				Debug.logln("Setting up connection");
+				Debug.logln("DB: Setting up connection");
 				conn = DriverManager.getConnection(url,username,password);
 				conn.setAutoCommit(true);
 				conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			} catch (SQLException e) {
-				Debug.logln("Oops: " + e.getMessage() );
-				Debug.logln("SQLState: " + e.getSQLState() );
+				Debug.logln("DB: Oops: " + e.getMessage() );
+				Debug.logln("DB: SQLState: " + e.getSQLState() );
 			}
 		
 			
 		}	catch (ClassNotFoundException e) {
-			Debug.logln("JDBC driver not loaded.");
+			Debug.logln("DB: JDBC driver not loaded.");
 		}
 	}
 	
 	public void closeConnection(){
-		Debug.logln("Attempting to close connection");
+		Debug.logln("DB: Closing connection");
 		try {
 			conn.close();
 		} catch (SQLException e) {
-			Debug.logln("Oops: " + e.getMessage() );
-			Debug.logln("SQLState: " + e.getSQLState() );
+			Debug.logln("DB: Oops: " + e.getMessage() );
+			Debug.logln("DB: SQLState: " + e.getSQLState() );
 		}
 	}
 }
