@@ -2,7 +2,6 @@ CREATE TABLE TESTi.Person(
 	personID 	INTEGER,
 	firstname	TEXT NOT NULL,
 	surname		TEXT NOT NULL,
-	username	TEXT NOT NULL,
 	password	TEXT NOT NULL,	
 	PRIMARY KEY	(personID),
 	UNIQUE		(username));

@@ -1,11 +1,11 @@
 INSERT INTO TESTi.Person
-VALUES	('00001', 'Tim', 'de Klerk', 'tklerk', 'wachtwoord'),
-	('00002', 'Frank', 'Groeneveld', 'fgroeneveld', '1234'),
-	('00003', 'Kevin', 'Booijink', 'kevin', 'lala'),
-	('69426', 'Mark', '`t Hart', 'hartje', 'mark'),
-	('22222', 'Leon', 'de Vries', 'lrdevries', 'vroemvroem'),
-	('09876', 'Guus', 'Kuiper', 'gkuipje', 'jala'),
-	('12345', 'Klaas', 'Sikkel', 'klaas', 'sikkel');
+VALUES	('00001', 'Tim', 'de Klerk', 'wachtwoord'),
+	('00002', 'Frank', 'Groeneveld', '1234'),
+	('00003', 'Kevin', 'Booijink', 'lala'),
+	('69426', 'Mark', '`t Hart', 'mark'),
+	('22222', 'Leon', 'de Vries', 'vroemvroem'),
+	('09876', 'Guus', 'Kuiper', 'jala'),
+	('12345', 'Klaas', 'Sikkel', 'sikkel');
 
 INSERT INTO TESTi.Student 
 VALUES	('00001'),

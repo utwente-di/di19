@@ -23,13 +23,13 @@ public class Overzicht {
 					Statement st = conn.createStatement();
 					st.execute("set search_path to 'testi'");
 					ResultSet rs = st.executeQuery(
-						"SELECT p1.firstname   FROM person p1"
+						"SELECT *  FROM person p1"
 							);
 					
 					int i=1;					
 					while (rs.next())
 					{
-						System.out.println(i+" : "+rs.getString(1));
+						System.out.println(i+" : "+ rs.getString("firstname") + " " + rs.getString("surname"));
 						i++;
 					}
 					rs.close();
