@@ -27,5 +27,10 @@ document.write('\
 	  </ul>\
 \
   </section>\
+  <section class="top-bar-section">\
+  <ul class="right">\
+	<li><a href="#">My account</a></li>\
+	<li><a href="#">Settings</a></li>\
+	</section>\
 </nav>\
 ');
