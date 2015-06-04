@@ -6,6 +6,9 @@
     <title>TOSTi Framework</title>
     <link rel="stylesheet" href="css/foundation.css"/>
     <script src="js/vendor/modernizr.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/fastclick.js"></script>
+    <script src="js/foundation.min.js"></script>
 </head>
 <body>
 <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
@@ -38,11 +41,11 @@
     <!-- Left Nav Section -->
   </section>
 </nav>
-<h1 style="background-color:#EAEAEA; border-color:#EAEAEA">Module 1</h1>
+<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA">Module 1</h1>
 <ul class="accordion" data-accordion>
   <li class="accordion-navigation">
     <a href="#panel1a">Vak 1</a>
-    <div style="background-color:white" id="panel1a" class="content-active">
+    <div style="background-color:white" id="panel1a" class="content">
 		
 		<table>
 			<thead>
@@ -54,17 +57,16 @@
 			<tbody>
 				<tr>
 					<td>Opdracht 1:</td>
-					<td>
-						<div class="switch tiny round">
-							<input id="Opdracht1Switch" type="checkbox" checked>
-							<label for="Opdracht1Switch"></label>
-							</div>
+					<td style="background-color:lime">
 					</td>
 				</tr>
 				<tr>
 					<td>Toets 1:</td>
-					<td style="background-color:lime">9.6</td>
+					<td style="background-color:#FF9500">5.4</td>
 				</tr>
+				<tr>
+					<td>Totaal:</td>
+					<td style="background-color:#FF9500">5.4</td>
 			</tbody>
 		</table>
 	</div>
@@ -72,20 +74,58 @@
   <li class="accordion-navigation">
     <a href="#panel2a">Vak 2</a>
     <div id="panel2a" class="content">
-      Tabel met Info over Vak 2
+      <table>
+			<thead>
+				<tr> 
+					<th>Opdracht</th>
+					<th>Resultaat</th>
+				</tr>
+			<thead>
+			<tbody>
+				<tr>
+					<td>Opdracht 1:</td>
+					<td style="background-color:lime">
+					</td>
+				</tr>
+				<tr>
+					<td>Toets 1:</td>
+					<td style="background-color:lime">9.6</td>
+				</tr>
+				<tr>
+					<td>Totaal:</td>
+					<td style="background-color:lime">9.6</td>
+			</tbody>
+		</table>
     </div>
   </li>
   <li class="accordion-navigation">
     <a href="#panel3a">Vak 3</a>
     <div id="panel3a" class="content">
-      Tabel met Info over Vak 3
+      <table>
+			<thead>
+				<tr> 
+					<th>Opdracht</th>
+					<th>Resultaat</th>
+				</tr>
+			<thead>
+			<tbody>
+				<tr>
+					<td>Opdracht 1:</td>
+					<td style="background-color:#FF0000">
+					</td>
+				</tr>
+				<tr>
+					<td>Toets 1:</td>
+					<td style="background-color:#FF0000">3.4</td>
+				</tr>
+				<tr>
+					<td>Totaal:</td>
+					<td style="background-color:#FF0000">3.4</td>
+			</tbody>
+		</table>
     </div>
   </li>
 </ul>
-<script src="js/vendor/jquery.js"></script>
-  <script src="js/foundation/foundation.js"></script>
-  <script src="js/foundation/foundation.topbar.js"></script>
-  <script src="js/foundation/foundation.accordion.js>"</script>
   <!-- Other JS plugins can be included here -->
 
   <script>
