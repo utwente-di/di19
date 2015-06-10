@@ -5,7 +5,6 @@ CREATE TABLE TESTi.Person(
 	password	TEXT NOT NULL,	
 	PRIMARY KEY	(personID));
 
-
 CREATE TABLE TESTi.Student(
 	studentID	INTEGER,
 	PRIMARY KEY	(studentID),
@@ -13,6 +12,7 @@ CREATE TABLE TESTi.Student(
 
 CREATE TABLE TESTi.Teacher(
 	teacherID	INTEGER,
+	administrator	BIT NOT NULL,
 	PRIMARY KEY	(teacherID),
 	FOREIGN KEY	(teacherID) REFERENCES TESTi.Person(personID));
 
@@ -60,9 +60,8 @@ CREATE TABLE TESTi.Assignment(
 			BIT NOT NULL,
 	weight		INTEGER NOT NULL,
 	minimunResult	INTEGER NOT NULL,
-	PRIMARY KEY	(assignmentID, courseCode, courseYear),
-	FOREIGN KEY	(courseCode, courseYear) REFERENCES TESTi.Course(courseCode, year),
-	UNIQUE		(assignmentID));
+	PRIMARY KEY	(assignmentID),
+	FOREIGN KEY	(courseCode, courseYear) REFERENCES TESTi.Course(courseCode, year));
 
 CREATE TABLE TESTi.AssignmentOccasion(
 	assignmentID	INTEGER,

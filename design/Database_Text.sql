@@ -14,9 +14,9 @@ VALUES	('00001'),
 	('69426');
 
 INSERT INTO TESTi.Teacher
-VALUES	('22222'),
-	('09876'),
-	('12345');
+VALUES	('22222', '1'),
+	('09876', '0'),
+	('12345', '1');
 
 INSERT INTO TESTi.SuperModule
 VALUES	('1234567890', 'Data & Informatie'),
