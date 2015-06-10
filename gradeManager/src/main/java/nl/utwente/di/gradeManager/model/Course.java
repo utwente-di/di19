@@ -2,9 +2,10 @@ package nl.utwente.di.gradeManager.model;
 
 public class Course {
 	private int courseCode;
-	private String name;
-	private int weight;
-	private int year;
+	private int year; 
+	private String name; //NOT NULL
+	private int weight; //NOT NULL
+	
 	
 	/**
 	 * Default constructor for Course
@@ -34,6 +35,23 @@ public class Course {
 	 */
 	public void setCode(int code){
 		this.courseCode = code;
+	}
+	
+
+	/**
+	 * 
+	 * @return this course's year
+	 */
+	public int getYear(){
+		return year;
+	}
+	
+	/**
+	 * 
+	 * @param year  this course's year
+	 */
+	public void setYear(int year){
+		this.year = year;
 	}
 	
 	/**
@@ -68,19 +86,4 @@ public class Course {
 		this.weight = weight;
 	}
 	
-	/**
-	 * 
-	 * @return this course's year
-	 */
-	public int getYear(){
-		return year;
-	}
-	
-	/**
-	 * 
-	 * @param year  this course's year
-	 */
-	public void setYear(int year){
-		this.year = year;
-	}
 }

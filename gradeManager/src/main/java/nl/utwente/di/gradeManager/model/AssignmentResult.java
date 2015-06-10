@@ -1,62 +1,95 @@
 package nl.utwente.di.gradeManager.model;
 
-public class AssignmentResult {
-	
-	private Student student;
-	private AssignmentOccasion assignment;
-	private double result;
-	
-	/**
-	 * Default constructor for Assignmentresult
-	 * @param argStudent		The student that made this assignment
-	 * @param argAssignment		The assignment the student made
-	 * @param argResult			The result of the assignment
-	 */
-	public AssignmentResult(Student argStudent, AssignmentOccasion argAssignment, double argResult){
-		this.student = argStudent;
-		this.assignment = argAssignment;
-		this.result = argResult;
-	}
-	
-	/**
-	 * 
-	 * @return	The student whom this result corresponds to
-	 */
-	public Student getStudent(){
-		return student;
-	}
+import java.util.Date;
 
-	/**
-	 * 
-	 * @param argStudent	The student whom this result corresponds to
-	 */
-	public void setStudent(Student argStudent){
-		this.student = argStudent;
-	}
+/**
+ * Class for results of assignments.
+ * @author Frank
+ *
+ */
+
+public class AssignmentResult{
+	
+	private int assignmentID; 	//PK INT
+	private Date occasionDate; //PK DATE
+	private int studentID; 	//PK INT
+	private float result;
 	
 	/**
-	 * 
-	 * @return	The assignmentoccasion this result corresponds to
+	 * Constructs the result of an assignment for a student on a date.
+	 * @param argAssignmentID The ID of the assignment.
+	 * @param argOccasionDate The date on which the assignment occurred.
+	 * @param argStudentID The student ID of the student who made the assignment.
+	 * @param argResult The result of the made assignment.
 	 */
-	public AssignmentOccasion getAssignment(){
-		return assignment;
-	}
-	
-	
-	public void setAssignment(AssignmentOccasion argAssignment){
-		this.assignment = argAssignment;
+	public AssignmentResult(int argAssignmentID, Date argOccasionDate, int argStudentID, float argResult){
+		this.assignmentID = argAssignmentID;
+		this.occasionDate = argOccasionDate;
+		this.studentID = argStudentID;
+		this.result = argResult;		
 	}
 	
 	/**
-	 * 
-	 * @return	The result of this assignment
+	 * Gets the ID of the assignment.
+	 * @return The ID of the assignment.
 	 */
-	public double getResult(){
-		return result;
+	public int getAssignmentID(){
+		return this.assignmentID;
 	}
 	
+	/**
+	 * Sets the ID of the assignment.
+	 * @param argAssignmentID The ID of the assignment.
+	 */
+	public void setAssignmentID(int argAssignmentID){
+		this.assignmentID = argAssignmentID;
+	}
 	
-	public void setResult(double argResult){
+	/**
+	 * Gets the date on which the assignment occurred.
+	 * @return The date on which the assignment occurred.
+	 */
+	public Date getOccasionDate(){
+		return this.occasionDate;
+	}
+	
+	/**
+	 * Sets the date on which the assignment occurred
+	 * @param argOccasionDate The date on which the assignment occurred.
+	 */
+	public void setOccasionDate(Date argOccasionDate){
+		this.occasionDate = argOccasionDate;
+	}
+	
+	/**
+	 * Gets the ID of the student for this result.
+	 * @return The ID of the student.
+	 */
+	public int getStudentID(){
+		return this.studentID;
+	}
+	
+	/**
+	 * Sets the ID of the student for this result.
+	 * @param argStudentID The ID of the student for this result.
+	 */
+	public void setStudentID(int argStudentID){
+		this.studentID = argStudentID;
+	}
+	
+	/**
+	 * Gets the result of this assignment.
+	 * @return The result of this assignment.
+	 */
+	public float getResult(){
+		return this.result;
+	}
+	
+	/**
+	 * Sets the result of this assignment.
+	 * @param argResult The result of this assignment.
+	 */
+	public void setResult(float argResult){
 		this.result = argResult;
 	}
 }
