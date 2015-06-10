@@ -39,6 +39,7 @@ public class LoginDB extends DB {
 				//get person count from result;
 				count = rs.getInt("count");
 			}
+			Debug.logln("LoginDB: The number of accounts = " + count);
 			//close the result set and statement.
 			rs.close();
 			st.close();

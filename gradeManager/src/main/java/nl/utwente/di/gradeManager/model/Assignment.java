@@ -8,8 +8,9 @@ package nl.utwente.di.gradeManager.model;
  */
 public class Assignment {
 
-	private int assignmentID;
-	private Course course;
+	private int assignmentID; //PK unique
+	private int courseCode; 
+	private int courseYear; 
 	private String name;
 	private boolean isGraded;
 	private int weight;
@@ -22,9 +23,10 @@ public class Assignment {
 	 * @param argGraded Boolean whether the assignment is graded or not.
 	 * @param argWeight The Weight of the assignment.
 	 */
-	public Assignment(int argID, Course argcourse, String argname, boolean argGraded, int argWeight){
+	public Assignment(int argID, int argCourseCode, int argCourseYear, String argname, boolean argGraded, int argWeight){
 		this.assignmentID = argID;
-		this.course = argcourse;
+		this.courseCode = argCourseCode;
+		this.courseYear = argCourseYear;
 		this.name = argname;
 		this.isGraded = argGraded;
 		this.weight = argWeight;
@@ -47,19 +49,35 @@ public class Assignment {
 	}
 	
 	/**
-	 * 
-	 * @return	The Course of this assignment
+	 * Gets the course code of this assignment.
+	 * @return The course code of this assignment.
 	 */
-	public Course getCourse(){
-		return course;
+	public int getCourseCode(){
+		return this.courseCode;
 	}
 	
 	/**
-	 * 
-	 * @param course	The Course of this assignment
+	 * Sets the course year of this assignment. 
+	 * @param argCourseCode The course code of this assignment.
 	 */
-	public void setCourse(Course argCourse){
-		this.course = argCourse;
+	public void setCourseCode(int argCourseCode){
+		this.courseCode = argCourseCode;
+	}
+	
+	/**
+	 * Gets the course year of this assignment.
+	 * @return The course year of this assignment..
+	 */
+	public int getCourseYear(){
+		return this.courseYear;
+	}
+	
+	/**
+	 * Sets the course year of this assignment.
+	 * @param argCourseYear The course year of this assignment.
+	 */
+	public void setCourseYear(int argCourseYear){
+		this.courseYear = argCourseYear;
 	}
 	
 	/**
