@@ -16,11 +16,11 @@
 <body>
 <script src="Navigatiebalk.js"></script>
 <h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA">module.getname()</h1>
-<ul style="float:left; width: 50%" class="accordion" data-accordion></ul>
+<ul style="float:left; width: 50%" class="accordion" data-accordion>
 <% for(int i=0, i => moduleset.getlength(), i++) {%>
 <li class="accordion-navigation">
-	<a href="#<%=vak.getnaam() %>"><%=vak.getnaam()%></a>
-		<div style="background-color:white" id="<%=v$ak.getnaam() %>"class="content">
+	<a href="#<%=i.getnaam() %>"><%=i.getnaam()%></a>
+		<div style="background-color:white" id="<%=i.getnaam() %>"class="content">
 			<table>
 			<thead>
 				<tr>
