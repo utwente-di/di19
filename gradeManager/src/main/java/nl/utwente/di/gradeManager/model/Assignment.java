@@ -3,128 +3,106 @@ package nl.utwente.di.gradeManager.model;
 
 
 /**
- * Abstract class for assignments.
+ * Class for assignments.
  *
  */
 public class Assignment {
 
 	private int assignmentID; //PK unique
-	private int courseCode; 
-	private int courseYear; 
+	private int coursecode; 
+	private int courseyear; 
 	private String name;
 	private boolean isGraded;
 	private int weight;
+	private float minimumresult;
 	
 	/**
-	 * Constructor for Assignment
-	 * @param argID		The ID of the assignment.
-	 * @param argCourse The Course of the assignment.
-	 * @param argName 	The Name of the assignment.
-	 * @param argGraded Boolean whether the assignment is graded or not.
-	 * @param argWeight The Weight of the assignment.
+	 * Constructs an assignment
+	 * @param argAssignmentid The id for the assignment.
+	 * @param argCoursecode The course code of the course of which the assignment is a part.
+	 * @param argCourseyear The course year in which the assignment is held.
+	 * @param argName The name of the assignment.
+	 * @param argIsgradedassignment Whether the assignment is graded (true) or signed off (false)
+	 * @param argWeight The weight of the assignment used for computing the average result of a course.
+	 * @param argMinimumresult The minimum expected result for the assignment for passing it.
 	 */
-	public Assignment(int argID, int argCourseCode, int argCourseYear, String argname, boolean argGraded, int argWeight){
-		this.assignmentID = argID;
-		this.courseCode = argCourseCode;
-		this.courseYear = argCourseYear;
-		this.name = argname;
-		this.isGraded = argGraded;
+	public Assignment(int argAssignmentid, int argCoursecode, int argCourseyear, String argName, boolean argIsgradedassignment, int argWeight, float argMinimumresult){
+		this.assignmentID = argAssignmentid;
+		this.coursecode = argCoursecode;
+		this.courseyear = argCourseyear;
+		this.name = argName;
+		this.isGraded = argIsgradedassignment;
 		this.weight = argWeight;
+		this.minimumresult = argMinimumresult;
 	}
 	
 	/**
-	 * 
-	 * @return	The ID of this assignment
+	 * Gets the assignment id of this assignment.
+	 * @return The ID of the assignment.
 	 */
-	public int getID(){
-		return assignmentID;
+	public int getAssignmentID(){
+		return this.assignmentID;
 	}
 	
 	/**
-	 * 
-	 * @param ID	The ID of this assignment
+	 * Sets the id of this assignment.
+	 * @param argAssignmentID The id of this assignment.
 	 */
-	public void setID(int argID){
-		this.assignmentID = argID;
+	public void setAssignmentID(int argAssignmentID){
+		this.assignmentID = argAssignmentID;
 	}
 	
-	/**
-	 * Gets the course code of this assignment.
-	 * @return The course code of this assignment.
-	 */
 	public int getCourseCode(){
-		return this.courseCode;
+		return this.coursecode;
 	}
 	
-	/**
-	 * Sets the course year of this assignment. 
-	 * @param argCourseCode The course code of this assignment.
-	 */
 	public void setCourseCode(int argCourseCode){
-		this.courseCode = argCourseCode;
+		this.coursecode = argCourseCode;
 	}
 	
-	/**
-	 * Gets the course year of this assignment.
-	 * @return The course year of this assignment..
-	 */
-	public int getCourseYear(){
-		return this.courseYear;
+	public int getCourseyear(){
+		return this.courseyear;
 	}
 	
-	/**
-	 * Sets the course year of this assignment.
-	 * @param argCourseYear The course year of this assignment.
-	 */
-	public void setCourseYear(int argCourseYear){
-		this.courseYear = argCourseYear;
+	public void setCourseyear(int argCourseyear){
+		this.courseyear = argCourseyear;
 	}
 	
-	/**
-	 * 
-	 * @return	The name of this Assignment
-	 */
 	public String getName(){
-		return name;
+		return this.name;
 	}
 	
-	/**
-	 * 
-	 * @param argName	The name of this assignment
-	 */
 	public void setName(String argName){
 		this.name = argName;
 	}
 	
-	/**
-	 * 
-	 * @return  True if assignment is graded, False if assignment has to be signed off
-	 */
-	public Boolean getGraded(){
-		return isGraded;
+	public boolean getGraded(){
+		return this.isGraded;
 	}
 	
-	/**
-	 * 
-	 * @param argGraded		Whether this assignment is graded or not
-	 */
 	public void setGraded(boolean argGraded){
 		this.isGraded = argGraded;
 	}
 	
-	/**
-	 * 
-	 * @return	The weight of this assignment
-	 */
 	public int getWeight(){
-		return weight;
+		return this.weight;
 	}
 	
-	/**
-	 * 
-	 * @param argWeight		The weight of this assignment
-	 */
-	public void setWeight(int argWeight){
-		this.weight = argWeight;
+	public void setWeight(int argWeigth){
+		this.weight = argWeigth;
 	}
+	
+	public float getMinimumresult(){
+		return this.minimumresult;
+	}
+	
+	public void setMinimumresult(float argMinimumresult){
+		this.minimumresult = argMinimumresult;
+	}
+	
+	
+	
+	
+	
+	
 }

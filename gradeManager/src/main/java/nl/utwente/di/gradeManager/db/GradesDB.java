@@ -52,6 +52,11 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	/**
+	 * Gets the courses which are part of a certain module.
+	 * @param argModulecode The code of the module.
+	 * @return The courses which are part of the module.
+	 */
 	public List<Course> getCoursesForModule(int argModulecode){
 		List<Course> result = new ArrayList<Course>();
 		
@@ -84,7 +89,44 @@ public class GradesDB extends DB {
 	
 	}
 	
-	
-	
+	/**
+	 * Gets the assignments for a certain course.
+	 * @param argCoursecode The code of the course.
+	 * @param argCourseyear The year in which this course is held.
+	 * @return A list of assignments, which are part of the course.
+	 */
+	public List<Assignment> getAssignmentsForCourse(int argCoursecode, int argCourseyear){
+		List<Assignment> result = new ArrayList<Assignment>();
+		String query = "SELECT * FROM Testi.assignment a WHERE a.coursecode = "+
+		argCoursecode + " AND a.courseyear = " + 
+		argCourseyear + " ORDER BY assignmentid";
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int assignmentid = rs.getInt("assignmentid");
+				int coursecode = rs.getInt("coursecode");
+				int courseyear = rs.getInt("courseyear");
+				String name = rs.getString("name");
+				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
+				int weight = rs.getInt("weight");
+				float minimumresult = rs.getFloat("minimumresult");
+				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
+				result.add(a);
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	}
 	
 }
