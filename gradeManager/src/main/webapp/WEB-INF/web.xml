@@ -21,7 +21,7 @@
     <url-pattern>/pages/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-		<servlet-name>proefTabel</servlet-name>
+		<servlet-name>Proeftabel</servlet-name>
 		<url-pattern>/proefTabel</url-pattern>
 	</servlet-mapping>
 </web-app> 
