@@ -5,9 +5,9 @@ import java.util.Date;
 public class AssignmentOccasion extends Assignment{
 	private Date date;
 
-	public AssignmentOccasion(int argID, Course argcourse, String argname,
-			boolean argGraded, int argWeight) {
-		super(argID, argcourse, argname, argGraded, argWeight);
+	public AssignmentOccasion(int argID, int argcourse, int argyear, String argname,
+			boolean argGraded, int argWeight, int argminimum) {
+		super(argID, argcourse, argyear, argname, argGraded, argWeight, argminimum);
 		// TODO Auto-generated constructor stub
 	}
 
