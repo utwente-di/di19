@@ -17,7 +17,7 @@ import nl.utwente.di.gradeManager.model.Course;
 
 public class Resulttable extends HttpServlet {
 	
-	private final String jsp_address = "/WEB-INF/Student2.jsp";
+	private final String jsp_address = "Student2.jsp";
 	private List<Course> courses;
 	private List<Assignment> assignments;
 	
@@ -46,7 +46,8 @@ public class Resulttable extends HttpServlet {
 					coursesList.add(courses.get(i));
 			}
 			
-			String SID = request.getAttribute("studentID").toString();
+			//String SID = request.getAttribute("studentID").toString();
+			String SID = "Tim";
 			StudentCourses bean = new StudentCourses(SID, coursesList);
 			request.setAttribute("coursestoShow", bean);
 		}
