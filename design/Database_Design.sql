@@ -59,7 +59,7 @@ CREATE TABLE TESTi.Assignment(
 	isGradedAssignment
 			BIT NOT NULL,
 	weight		INTEGER NOT NULL,
-	minimunResult	INTEGER NOT NULL,
+	minimumResult	DECIMAL(2,1) NOT NULL,
 	PRIMARY KEY	(assignmentID),
 	FOREIGN KEY	(courseCode, courseYear) REFERENCES TESTi.Course(courseCode, year));
 
