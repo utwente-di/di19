@@ -1,8 +1,6 @@
 package nl.utwente.di.gradeManager.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 import nl.utwente.di.gradeManager.debug.Debug;
 
