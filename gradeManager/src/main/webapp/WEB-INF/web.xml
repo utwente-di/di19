@@ -9,10 +9,19 @@
         <param-value>nl.utwente.di.gradeManager.pages</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+    
   </servlet>
+  <servlet>
+		<servlet-name>Proeftabel</servlet-name>
+		<servlet-class>nl.utwente.di.gradeMananger.servlets.proefTabel</servlet-class>
+	</servlet>
   
   <servlet-mapping>
     <servlet-name>gradeManagerPages</servlet-name>
     <url-pattern>/pages/*</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+		<servlet-name>proefTabel</servlet-name>
+		<url-pattern>/proefTabel</url-pattern>
+	</servlet-mapping>
 </web-app> 

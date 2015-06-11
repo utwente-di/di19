@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nl.utwente.di.gradeManager.db.GradesDB;
 import nl.utwente.di.gradeManager.model.Assignment;
 import nl.utwente.di.gradeManager.model.Course;
 
@@ -17,21 +18,21 @@ import nl.utwente.di.gradeManager.model.Course;
 public class Resulttable extends HttpServlet {
 	
 	private final String jsp_address = "/WEB-INF/Student2.jsp";
-	private Course[] courses;
-	private Assignment[] assignments;
+	private List<Course> courses;
+	private List<Assignment> assignments;
 	
-	protected void setCourses(String[] courseIDs) {
-		courses = new Course[courseIDs.length];
-		for (int i = 0; i < courses.length; i++) {
-			courses[i] = QueryvanFrank.getCourse(courseIDs[i]);
-		}
+	protected void setCourses(int moduleID) {
+		GradesDB gradesDB = new GradesDB();
+		courses = gradesDB.getCoursesForModule(moduleID);
+		gradesDB.closeConnection();
 	}
 	
-	protected void setAssignments(String[] assignmentIDs) {
-		assignments = new Assignment[assignmentIDs.length];
-		for (int i = 0; i < courses.length; i++) {
-			courses[i] = QueryvanFrank2.getCourse(assignmentIDs[i]);
+	protected void setAssignments() {
+		GradesDB gradesDB = new GradesDB();
+		for (int i = 0; i < courses.size(); i++){
+			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCode(), courses.get(i).getYear());
 		}
+		gradesDB.closeConnection();
 	}
 	
 	
@@ -40,20 +41,21 @@ public class Resulttable extends HttpServlet {
 		
 		if (courses != null) {
 			List<Course> coursesList = new ArrayList<Course>();
-			for (int i = 0; i < courses.length; i++) {
-				if (courses[i] != null)
-					coursesList.add(courses[i]);
+			for (int i = 0; i < courses.size(); i++) {
+				if (courses.get(i) != null)
+					coursesList.add(courses.get(i));
 			}
 			
 			String SID = request.getAttribute("studentID").toString();
 			StudentCourses bean = new StudentCourses(SID, coursesList);
 			request.setAttribute("coursestoShow", bean);
+		}
 			
 		if (assignments != null) {
 			List<Assignment> assignmentList = new ArrayList<Assignment>();
-			for (int i = 0; i < assignments.length; i++) {
-				if (assignments[i] != null)
-					assignmentList.add(assignments[i]);
+			for (int i = 0; i < assignments.size(); i++) {
+				if (assignments.get(i) != null)
+					assignmentList.add(assignments.get(i));
 			}
 			
 			
