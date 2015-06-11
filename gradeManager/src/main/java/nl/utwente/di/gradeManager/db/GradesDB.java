@@ -28,6 +28,7 @@ public class GradesDB extends DB {
 		String query = "SELECT * FROM Testi.course c WHERE " +
 		"c.coursecode = " + argCoursecode + " AND " +
 		"c.year = " + argCourseyear;	
+		
 		try{
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
@@ -57,14 +58,77 @@ public class GradesDB extends DB {
 	}
 	
 	/**
+	 * Gets the students from the database.
+	 * @return A list of students, as in the database.
+	 */
+	public List<Student> getStudents(){
+		List<Student> result = new ArrayList<Student>();
+		String query = "SELECT * FROM Testi.Person p, Testi.Student s WHERE p.personid = s.studentid";
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int personid = rs.getInt("personid");
+				String firstname = rs.getString("firstname");
+				String surname = rs.getString("surname");
+				String password = rs.getString("password");
+				Student s = new Student(personid, firstname, surname, password);
+				result.add(s);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Gets the teachers from the database.	
+	 * @return A list of teachers, as in the database.
+	 */
+	public List<Teacher> getTeachers(){
+		List<Teacher> result = new ArrayList<Teacher>();
+		String query = "SELECT * FROM Testi.Person p, Testi.Teacher t WHERE p.personid = t.teacherid";
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int personid = rs.getInt("personid");
+				String firstname = rs.getString("firstname");
+				String surname = rs.getString("surname");
+				String password = rs.getString("password");
+				boolean administrator = rs.getInt("administrator") == 1;
+				Teacher t = new Teacher(personid,firstname,surname,password,administrator);
+				result.add(t);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * Gets the modules, which a student is doing.
 	 * @param argStudentID The ID of the student.
 	 * @return A list of modules, which the student is doing.
 	 */
 	public List<Module> getModulesForStudent(int argStudentID){
 		List<Module> result = new ArrayList<Module>();
-		
-		
 		String query = "SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.moduleresult mr, Testi.supermodule sm WHERE " +
 		"mr.studentid = " + argStudentID + 
 		"AND mr.modulecode = m.modulecode AND mr.year = m.year AND m.modulecode = sm.modulecode";
@@ -99,7 +163,6 @@ public class GradesDB extends DB {
 	 */
 	public List<Course> getCoursesForModule(int argModulecode){
 		List<Course> result = new ArrayList<Course>();
-		
 		String query = "SELECT c.* FROM Testi.course c,Testi.hascourses hc WHERE " +
 		"hc.modulecode = " + argModulecode + 
 		" AND c.coursecode = hc.coursecode AND c.year = hc.courseyear";
