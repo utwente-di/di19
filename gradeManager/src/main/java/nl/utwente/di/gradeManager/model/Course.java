@@ -1,7 +1,7 @@
 package nl.utwente.di.gradeManager.model;
 
 public class Course {
-	private int courseCode;
+	private int coursecode;
 	private int year; 
 	private String name; //NOT NULL
 	private int weight; //NOT NULL
@@ -15,7 +15,7 @@ public class Course {
 	 * @param year 		This course's year
 	 */
 	public Course(int code, String name, int weight, int year){
-		this.courseCode = code;
+		this.coursecode = code;
 		this.name = name;
 		this.weight = weight;
 		this.year = year;
@@ -26,7 +26,7 @@ public class Course {
 	 * @return the course code
 	 */
 	public int getCode(){
-		return courseCode;
+		return coursecode;
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class Course {
 	 * @param code  the course code
 	 */
 	public void setCode(int code){
-		this.courseCode = code;
+		this.coursecode = code;
 	}
 	
 
