@@ -8,7 +8,7 @@ import nl.utwente.di.gradeManager.debug.Debug;
  * Database helper tool
  * 
  */
-public class DB {
+public abstract class DB {
 	//The idea of this class is to extend it, and make use of the generated connection.
 	
 	//Initial variables for connection to the database.	

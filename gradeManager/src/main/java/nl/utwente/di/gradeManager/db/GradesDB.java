@@ -5,7 +5,7 @@ import java.util.List;
 import java.sql.*;
 
 import nl.utwente.di.gradeManager.debug.Debug;
-import nl.utwente.di.gradeManager.model.Module;
+import nl.utwente.di.gradeManager.model.*;
 
 /**
  * Helper class for Database connection for use for grades page.
@@ -48,8 +48,40 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
-				
+		
 		return result;
+	}
+	
+	public List<Course> getCoursesForModule(int argModulecode){
+		List<Course> result = new ArrayList<Course>();
+		
+		String query = "SELECT Testi.course.coursecode, Testi.course.name, Testi.course.weight, Testi.course.year FROM Testi.course,Testi.hascourses WHERE Testi.hascourses.modulecode = " +
+		argModulecode +
+		" AND Testi.course.coursecode = Testi.hascourses.coursecode AND Testi.course.year = Testi.hascourses.courseyear";
+	
+		try {
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int coursecode = rs.getInt("coursecode");
+				String coursename = rs.getString("name");
+				int weight = rs.getInt("weight");
+				int year = rs.getInt("year");
+				Course c = new Course(coursecode, coursename, weight, year);
+				result.add(c);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	
 	}
 	
 	
