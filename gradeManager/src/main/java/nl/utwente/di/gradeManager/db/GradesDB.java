@@ -233,4 +233,38 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	/**
+	 * Gets the occasions for a given assignment.
+	 * @param argAssignmentid The id of the assignment.
+	 * @return A list of occasions for this assignment.
+	 */
+	public List<AssignmentOccasion> getOccasionsForAssignment(int argAssignmentid){
+		List<AssignmentOccasion> result = new ArrayList<AssignmentOccasion>();
+		String query = "SELECT * FROM Testi.assignmentoccasion ao WHERE " + 
+		"ao.assignmentid = " + argAssignmentid; 
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int occasionid = rs.getInt("occasionid");
+				int assignmentid = rs.getInt("assignmentid");
+				Date occasiondate = rs.getDate("occasiondate");
+				AssignmentOccasion ao = new AssignmentOccasion(occasionid, assignmentid, occasiondate);
+			
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	}
+	
 }
