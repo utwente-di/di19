@@ -1,69 +1,56 @@
 package nl.utwente.di.gradeManager.model;
 
-import java.util.List;
 
 /**
- * Module class 
- *
+ * Class for super modules.
  */
 public abstract class SuperModule {
-
-	private List<RequiredResult> requiredResults;
-	
-	private String moduleCode;
-	private String moduleName;
+	private int modulecode;
+	private String name;
 	
 	/**
-	 *  
-	 * @return the code of this module
+	 * Constructs a supermodule
+	 * @param argModulecode The module code of the supermodule.
+	 * @param argName The name for the supermodule.
 	 */
-	public String getCode(){
-		return moduleCode;
+	public SuperModule(int argModulecode, String argName){
+		this.modulecode = argModulecode;
+		this.name = argName;
+		
 	}
+	
 	/**
-	 * 
-	 * @param code  the code of this module
+	 * Gets the modulecode for this supermodule.
+	 * @return The modulecode for the supermodule.
 	 */
-	public void setCode(String code){
-		this.moduleCode = code;
+	public int getModulecode(){
+		return this.modulecode;
 	}
+	
 	/**
-	 * 
-	 * @return the name of this module
+	 * Sets the modulecode for this supermodule
+	 * @param argModulecode The module code for the supermodule.
+	 */
+	public void setModulecode(int argModulecode){
+		this.modulecode = argModulecode;
+	}
+	
+	/**
+	 * Gets the name of the supermodule.
+	 * @return The name of the supermodule.
 	 */
 	public String getName(){
-		return moduleName;
-	}
-	/**
-	 * 
-	 * @param name  the name of this module
-	 */
-	public void setName(String name){
-		this.moduleName = name;
-	}
-	/**
-	 * Default constructor for SuperModule
-	 * @param name  the name of the module
-	 * @param code  the code corresponding to the module
-	 */
-	public SuperModule(String name, String code){
-		moduleName = name;
-		moduleCode = code;
+		return this.name;
 	}
 	
 	/**
-	 * add this RequiredResult to the list of RequiredResults
-	 * @param argRequiredResult  the RequiredResult to be added
+	 * Sets the name for the supermodule.
+	 * @param argName The new name for the supermodule.
 	 */
-	public void addRequiredResult(RequiredResult argRequiredResult){
-		this.requiredResults.add(argRequiredResult);
+	public void setName(String argName){
+		this.name = argName;
 	}
 	
-	/**
-	 * Gets the Required Results for passign this module
-	 * @return the required results for passing this module.
-	 */
-	public List<RequiredResult> getRequiredResults(){
-		return requiredResults;
-	}	
+	
+	
 }

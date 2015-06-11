@@ -1,47 +1,38 @@
 package nl.utwente.di.gradeManager.model;
 
+/**
+ * Class for a module.
+ *
+ */
 public class Module extends SuperModule{
-	
 	private int year;
-	private Teacher coordinator;
-	
-	/**
-	 * Default constructor for module
-	 * @param name  the name of this module
-	 * @param code  the code of this module
-	 */
-	public Module(String name, String code) {
-		super(name, code);
-			}
 
 	/**
-	 * 
-	 * @return the year of this module
+	 * Constructs a module.
+	 * @param argModulecode The module code of this module.
+	 * @param argYear The year in which this module is given.
+	 * @param argName The name of the module.
+	 */
+	public Module(int argModulecode, int argYear, String argName){
+		super(argModulecode, argName);
+	}
+	/**
+	 * Gets the year of this module.
+	 * @return The year of this module.
 	 */
 	public int getYear(){
-		return year;
-	}
-	/**
-	 * 
-	 * @param year  the year of this module
-	 */
-	public void setYear(int year){
-		this.year = year; 
+		return this.year;
 	}
 	
 	/**
-	 * 
-	 * @return	The coordinator of this module
+	 * Sets the year of this module.
+	 * @param argYear The year of this module.
 	 */
-	public Teacher getCoordinator(){
-		return coordinator;
+	public void setYear(int argYear){
+		this.year = argYear;
 	}
 	
-	/**
-	 * 
-	 * @param teacher	The coordinator of this module
-	 */
-	public void setCoordinator(Teacher teacher){
-		this.coordinator = teacher;
-	}
+	
+	
 }
+
