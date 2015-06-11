@@ -64,18 +64,18 @@ CREATE TABLE TESTi.Assignment(
 	FOREIGN KEY	(courseCode, courseYear) REFERENCES TESTi.Course(courseCode, year));
 
 CREATE TABLE TESTi.AssignmentOccasion(
+	occasionID	INTEGER,
 	assignmentID	INTEGER,
 	occasionDate	DATE,
-	PRIMARY KEY	(assignmentID, occasionDate),
+	PRIMARY KEY	(occasionID),
 	FOREIGN KEY	(assignmentID) references TESTi.Assignment(assignmentID));
 
 CREATE TABLE TESTi.AssignmentResult(
-	assignmentID	INTEGER,
-	occasionDate	DATE,
+	occasionID	INTEGER,
 	studentID	INTEGER,
 	result		DECIMAL(2,1) CHECK (result >=1.0 AND result <=10.0),
-	PRIMARY KEY 	(assignmentID, occasionDate, studentID),
-	FOREIGN KEY	(assignmentID, occasionDate) REFERENCES TESTi.AssignmentOccasion(assignmentID, occasionDate),
+	PRIMARY KEY 	(occasionID, studentID),
+	FOREIGN KEY	(occasionID) REFERENCES TESTi.AssignmentOccasion(occasionID),
 	FOREIGN KEY	(studentID) REFERENCES TESTi.Student(studentID));
 	
 
