@@ -18,6 +18,45 @@ public class GradesDB extends DB {
 	}
 	
 	/**
+	 * Gets a course from the database with a given course code and a code year
+	 * @param argCoursecode The code of the course.
+	 * @param argCourseyear The year of the course.
+	 * @return The course for the given course code and year.
+	 */
+	public Course getCourse(int argCoursecode, int argCourseyear){
+		Course result = null;
+		String query = "SELECT * FROM Testi.course c WHERE " +
+		"c.coursecode = " + argCoursecode + " AND " +
+		"c.year = " + argCourseyear;	
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int coursecode = rs.getInt("coursecode");
+				String  name = rs.getString("name");
+				int weight = rs.getInt("weight");
+				int year = rs.getInt("year");
+				result = new Course(coursecode, name, weight, year);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		if (result == null){
+			//niet gevonden!!
+			Debug.logln("GradesDB: I looked for a course with ID: " + argCoursecode + " and year : " + argCourseyear + " but I wasn't able to find one.");
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * Gets the modules, which a student is doing.
 	 * @param argStudentID The ID of the student.
 	 * @return A list of modules, which the student is doing.
