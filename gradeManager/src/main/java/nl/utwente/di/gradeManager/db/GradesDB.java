@@ -26,10 +26,11 @@ public class GradesDB extends DB {
 		List<Module> result = new ArrayList<Module>();
 		
 		
-		String query = "SELECT Testi.module.modulecode, Testi.module.year, Testi.supermodule.name FROM Testi.module,Testi.moduleresult,Testi.supermodule WHERE Testi.moduleresult.studentid = " + 
-		argStudentID + 
-		" AND Testi.moduleresult.modulecode = Testi.module.modulecode AND Testi.moduleresult.year = Testi.module.year AND Testi.module.modulecode = Testi.supermodule.modulecode";
-		try { 
+		String query = "SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.moduleresult mr, Testi.supermodule sm WHERE " +
+		"mr.studentid = " + argStudentID + 
+		"AND mr.modulecode = m.modulecode AND mr.year = m.year AND m.modulecode = sm.modulecode";
+		
+		try{
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
 			Debug.logln("GradesDB: Executing query : " + query);
@@ -60,9 +61,9 @@ public class GradesDB extends DB {
 	public List<Course> getCoursesForModule(int argModulecode){
 		List<Course> result = new ArrayList<Course>();
 		
-		String query = "SELECT Testi.course.coursecode, Testi.course.name, Testi.course.weight, Testi.course.year FROM Testi.course,Testi.hascourses WHERE Testi.hascourses.modulecode = " +
-		argModulecode +
-		" AND Testi.course.coursecode = Testi.hascourses.coursecode AND Testi.course.year = Testi.hascourses.courseyear";
+		String query = "SELECT c.* FROM Testi.course c,Testi.hascourses hc WHERE " +
+		"hc.modulecode = " + argModulecode + 
+		" AND c.coursecode = hc.coursecode AND c.year = hc.courseyear";
 	
 		try {
 			//execute query in the connected database.
@@ -97,9 +98,10 @@ public class GradesDB extends DB {
 	 */
 	public List<Assignment> getAssignmentsForCourse(int argCoursecode, int argCourseyear){
 		List<Assignment> result = new ArrayList<Assignment>();
-		String query = "SELECT * FROM Testi.assignment a WHERE a.coursecode = "+
-		argCoursecode + " AND a.courseyear = " + 
-		argCourseyear + " ORDER BY assignmentid";
+		String query = "SELECT * FROM Testi.assignment a WHERE "+ 
+		"a.coursecode = " + argCoursecode + " AND " + 
+		"a.courseyear = " +	argCourseyear + 
+		" ORDER BY assignmentid";
 		
 		try{
 			//execute the query
