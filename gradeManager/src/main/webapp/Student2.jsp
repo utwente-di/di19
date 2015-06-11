@@ -26,7 +26,7 @@
 <% List<ModuleResult> courses = coursestoShow.getCourses();
 		for (ModuleResult course : courses) {
 			out.println("<li class=\"accordion-navigation\">"+
-							"<a href=\"#=" + course.getName() + "> " + course.getName + "</a>"+
+							"<a href=\"#=" + course.getName() + "> " + course.getName() + "</a>"+
 								"<div style=\"background-color:white\" id==" + course.getName() + " class=\"content\">"+
 									"<table>"+
 										"<thead>"+
