@@ -10,9 +10,9 @@ import java.util.Date;
 
 public class AssignmentResult{
 	
-	private int assignmentID; 	//PK INT
-	private Date occasionDate; //PK DATE
-	private int studentID; 	//PK INT
+	private int occasionid; 	//PK INT
+	private int studentid; 	//PK INT
+	private Date occasiondate;
 	private float result;
 	
 	/**
@@ -22,59 +22,59 @@ public class AssignmentResult{
 	 * @param argStudentID The student ID of the student who made the assignment.
 	 * @param argResult The result of the made assignment.
 	 */
-	public AssignmentResult(int argAssignmentID, Date argOccasionDate, int argStudentID, float argResult){
-		this.assignmentID = argAssignmentID;
-		this.occasionDate = argOccasionDate;
-		this.studentID = argStudentID;
-		this.result = argResult;		
+	public AssignmentResult(int argOccasionid,int argStudentid,Date argOccasionDate, float argResult){
+		this.occasionid = argOccasionid;
+		this.studentid = argStudentid;
+		this.occasiondate = argOccasionDate;
+		this.result = argResult;
 	}
 	
 	/**
-	 * Gets the ID of the assignment.
-	 * @return The ID of the assignment.
+	 * Gets the ID of the occasion.
+	 * @return The ID of the occasion.
 	 */
-	public int getAssignmentID(){
-		return this.assignmentID;
+	public int getOccasionid(){
+		return this.occasionid;
 	}
 	
 	/**
-	 * Sets the ID of the assignment.
-	 * @param argAssignmentID The ID of the assignment.
+	 * Sets the ID of the occasion.
+	 * @param argAssignmentID The ID of the occasion.
 	 */
-	public void setAssignmentID(int argAssignmentID){
-		this.assignmentID = argAssignmentID;
+	public void setOccasionid(int argOccasionid){
+		this.occasionid = argOccasionid;
 	}
 	
 	/**
 	 * Gets the date on which the assignment occurred.
 	 * @return The date on which the assignment occurred.
 	 */
-	public Date getOccasionDate(){
-		return this.occasionDate;
+	public Date getOccasiondate(){
+		return this.occasiondate;
 	}
 	
 	/**
 	 * Sets the date on which the assignment occurred
 	 * @param argOccasionDate The date on which the assignment occurred.
 	 */
-	public void setOccasionDate(Date argOccasionDate){
-		this.occasionDate = argOccasionDate;
+	public void setOccasiondate(Date argOccasiondate){
+		this.occasiondate = argOccasiondate;
 	}
 	
 	/**
 	 * Gets the ID of the student for this result.
 	 * @return The ID of the student.
 	 */
-	public int getStudentID(){
-		return this.studentID;
+	public int getStudentid(){
+		return this.studentid;
 	}
 	
 	/**
 	 * Sets the ID of the student for this result.
 	 * @param argStudentID The ID of the student for this result.
 	 */
-	public void setStudentID(int argStudentID){
-		this.studentID = argStudentID;
+	public void setStudentid(int argStudentid){
+		this.studentid = argStudentid;
 	}
 	
 	/**

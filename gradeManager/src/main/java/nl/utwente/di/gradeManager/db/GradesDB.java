@@ -29,6 +29,10 @@ public class GradesDB extends DB {
 		"c.coursecode = " + argCoursecode + " AND " +
 		"c.year = " + argCourseyear;	
 		
+		//SELECT * FROM Testi.course c WHERE 
+		//c.coursecode = argCoursecode  AND 
+		//c.year = argCourseyear
+		
 		try{
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
@@ -65,6 +69,8 @@ public class GradesDB extends DB {
 		List<Student> result = new ArrayList<Student>();
 		String query = "SELECT * FROM Testi.Person p, Testi.Student s WHERE p.personid = s.studentid";
 		
+		//SELECT * FROM Testi.Person p, Testi.Student s WHERE p.personid = s.studentid
+		
 		try{
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
@@ -96,6 +102,8 @@ public class GradesDB extends DB {
 	public List<Teacher> getTeachers(){
 		List<Teacher> result = new ArrayList<Teacher>();
 		String query = "SELECT * FROM Testi.Person p, Testi.Teacher t WHERE p.personid = t.teacherid";
+		
+		//SELECT * FROM Testi.Person p, Testi.Teacher t WHERE p.personid = t.teacherid
 		
 		try{
 			//execute query in the connected database.
@@ -130,8 +138,17 @@ public class GradesDB extends DB {
 	public List<Module> getModulesForStudent(int argStudentID){
 		List<Module> result = new ArrayList<Module>();
 		String query = "SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.moduleresult mr, Testi.supermodule sm WHERE " +
-		"mr.studentid = " + argStudentID + 
-		"AND mr.modulecode = m.modulecode AND mr.year = m.year AND m.modulecode = sm.modulecode";
+		"mr.studentid = " + argStudentID + " AND " +
+		"mr.modulecode = m.modulecode AND " + 
+		"mr.year = m.year AND " + 
+		"m.modulecode = sm.modulecode";
+		
+		//SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.moduleresult mr, Testi.supermodule sm WHERE 
+		//mr.studentid = argStudentID AND
+		//mr.modulecode = m.modulecode AND 
+		//mr.year = m.year AND 
+		//m.modulecode = sm.modulecode
+		
 		
 		try{
 			//execute query in the connected database.
@@ -167,6 +184,12 @@ public class GradesDB extends DB {
 		"hc.modulecode = " + argModulecode + 
 		" AND c.coursecode = hc.coursecode AND c.year = hc.courseyear";
 	
+		//SELECT c.* FROM Testi.course c,Testi.hascourses hc WHERE 
+		//hc.modulecode = argModulecode AND 
+		//c.coursecode = hc.coursecode AND 
+		//c.year = hc.courseyear
+		
+		
 		try {
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
@@ -204,6 +227,11 @@ public class GradesDB extends DB {
 		"a.coursecode = " + argCoursecode + " AND " + 
 		"a.courseyear = " +	argCourseyear + 
 		" ORDER BY assignmentid";
+		
+		//SELECT * FROM Testi.assignment a WHERE 
+		//a.coursecode = argCoursecode AND 
+		//a.courseyear = argCourseyear 
+		//ORDER BY assignmentid
 		
 		try{
 			//execute the query
@@ -243,6 +271,9 @@ public class GradesDB extends DB {
 		String query = "SELECT * FROM Testi.assignmentoccasion ao WHERE " + 
 		"ao.assignmentid = " + argAssignmentid; 
 		
+		//SELECT * FROM Testi.assignmentoccasion ao WHERE
+		//ao.assignmentid = argAssignmentid
+		
 		try{
 			//execute the query
 			Statement st = conn.createStatement();
@@ -254,7 +285,7 @@ public class GradesDB extends DB {
 				int assignmentid = rs.getInt("assignmentid");
 				Date occasiondate = rs.getDate("occasiondate");
 				AssignmentOccasion ao = new AssignmentOccasion(occasionid, assignmentid, occasiondate);
-			
+				result.add(ao);
 			}
 		
 			rs.close();
@@ -265,6 +296,52 @@ public class GradesDB extends DB {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * Gets the assignment results for a specific student and assignment.
+	 * @param argStudentid The id of the student who made the assignment
+	 * @param argAssignmentid The id of the made assignment.
+	 * @return
+	 */
+	public List<AssignmentResult> getResultsForAssignmentAndStudent(int argStudentid, int argAssignmentid){
+		List<AssignmentResult> result = new ArrayList<AssignmentResult>();
+		
+		// SELECT ar.*,ao.occasiondate FROM Testi.assignmentresult ar, Testi.assignmentoccasion ao WHERE 
+		// ar.studentid = argStudentid AND  
+		// ao.assignmentid = argAssignmentid AND 
+		// ao.occasionid = ar.occasionid
+		
+		String query = "SELECT ar.*,ao.occasiondate FROM Testi.assignmentresult ar, Testi.assignmentoccasion ao WHERE "
+				+ "ar.studentid = " + argStudentid + " AND " 
+				+ "ao.assignmentid = " + argAssignmentid  + " AND "
+				+ "ao.occasionid = ar.occasionid";
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int occasionid = rs.getInt("occasionid");
+				float grade = rs.getFloat("result");
+				Date date = rs.getDate("occasiondate");
+				AssignmentResult ar = new AssignmentResult(occasionid, argStudentid, date,grade);
+				result.add(ar);
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		
+		return result;
+		
 	}
 	
 }
