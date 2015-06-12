@@ -39,10 +39,20 @@
 						);
 			List<Assignment> assignments = assignmentstoShow.getAssignments();
 				for (Assignment assignment : assignments) {
+					String backgroundcolour = "";
+					
+					if(assignment.getMinimumresult() < 5.4) {
+						//result is not passing grade.
+						backgroundcolour = "FF0000"; // red
+						} else {
+						backgroundcolour = "00FF00"; // green
+					}
+					
+					
 					out.println(		"<tbody>" + 
 											"<tr>"+
 												"<td>" + assignment.getName() + ":</td>"+
-												"<td style=\"background-color:#FF0000\">" + assignment.getMinimumresult() + "</td>"+
+												"<td style=\"background-color:#"+ backgroundcolour + "\">" + assignment.getMinimumresult() + "</td>"+
 											"</tr>"+
 										"</tbody>");
 				}

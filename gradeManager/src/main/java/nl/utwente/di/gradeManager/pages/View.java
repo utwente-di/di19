@@ -102,7 +102,7 @@ public class View {
 		response += "<h1> All assignments for the course : " + course.getName() + "</h1> </br>";
 		response += "<table> <tr> <th> id </th> <th> name </th> <th> weight </th> <th> graded </th> <th> minimumresult </th> </tr>";
 		for(Assignment a : assignments){
-			response+= "<tr> <td> " + a.getAssignmentID() + " </td> <td> " + a.getName() + " </td> <td> + " + a.getWeight() + " </td> <td> " + a.getGraded() + " </td> <td> " + a.getMinimumresult() + "</td> </tr>";
+			response+= "<tr> <td> " + a.getAssignmentID() + " </td> <td> " + a.getName() + " </td> <td> " + a.getWeight() + " </td> <td> " + a.getGraded() + " </td> <td> " + a.getMinimumresult() + "</td> </tr>";
 		}
 		response += "</table>";
 		gradesDB.closeConnection();
