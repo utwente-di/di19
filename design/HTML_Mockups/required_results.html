@@ -1,0 +1,137 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="css/foundation.css"/>
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/fastclick.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script src="js/drag.js"></script>
+
+    <style>
+      .unselectable {
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .minigradable {
+          font-size: 10;
+          width: 90px; 
+          height: 30px;
+          padding: 2em;
+          margin: 0 2px 2px 0;
+          list-style: none;
+          float: left;
+          clear: left;
+          background-color: rgba(120,120,120,0.5);
+
+          z-index: 10;
+        }
+
+      .gradable { 
+          width: 180px; 
+          height: 45px;
+          padding: 0.5em;
+          margin: 0 10px 10px 0;
+          list-style: none;
+          background-color: rgba(120,120,120,0.5);
+
+          z-index: 10;
+        }
+
+      .requirement { 
+          padding: 0.5em; 
+          float: left; margin: 0 10px 10px 0;
+          border: 1px solid rgb(86, 180, 239);
+          list-style: none;
+        }
+
+      .panel { 
+        height: 95%;   
+        border:2px solid #ccc; 
+        padding: 3px; 
+      }
+
+      .droppable {
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+      }
+
+      .deletable {
+        border: 1px solid rgb(239, 116, 86);
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(236, 108, 82, 0.6);
+      }
+    </style>  
+  </head>
+  <body>
+
+    <div id = "drag-box" class="row">
+
+        <div id = "gradables-panel" class = "panel small-4 large-3 columns">
+
+          <ul id="gradables" class="gradables">
+            <li class="gradable unselectable" draggable="true" data-type="gradable" data-id="1">
+              Gradable
+            </li>
+            <li class="gradable unselectable" draggable="true" data-type="gradable" data-id="2">
+              Gradable2
+            </li>
+            <li class="gradable unselectable" draggable="true" data-type="gradable" data-id="3">
+              Gradable3
+            </li>
+            <li class="gradable unselectable" draggable="true" data-type="gradable" data-id="4">
+              Gradable4
+            </li>
+            <li class="gradable unselectable" draggable="true" data-type="gradable" data-id="5">
+              Gradable5
+            </li>
+            <li class="gradable unselectable" draggable="true" data-type="gradable" data-id="6">
+              Gradable6
+            </li>
+            <li class="gradable unselectable" draggable="true" data-type="gradable" data-id="7">
+              Gradable7
+            </li>
+          </ul>
+
+        </div>
+
+        <div id = "requirements-panel" class = "panel small-8 large-9 columns">
+
+          <ul id="requirements" class="requirements">
+            <li class="requirement unselectable" draggable="true">
+              <h4>Requirement</h4>
+              <ul>
+                
+              </ul>
+            </li>
+            <li class="requirement unselectable" draggable="true">
+              <h4>Requirement2</h4>
+              <ul>
+                
+              </ul>
+            </li>
+            <li class="requirement unselectable" draggable="true">
+              <h4>Requirement3</h4>
+              <ul>
+                
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+
+    </div>
+
+    <script>
+      $(document).foundation();
+      setDrag($(".gradable"));
+      setDrag($(".requirement"));
+      setDelete($(".requirement"));
+      setDrop($(".requirement"));
+    </script>
+  </body>
+</html>
+  
+  
+ 
