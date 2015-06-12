@@ -62,6 +62,50 @@ public class GradesDB extends DB {
 	}
 	
 	/**
+	 * Gets the student from the database with an id.
+	 * @param argStudentid The id of this specific student.
+	 * @return The student with the id.
+	 */
+	public Student getStudent(int argStudentid){
+		Student result = null;
+		
+		String query = "SELECT * FROM Testi.person p, Testi.student s WHERE " +
+				"p.personid = s.studentid AND " +
+				"s.studentid = " + argStudentid;
+		
+		//SELECT * FROM Testi.person p, Testi.student s WHERE 
+		//p.personid = s.studentid AND 
+		//s.studentid = argStudentid
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int personid = rs.getInt("personid");
+				String firstname = rs.getString("firstname");
+				String surname = rs.getString("surname");
+				String password = rs.getString("password");
+				Student s = new Student(personid, firstname, surname, password);
+				result = s;
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		if (result == null){
+			Debug.logln("GradesDB: I looked in the database for student id " + argStudentid + " but couldn't find anything.");
+		}
+		return result;
+	}
+	
+	/**
 	 * Gets the students from the database.
 	 * @return A list of students, as in the database.
 	 */
@@ -92,6 +136,51 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 		
+		return result;
+	}
+	
+	/**
+	 * Gets a teacher from the database
+	 * @param argTeacherid The id of the teacher.
+	 * @return The teacher with the certain id.
+	 */
+	public Teacher getTeacher(int argTeacherid){
+		Teacher result = null;
+		
+		String query = "SELECT * FROM Testi.person p, Testi.teacher t WHERE " +
+				"p.personid = t.teacherid AND " +
+				"t.teacherid = " + argTeacherid;
+		
+		//SELECT * FROM Testi.person p, Testi.teacher t WHERE 
+		//p.personid = t.teacherid AND 
+		//t.teacherid = argTeacherid
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int personid = rs.getInt("personid");
+				String firstname = rs.getString("firstname");
+				String surname = rs.getString("surname");
+				String password = rs.getString("password");
+				boolean administrator = rs.getInt("administrator") == 1;
+				Teacher t = new Teacher(personid, firstname, surname, password,administrator);
+				result = t;
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		if (result == null){
+			Debug.logln("GradesDB: I looked in the database for student id " + argTeacherid + " but couldn't find anything.");
+		}
 		return result;
 	}
 	
@@ -129,6 +218,157 @@ public class GradesDB extends DB {
 		
 		return result;
 	}
+	
+	/**
+	 * Gets a module with a specific module code.
+	 * @param argModulecode The code of the module.
+	 * @return The module which has the specific code.
+	 */
+	public Module getModule(int argModulecode){
+		Module result = null;
+		String query = "SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE "
+				+ "m.modulecode = sm.modulecode AND " 
+				+ "m.modulecode = " + argModulecode;
+		//SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE
+		//m.modulecode = sm.modulecode AND
+		//m.modulecode = argModulecode
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int modulecode = rs.getInt("modulecode");
+				int year = rs.getInt("year");
+				String name = rs.getString("name");
+				Module m = new Module(modulecode, year, name);
+				result = m;
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Gets all the modules in the database.
+	 * @return A list containing all the module elements in the database.
+	 */
+	public List<Module> getModules(){
+		List<Module> result = new ArrayList<Module>();
+		String query = "SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE "
+				+ "m.modulecode = sm.modulecode ";
+		//SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE
+		//m.modulecode = sm.modulecode 		
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int modulecode = rs.getInt("modulecode");
+				int year = rs.getInt("year");
+				String name = rs.getString("name");
+				Module m = new Module(modulecode, year, name);
+				result.add(m);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Gets an assignment with a specific id.
+	 * @param argAssignmentid The id of the certain assignment.
+	 * @return The assignment with the certain id.
+	 */
+	public Assignment getAssignment(int argAssignmentid){
+		Assignment result = null;
+		String query = "SELECT * FROM Testi.assignment WHERE " +
+		"assignmentid = " + argAssignmentid;
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int assignmentid = rs.getInt("assignmentid");
+				int coursecode = rs.getInt("coursecode");
+				int courseyear = rs.getInt("courseyear");
+				String name = rs.getString("name");
+				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
+				int weight = rs.getInt("weight");
+				float minimumresult = rs.getFloat("minimumresult");
+				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
+				result = a;
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		if (result == null){
+			Debug.logln("I tried looking for an assignment with id : " + argAssignmentid + " but didn't find anything.");
+		}
+		return result;
+	}
+	
+	/**
+	 * Gets the assignments from the database.
+	 * @return An arraylist, containing all the assignments in the database.
+	 */
+	public List<Assignment> getAssignments(){
+		List<Assignment> result = new ArrayList<Assignment>();
+		
+		String query = "SELECT * FROM Testi.assignment";
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int assignmentid = rs.getInt("assignmentid");
+				int coursecode = rs.getInt("coursecode");
+				int courseyear = rs.getInt("courseyear");
+				String name = rs.getString("name");
+				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
+				int weight = rs.getInt("weight");
+				float minimumresult = rs.getFloat("minimumresult");
+				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
+				result.add(a);
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+	}
+	
 	
 	/**
 	 * Gets the modules, which a student is doing.
