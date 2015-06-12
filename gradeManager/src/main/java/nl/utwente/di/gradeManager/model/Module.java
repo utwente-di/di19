@@ -15,6 +15,7 @@ public class Module extends SuperModule{
 	 */
 	public Module(int argModulecode, int argYear, String argName){
 		super(argModulecode, argName);
+		this.year = argYear;
 	}
 	/**
 	 * Gets the year of this module.

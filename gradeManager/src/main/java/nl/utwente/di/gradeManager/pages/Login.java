@@ -84,7 +84,7 @@ public class Login {
 			}
 		}
 		if (response.equals("")){
-			//Geen van de usernames in de LoginDao komt overeen met de userid die in de form meegegeven is.
+			//Geen van de usernames in de database komt overeen met de userid die in de form meegegeven is.
 			Debug.logln("Login: Failed login attempt: " + userid + ":" + password);
 			response = "De gebruiker die is opgegeven is niet bekend in het systeem.";
 		}
