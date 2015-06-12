@@ -61,7 +61,7 @@
 		</tr>
 		<tr>
 			<td>Toegevoegd door:</td>
-			<td>Mourice van Ceulen</td>
+			<td>Maurice van Keulen</td>
 		</tr>
 		<tr>
 			<td>Minimaal cijfer:</td>
@@ -77,7 +77,7 @@
 		</tr>
 		<tr>
 			<td>Opmerking:</td>
-			<td></td>
+			<td>Dit is een test cijfer</td>
 		</tr>
 	</tbody>
 </table>

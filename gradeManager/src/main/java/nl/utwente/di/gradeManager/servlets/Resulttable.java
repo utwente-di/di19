@@ -29,10 +29,9 @@ public class Resulttable extends HttpServlet {
 	
 	protected void setAssignments() {
 		GradesDB gradesDB = new GradesDB();
-		for (int i = 0; i < courses.size(); i++){
-			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCode(), courses.get(i).getYear());
-		}
+		assignments = gradesDB.getAssignmentsForCourse(courses.get(0).getCode(), courses.get(0).getYear());
 		gradesDB.closeConnection();
+		
 	}
 	
 	
