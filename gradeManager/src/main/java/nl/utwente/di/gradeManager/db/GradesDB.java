@@ -267,4 +267,50 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	/**
+	 * Gets the assignment results for a specific student and assignment.
+	 * @param argStudentid The id of the student who made the assignment
+	 * @param argAssignmentid The id of the made assignment.
+	 * @return
+	 */
+	public List<AssignmentResult> getResultsForAssignmentAndStudent(int argStudentid, int argAssignmentid){
+		List<AssignmentResult> result = new ArrayList<AssignmentResult>();
+		
+		// SELECT ar.*,ao.occasiondate FROM Testi.assignmentresult ar, Testi.assignmentoccasion ao WHERE 
+		// ar.studentid = argStudentid AND  
+		// ao.assignmentid = argAssignmentid AND 
+		// ao.occasionid = ar.occasionid
+		
+		String query = "SELECT ar.*,ao.occasiondate FROM Testi.assignmentresult ar, Testi.assignmentoccasion ao WHERE "
+				+ "ar.studentid = " + argStudentid + " AND " 
+				+ "ao.assignmentid = " + argAssignmentid  + " AND "
+				+ "ao.occasionid = ar.occasionid";
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int occasionid = rs.getInt("occasionid");
+				float grade = rs.getFloat("result");
+				Date date = rs.getDate("occasiondate");
+				AssignmentResult ar = new AssignmentResult(occasionid, argStudentid, date,grade);
+				result.add(ar);
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		
+		return result;
+		
+	}
+	
 }
