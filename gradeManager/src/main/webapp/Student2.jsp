@@ -18,7 +18,7 @@
     <script src="js/foundation.min.js"></script>
 </head>
 <body>
-<script src="/js/Navigatiebalk.js"></script>
+<script src="js/Navigatiebalk.js"></script>
 <h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA">Module 1</h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
 
