@@ -33,6 +33,7 @@
 											"<tr>"+
 												"<th>Opdracht</th>"+
 												"<th>Resultaat</th>"+
+												"<th>Datum</th>"+
 											"</tr>"+
 										"</thead>" 
 						);
