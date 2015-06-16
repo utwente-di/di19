@@ -614,10 +614,9 @@ public class GradesDB extends DB {
 			ps.setString(4, t.getPassword());
 			ps2.setInt(1,personid_int);
 			ps2.setInt(2, t.isManager()?1:0); //dit is echt lelijk, maar bit type in postgresql is raar...
-			Debug.logln("GradesDB: Executing prepared statement 1.");
+			Debug.logln("GradesDB: Executing query 1 : " + ps.toString());
 			ps.executeUpdate();
-			Debug.logln("GradesDB: statement 2 looks like : " + ps2.toString());
-			Debug.logln("GradesDB: Executing prepared statement 2.");
+			Debug.logln("GradesDB: Executing query 2 : " + ps2.toString());
 			ps2.executeUpdate();
 			ps.close();
 			ps2.close();
@@ -658,4 +657,57 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}		
 	}	
+	
+	//TODO: test
+	public void addCourse(Course c){
+		String query = "INSERT INTO Testi.Course(coursecode,name,weight,year) " + 
+		"VALUES (?,?,?,?)";
+		
+		try{
+			//prepare the query
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,c.getCode());
+			ps.setString(2,c.getName());
+			ps.setInt(3,c.getWeight());
+			ps.setInt(4, c.getYear());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		}  catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}	
+		
+	}
+	
+	//TODO: test
+	//Note that, when creating an assignment, it has to be part of a course,
+	//therefore, a valid (coursecode,courseyear) tuple has to be given for the assignment to be added succesfully!
+	public void addAssignment(Assignment a){
+		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode, courseyear, name,isgradedassignment, weight, minimumresult)" + 
+		"VALUES(?,?,?,?,?::bit(1),?,?)";
+		try{
+			//prepare the query
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, a.getAssignmentID());
+			ps.setInt(2, a.getCourseCode());
+			ps.setInt(3, a.getCourseyear());
+			ps.setString(4, a.getName());
+			ps.setInt(5,a.getGraded()?1:0);
+			ps.setInt(6, a.getWeight());
+			ps.setBigDecimal(7, a.getMinimumresult()); //BigDecimal is the recommended java mapping for numeric values in SQL. (https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html Paragraph 8.3.11)
+			Debug.logln("GradesDB: Executing statement : " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}	
+		
+	}
+
+	//TODO: addAssignmentOccasion
+	//TODO: addAssignmentResult
+	//TODO: addSuperModule
+	//TODO: addModule
 }
