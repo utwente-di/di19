@@ -17,6 +17,10 @@ public class GradesDB extends DB {
 		super();
 	}
 	
+	/*
+	 * READ
+	 */
+	
 	/**
 	 * Gets a course from the database with a given course code and a code year
 	 * @param argCoursecode The code of the course.
@@ -584,4 +588,74 @@ public class GradesDB extends DB {
 		
 	}
 	
+	
+	/*
+	 *CREATE
+	 */
+	
+	/**
+	 * Adds a student to the database.
+	 * @param s the student to add.
+	 */
+	public void addTeacher(Teacher t){
+		//because student numbers always start with a s, remove it in order to get the integer; personid.
+		int personid_int = Integer.parseInt(t.getPersonID().substring(1)); //convert the string without the first character to an integer.
+		
+		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
+		"VALUES (?,?,?,?)";
+		String query2 = "INSERT INTO Testi.teacher (teacherid,administrator) VALUES (?,?::bit(1))";
+		try{
+			//prepare the two queries.
+			PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement ps2 = conn.prepareStatement(query2);
+			ps.setInt(1, personid_int);
+			ps.setString(2,t.getFirstname());
+			ps.setString(3,t.getSurname());
+			ps.setString(4, t.getPassword());
+			ps2.setInt(1,personid_int);
+			ps2.setInt(2, t.isManager()?1:0); //dit is echt lelijk, maar bit type in postgresql is raar...
+			Debug.logln("GradesDB: Executing prepared statement 1.");
+			ps.executeUpdate();
+			Debug.logln("GradesDB: statement 2 looks like : " + ps2.toString());
+			Debug.logln("GradesDB: Executing prepared statement 2.");
+			ps2.executeUpdate();
+			ps.close();
+			ps2.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}		
+	}	
+	
+	/**
+	 * Adds a student to the database.
+	 * @param s the student to add.
+	 */
+	public void addStudent(Student s){
+		//because student numbers always start with a s, remove it in order to get the integer; personid.
+		int personid_int = Integer.parseInt(s.getPersonID().substring(1)); //convert the string without the first character to an integer.
+		
+		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
+		"VALUES (?,?,?,?)";
+		String query2 = "INSERT INTO Testi.student (studentid) VALUES (?)";
+		try{
+			//prepare the two queries.
+			PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement ps2 = conn.prepareStatement(query2);
+			ps.setInt(1, personid_int);
+			ps.setString(2,s.getFirstname());
+			ps.setString(3,s.getSurname());
+			ps.setString(4, s.getPassword());
+			ps2.setInt(1,personid_int);
+			Debug.logln("GradesDB: Executing prepared statement 1.");
+			ps.executeUpdate();
+			Debug.logln("GradesDB: Executing prepared statement 2.");
+			ps2.executeUpdate();
+			ps.close();
+			ps2.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}		
+	}	
 }
