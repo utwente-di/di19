@@ -171,7 +171,7 @@ public class GradesDB extends DB {
 				String firstname = rs.getString("firstname");
 				String surname = rs.getString("surname");
 				String password = rs.getString("password");
-				boolean administrator = rs.getInt("administrator") == 1;
+				boolean administrator = rs.getBoolean("administrator");
 				Teacher t = new Teacher(personid, firstname, surname, password,administrator);
 				result = t;
 			}
@@ -210,7 +210,7 @@ public class GradesDB extends DB {
 				String firstname = rs.getString("firstname");
 				String surname = rs.getString("surname");
 				String password = rs.getString("password");
-				boolean administrator = rs.getInt("administrator") == 1;
+				boolean administrator = rs.getBoolean("administrator");
 				Teacher t = new Teacher(personid,firstname,surname,password,administrator);
 				result.add(t);
 			}
@@ -316,7 +316,7 @@ public class GradesDB extends DB {
 				int coursecode = rs.getInt("coursecode");
 				int courseyear = rs.getInt("courseyear");
 				String name = rs.getString("name");
-				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
+				boolean isgradedassignment = rs.getBoolean("isgradedassignment");
 				int weight = rs.getInt("weight");
 				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
@@ -357,7 +357,7 @@ public class GradesDB extends DB {
 				int coursecode = rs.getInt("coursecode");
 				int courseyear = rs.getInt("courseyear");
 				String name = rs.getString("name");
-				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
+				boolean isgradedassignment = rs.getBoolean("isgradedassignment");
 				int weight = rs.getInt("weight");
 				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
