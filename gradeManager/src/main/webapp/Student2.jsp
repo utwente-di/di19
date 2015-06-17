@@ -40,8 +40,8 @@
 			List<Assignment> assignments = assignmentstoShow.getAssignments();
 				for (Assignment assignment : assignments) {
 					String backgroundcolour = "";
-					
-					if(assignment.getMinimumresult().doubleValue() > 5.4) {
+					if(assignment.getCourseCode() == course.getCode() && assignment.getCourseyear() == course.getYear()){	
+						if(assignment.getMinimumresult().doubleValue() > 5.4) {
 						//result is not passing grade.
 						backgroundcolour = "FF0000"; // red
 						} else {
@@ -55,6 +55,7 @@
 												"<td style=\"background-color:#"+ backgroundcolour + "\">" + assignment.getMinimumresult() + "</td>"+
 											"</tr>"+
 										"</tbody>");
+					}
 				}
 			out.println(
 									"</table>"+
