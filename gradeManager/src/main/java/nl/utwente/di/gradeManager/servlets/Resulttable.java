@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import nl.utwente.di.gradeManager.db.GradesDB;
 import nl.utwente.di.gradeManager.model.Assignment;
 import nl.utwente.di.gradeManager.model.Course;
+import nl.utwente.di.gradeManager.model.Module;
 
 
 public class Resulttable extends HttpServlet {
@@ -20,6 +21,7 @@ public class Resulttable extends HttpServlet {
 	private final String jsp_address = "Student2.jsp";
 	private List<Course> courses;
 	private List<Assignment> assignments;
+	private Module module;
 	
 	protected void setCourses(int moduleID) {
 		GradesDB gradesDB = new GradesDB();
@@ -42,6 +44,11 @@ public class Resulttable extends HttpServlet {
 		}
 		gradesDB.closeConnection();
 		assignments = assignmentList;
+	}
+	
+	protected void setModule(int moduleID){
+		GradesDB gradesDB = new GradesDB();
+		module = gradesDB.getModule(moduleID);
 	}
 	
 	
@@ -73,7 +80,7 @@ public class Resulttable extends HttpServlet {
 			CourseAssignments bean2 = new CourseAssignments("Dit is een vak", assList);
 			request.setAttribute("assignmentstoShow", bean2);
 			
-		
+			request.setAttribute("moduletoShow", module);
 		
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
 			dispatcher.forward(request, response);

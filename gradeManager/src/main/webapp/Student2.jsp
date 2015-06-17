@@ -9,6 +9,8 @@
 		scope="request" />
 	<jsp:useBean id="assignmentstoShow" type="nl.utwente.di.gradeManager.servlets.CourseAssignments"
 		scope="request" />
+	<jsp:useBean id="moduletoShow" type="nl.utwente.di.gradeManager.model.Module"
+		scope="request" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>TOSTi Framework</title>
     <link rel="stylesheet" href="css/foundation.css"/>
@@ -19,7 +21,7 @@
 </head>
 <body>
 <script src="js/Navigatiebalk.js"></script>
-<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA">Module 1</h1>
+<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"><jsp:getProperty name="moduletoShow" property="name"/></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
 
 <% List<Course> courses = coursestoShow.getCourses();
@@ -41,7 +43,7 @@
 				for (Assignment assignment : assignments) {
 					String backgroundcolour = "";
 					if(assignment.getCourseCode() == course.getCode() && assignment.getCourseyear() == course.getYear()){	
-						if(assignment.getMinimumresult().doubleValue() > 5.4) {
+						if(assignment.getMinimumresult().doubleValue() < 5.5) {
 						//result is not passing grade.
 						backgroundcolour = "FF0000"; // red
 						} else {
