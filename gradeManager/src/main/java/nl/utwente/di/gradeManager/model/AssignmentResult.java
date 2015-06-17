@@ -1,5 +1,6 @@
 package nl.utwente.di.gradeManager.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ public class AssignmentResult{
 	private int occasionid; 	//PK INT
 	private int studentid; 	//PK INT
 	private Date occasiondate;
-	private float result;
+	private BigDecimal result;
 	
 	/**
 	 * Constructs the result of an assignment for a student on a date.
@@ -22,7 +23,7 @@ public class AssignmentResult{
 	 * @param argStudentID The student ID of the student who made the assignment.
 	 * @param argResult The result of the made assignment.
 	 */
-	public AssignmentResult(int argOccasionid,int argStudentid,Date argOccasionDate, float argResult){
+	public AssignmentResult(int argOccasionid,int argStudentid,Date argOccasionDate, BigDecimal argResult){
 		this.occasionid = argOccasionid;
 		this.studentid = argStudentid;
 		this.occasiondate = argOccasionDate;
@@ -81,7 +82,7 @@ public class AssignmentResult{
 	 * Gets the result of this assignment.
 	 * @return The result of this assignment.
 	 */
-	public float getResult(){
+	public BigDecimal getResult(){
 		return this.result;
 	}
 	
@@ -89,7 +90,7 @@ public class AssignmentResult{
 	 * Sets the result of this assignment.
 	 * @param argResult The result of this assignment.
 	 */
-	public void setResult(float argResult){
+	public void setResult(BigDecimal argResult){
 		this.result = argResult;
 	}
 }
