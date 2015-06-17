@@ -2,6 +2,7 @@ package nl.utwente.di.gradeManager.db;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 import java.sql.*;
 
 import nl.utwente.di.gradeManager.debug.Debug;
@@ -317,7 +318,7 @@ public class GradesDB extends DB {
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
 				int weight = rs.getInt("weight");
-				float minimumresult = rs.getFloat("minimumresult");
+				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
 				result = a;
 			}
@@ -358,7 +359,7 @@ public class GradesDB extends DB {
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
 				int weight = rs.getInt("weight");
-				float minimumresult = rs.getFloat("minimumresult");
+				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
 				result.add(a);
 			}
@@ -490,7 +491,7 @@ public class GradesDB extends DB {
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
 				int weight = rs.getInt("weight");
-				float minimumresult = rs.getFloat("minimumresult");
+				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
 				result.add(a);
 			}
