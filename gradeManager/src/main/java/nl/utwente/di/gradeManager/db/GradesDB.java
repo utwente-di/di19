@@ -489,7 +489,7 @@ public class GradesDB extends DB {
 				int coursecode = rs.getInt("coursecode");
 				int courseyear = rs.getInt("courseyear");
 				String name = rs.getString("name");
-				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
+				boolean isgradedassignment = rs.getBoolean("isgradedassignment");
 				int weight = rs.getInt("weight");
 				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
@@ -570,7 +570,7 @@ public class GradesDB extends DB {
 			
 			while(rs.next()){
 				int occasionid = rs.getInt("occasionid");
-				float grade = rs.getFloat("result");
+				BigDecimal grade = rs.getBigDecimal("result");
 				Date date = rs.getDate("occasiondate");
 				AssignmentResult ar = new AssignmentResult(occasionid, argStudentid, date,grade);
 				result.add(ar);
@@ -595,8 +595,8 @@ public class GradesDB extends DB {
 	 */
 	
 	/**
-	 * Adds a student to the database.
-	 * @param s the student to add.
+	 * Adds a teacher to the database.
+	 * @param s The teacher to add.
 	 */
 	public void addTeacher(Teacher t){
 		//because student numbers always start with a s, remove it in order to get the integer; personid.
@@ -604,7 +604,7 @@ public class GradesDB extends DB {
 		
 		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
 		"VALUES (?,?,?,?)";
-		String query2 = "INSERT INTO Testi.teacher (teacherid,administrator) VALUES (?,?::bit(1))";
+		String query2 = "INSERT INTO Testi.teacher (teacherid,administrator) VALUES (?,?)";
 		try{
 			//prepare the two queries.
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -614,7 +614,7 @@ public class GradesDB extends DB {
 			ps.setString(3,t.getSurname());
 			ps.setString(4, t.getPassword());
 			ps2.setInt(1,personid_int);
-			ps2.setInt(2, t.isManager()?1:0); //dit is echt lelijk, maar bit type in postgresql is raar...
+			ps2.setBoolean(2, t.isManager()); 
 			Debug.logln("GradesDB: Executing query 1 : " + ps.toString());
 			ps.executeUpdate();
 			Debug.logln("GradesDB: Executing query 2 : " + ps2.toString());
@@ -686,7 +686,7 @@ public class GradesDB extends DB {
 	//therefore, a valid (coursecode,courseyear) tuple has to be given for the assignment to be added succesfully!
 	public void addAssignment(Assignment a){
 		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode, courseyear, name,isgradedassignment, weight, minimumresult)" + 
-		"VALUES(?,?,?,?,?::bit(1),?,?)";
+		"VALUES(?,?,?,?,?,?,?)";
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -694,7 +694,7 @@ public class GradesDB extends DB {
 			ps.setInt(2, a.getCourseCode());
 			ps.setInt(3, a.getCourseyear());
 			ps.setString(4, a.getName());
-			ps.setInt(5,a.getGraded()?1:0);
+			ps.setBoolean(5,a.getGraded());
 			ps.setInt(6, a.getWeight());
 			ps.setBigDecimal(7, a.getMinimumresult()); //BigDecimal is the recommended java mapping for numeric values in SQL. (https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html Paragraph 8.3.11)
 			Debug.logln("GradesDB: Executing statement : " + ps.toString());
@@ -708,7 +708,61 @@ public class GradesDB extends DB {
 	}
 
 	//TODO: addAssignmentOccasion
+	public void addAssignmentOccasion(AssignmentOccasion ao){
+		String query = "INSERT INTO Testi.assignmentoccasion(assignmentid,occasiondate) " + 
+		"VALUES (?,?)";
+		try{
+			//prepare the query
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,ao.getAssignmentid());
+			ps.setDate(2,ao.getOccasiondate());
+			//execute it
+			Debug.logln("GradesDB: Executing statement : " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	}
 	//TODO: addAssignmentResult
+	public void addAssignmentResult(AssignmentResult ar){
+		String query = "INSERT INTO Testi.assignmentresult(occasionid,studentid,result) "+ 
+	"VALUES (?,?,?)";
+		//Note that; 	1. Occasion for which the ar counts, must exist beforehand
+		//				2. Student for which the ar counts, must exist beforehand
+		//				3. (Occasionid,studentid) must be unique tuple in table
+		try {
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,ar.getOccasionid());
+			ps.setInt(2, ar.getStudentid());
+			ps.setBigDecimal(3, ar.getResult());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	}
 	//TODO: addSuperModule
+	public void addSuperModule(SuperModule sm){
+		String query = "INSERT INTO Testi.supermodule(modulecode,name) " +
+		"VALUES(?,?)";
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, sm.getModulecode());
+			ps.setString(2, sm.getName());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	}
 	//TODO: addModule
+	public void addModule(Module m){
+		
+	}
 }
