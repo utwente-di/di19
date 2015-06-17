@@ -2,6 +2,7 @@ package nl.utwente.di.gradeManager.db;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 import java.sql.*;
 
 import nl.utwente.di.gradeManager.debug.Debug;
@@ -16,6 +17,10 @@ public class GradesDB extends DB {
 	public GradesDB(){
 		super();
 	}
+	
+	/*
+	 * READ
+	 */
 	
 	/**
 	 * Gets a course from the database with a given course code and a code year
@@ -313,7 +318,7 @@ public class GradesDB extends DB {
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
 				int weight = rs.getInt("weight");
-				float minimumresult = rs.getFloat("minimumresult");
+				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
 				result = a;
 			}
@@ -354,7 +359,7 @@ public class GradesDB extends DB {
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
 				int weight = rs.getInt("weight");
-				float minimumresult = rs.getFloat("minimumresult");
+				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
 				result.add(a);
 			}
@@ -486,7 +491,7 @@ public class GradesDB extends DB {
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getInt("isgradedassignment") == 1;
 				int weight = rs.getInt("weight");
-				float minimumresult = rs.getFloat("minimumresult");
+				BigDecimal minimumresult = rs.getBigDecimal("minimumresult");
 				Assignment a = new Assignment(assignmentid, coursecode, courseyear, name, isgradedassignment, weight, minimumresult);
 				result.add(a);
 			}
@@ -584,4 +589,126 @@ public class GradesDB extends DB {
 		
 	}
 	
+	
+	/*
+	 *CREATE
+	 */
+	
+	/**
+	 * Adds a student to the database.
+	 * @param s the student to add.
+	 */
+	public void addTeacher(Teacher t){
+		//because student numbers always start with a s, remove it in order to get the integer; personid.
+		int personid_int = Integer.parseInt(t.getPersonID().substring(1)); //convert the string without the first character to an integer.
+		
+		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
+		"VALUES (?,?,?,?)";
+		String query2 = "INSERT INTO Testi.teacher (teacherid,administrator) VALUES (?,?::bit(1))";
+		try{
+			//prepare the two queries.
+			PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement ps2 = conn.prepareStatement(query2);
+			ps.setInt(1, personid_int);
+			ps.setString(2,t.getFirstname());
+			ps.setString(3,t.getSurname());
+			ps.setString(4, t.getPassword());
+			ps2.setInt(1,personid_int);
+			ps2.setInt(2, t.isManager()?1:0); //dit is echt lelijk, maar bit type in postgresql is raar...
+			Debug.logln("GradesDB: Executing query 1 : " + ps.toString());
+			ps.executeUpdate();
+			Debug.logln("GradesDB: Executing query 2 : " + ps2.toString());
+			ps2.executeUpdate();
+			ps.close();
+			ps2.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}		
+	}	
+	
+	/**
+	 * Adds a student to the database.
+	 * @param s the student to add.
+	 */
+	public void addStudent(Student s){
+		//because student numbers always start with a s, remove it in order to get the integer; personid.
+		int personid_int = Integer.parseInt(s.getPersonID().substring(1)); //convert the string without the first character to an integer.
+		
+		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
+		"VALUES (?,?,?,?)";
+		String query2 = "INSERT INTO Testi.student (studentid) VALUES (?)";
+		try{
+			//prepare the two queries.
+			PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement ps2 = conn.prepareStatement(query2);
+			ps.setInt(1, personid_int);
+			ps.setString(2,s.getFirstname());
+			ps.setString(3,s.getSurname());
+			ps.setString(4, s.getPassword());
+			ps2.setInt(1,personid_int);
+			Debug.logln("GradesDB: Executing prepared statement 1.");
+			ps.executeUpdate();
+			Debug.logln("GradesDB: Executing prepared statement 2.");
+			ps2.executeUpdate();
+			ps.close();
+			ps2.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}		
+	}	
+	
+	//TODO: test
+	public void addCourse(Course c){
+		String query = "INSERT INTO Testi.Course(coursecode,name,weight,year) " + 
+		"VALUES (?,?,?,?)";
+		
+		try{
+			//prepare the query
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,c.getCode());
+			ps.setString(2,c.getName());
+			ps.setInt(3,c.getWeight());
+			ps.setInt(4, c.getYear());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		}  catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}	
+		
+	}
+	
+	//TODO: test
+	//Note that, when creating an assignment, it has to be part of a course,
+	//therefore, a valid (coursecode,courseyear) tuple has to be given for the assignment to be added succesfully!
+	public void addAssignment(Assignment a){
+		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode, courseyear, name,isgradedassignment, weight, minimumresult)" + 
+		"VALUES(?,?,?,?,?::bit(1),?,?)";
+		try{
+			//prepare the query
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, a.getAssignmentID());
+			ps.setInt(2, a.getCourseCode());
+			ps.setInt(3, a.getCourseyear());
+			ps.setString(4, a.getName());
+			ps.setInt(5,a.getGraded()?1:0);
+			ps.setInt(6, a.getWeight());
+			ps.setBigDecimal(7, a.getMinimumresult()); //BigDecimal is the recommended java mapping for numeric values in SQL. (https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html Paragraph 8.3.11)
+			Debug.logln("GradesDB: Executing statement : " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}	
+		
+	}
+
+	//TODO: addAssignmentOccasion
+	//TODO: addAssignmentResult
+	//TODO: addSuperModule
+	//TODO: addModule
 }

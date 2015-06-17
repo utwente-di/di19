@@ -1,5 +1,7 @@
 package nl.utwente.di.gradeManager.model;
 
+import java.math.BigDecimal;
+
 
 
 /**
@@ -14,7 +16,7 @@ public class Assignment {
 	private String name;
 	private boolean isGraded;
 	private int weight;
-	private float minimumresult;
+	private BigDecimal minimumresult;
 	
 	/**
 	 * Constructs an assignment
@@ -26,7 +28,7 @@ public class Assignment {
 	 * @param argWeight The weight of the assignment used for computing the average result of a course.
 	 * @param argMinimumresult The minimum expected result for the assignment for passing it.
 	 */
-	public Assignment(int argAssignmentid, int argCoursecode, int argCourseyear, String argName, boolean argIsgradedassignment, int argWeight, float argMinimumresult){
+	public Assignment(int argAssignmentid, int argCoursecode, int argCourseyear, String argName, boolean argIsgradedassignment, int argWeight, BigDecimal argMinimumresult){
 		this.assignmentID = argAssignmentid;
 		this.coursecode = argCoursecode;
 		this.courseyear = argCourseyear;
@@ -92,11 +94,11 @@ public class Assignment {
 		this.weight = argWeigth;
 	}
 	
-	public float getMinimumresult(){
+	public BigDecimal getMinimumresult(){
 		return this.minimumresult;
 	}
 	
-	public void setMinimumresult(float argMinimumresult){
+	public void setMinimumresult(BigDecimal argMinimumresult){
 		this.minimumresult = argMinimumresult;
 	}
 	
