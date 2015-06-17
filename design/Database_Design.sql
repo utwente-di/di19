@@ -12,7 +12,7 @@ CREATE TABLE TESTi.Student(
 
 CREATE TABLE TESTi.Teacher(
 	teacherID	INTEGER,
-	administrator	BIT NOT NULL,
+	administrator	BOOLEAN NOT NULL,
 	PRIMARY KEY	(teacherID),
 	FOREIGN KEY	(teacherID) REFERENCES TESTi.Person(personID));
 
@@ -57,7 +57,7 @@ CREATE TABLE TESTi.Assignment(
 	courseyear	INTEGER,
 	name		TEXT NOT NULL,
 	isGradedAssignment
-			BIT NOT NULL,
+			BOOLEAN NOT NULL,
 	weight		INTEGER NOT NULL,
 	minimumResult	DECIMAL(2,1) NOT NULL,
 	PRIMARY KEY	(assignmentID),
