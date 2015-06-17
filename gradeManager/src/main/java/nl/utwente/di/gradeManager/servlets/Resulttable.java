@@ -30,10 +30,10 @@ public class Resulttable extends HttpServlet {
 	protected void setAssignments() {
 		GradesDB gradesDB = new GradesDB();
 		List<Assignment> assignmentList = new ArrayList<Assignment>();
-		for(int i = 0; i <= courses.size(); i++){
+		for(int i = 0; i < courses.size(); i++){
 			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCode(), courses.get(i).getYear());
 			if (assignments != null){
-				for (int j = 0; j <= assignments.size(); j++) {
+				for (int j = 0; j < assignments.size(); j++) {
 					if(assignments.get(j) != null){
 						assignmentList.add(assignments.get(j));
 					}
