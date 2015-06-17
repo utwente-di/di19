@@ -29,9 +29,19 @@ public class Resulttable extends HttpServlet {
 	
 	protected void setAssignments() {
 		GradesDB gradesDB = new GradesDB();
-		assignments = gradesDB.getAssignmentsForCourse(courses.get(0).getCode(), courses.get(0).getYear());
+		List<Assignment> assignmentList = new ArrayList<Assignment>();
+		for(int i = 0; i <= courses.size(); i++){
+			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCode(), courses.get(i).getYear());
+			if (assignments != null){
+				for (int j = 0; j <= assignments.size(); j++) {
+					if(assignments.get(j) != null){
+						assignmentList.add(assignments.get(j));
+					}
+				}
+			}
+		}
 		gradesDB.closeConnection();
-		
+		assignments = assignmentList;
 	}
 	
 	
@@ -50,16 +60,17 @@ public class Resulttable extends HttpServlet {
 			StudentCourses bean = new StudentCourses(SID, coursesList);
 			request.setAttribute("coursestoShow", bean);
 		}
-			
+
 		if (assignments != null) {
-			List<Assignment> assignmentList = new ArrayList<Assignment>();
-			for (int i = 0; i < assignments.size(); i++) {
-				if (assignments.get(i) != null)
-					assignmentList.add(assignments.get(i));
+			List<Assignment> assList = new ArrayList<Assignment>();
+			for (int j = 0; j < assignments.size(); j++) {
+				if (assignments.get(j) != null)
+					assList.add(assignments.get(j));
 			}
 			
 			
-			CourseAssignments bean2 = new CourseAssignments("Dit is een vak", assignmentList);
+			
+			CourseAssignments bean2 = new CourseAssignments("Dit is een vak", assList);
 			request.setAttribute("assignmentstoShow", bean2);
 			
 		

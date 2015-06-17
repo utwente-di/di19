@@ -41,7 +41,7 @@
 				for (Assignment assignment : assignments) {
 					String backgroundcolour = "";
 					
-					if(assignment.getMinimumresult() < 5.4) {
+					if(assignment.getMinimumresult().doubleValue() > 5.4) {
 						//result is not passing grade.
 						backgroundcolour = "FF0000"; // red
 						} else {
