@@ -16,6 +16,7 @@ import nl.utwente.di.gradeManager.model.AssignmentOccasion;
 import nl.utwente.di.gradeManager.model.AssignmentResult;
 import nl.utwente.di.gradeManager.model.Course;
 import nl.utwente.di.gradeManager.model.Module;
+import nl.utwente.di.gradeManager.model.ModuleResult;
 
 
 public class Resulttable extends HttpServlet {
@@ -25,6 +26,7 @@ public class Resulttable extends HttpServlet {
 	private List<Assignment> assignments;
 	private List<AssignmentResult> occasions;
 	private Module module;
+	private ModuleResult moduleResult;
 	
 	protected void setModule(int moduleID){
 		GradesDB gradesDB = new GradesDB();
@@ -71,6 +73,11 @@ public class Resulttable extends HttpServlet {
 		occasions = resultList;
 	}
 	
+	protected void setModuleResult(int personID){
+		GradesDB gradesDB = new GradesDB();
+		moduleResult = gradesDB.getModuleResult(personID,module.getModulecode(),module.getYear());
+	}
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -111,6 +118,9 @@ public class Resulttable extends HttpServlet {
 				
 			StudentAssignments bean4 = new StudentAssignments("Dit is een resultaat", resList);
 			request.setAttribute("resultstoShow", bean4);
+		}
+		if (moduleResult != null) {
+			request.setAttribute("moduleresulttoShow", moduleResult);
 		}
 		
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
