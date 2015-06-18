@@ -48,7 +48,7 @@
 			String backgroundcolour = "";
 				for (Assignment assignment : assignments) {
 					for(AssignmentResult result : results){
-						if(assignment.getCourseCode() == course.getCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID()){	
+						if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID()){	
 							if(result.getResult().doubleValue() < 5.5) {
 							//result is not passing grade.
 								backgroundcolour = "FF0000"; // red

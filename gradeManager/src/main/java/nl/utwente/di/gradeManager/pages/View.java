@@ -70,18 +70,18 @@ public class View {
 	@GET
 	@Path("coursesformodule/{moduleid}")
 	@Produces(MediaType.TEXT_HTML)
-	public String showCoursesForModule(@PathParam("moduleid") String argModuleid){
+	public String showCoursesForModule(@PathParam("moduleid") String argModuleid, @PathParam("moduleyear") String argModuleYear){
 		
 		int depth = 3;
 		GradesDB gradesDB = new GradesDB();
-		Module module = gradesDB.getModule(Integer.parseInt(argModuleid));
+		Module module = gradesDB.getModule(Integer.parseInt(argModuleid), Integer.parseInt(argModuleYear) );
 		List<Course> courses = gradesDB.getCoursesForModule(Integer.parseInt(argModuleid));
 				
 		String response = "<html> <head> " + Style.generateCSSLink(depth) + "</head> <body> ";
 		response += "<h1> All Courses for module : " + module.getName() + " : " + module.getModulecode() + "</h1> </br>";
 		response += "<table> <tr> <th> coursecode </th> <th> name </th> <th> weight </th> <th> year </th> </tr>";
 		for(Course c : courses){
-			response += "<tr> <td> " + c.getCode() + " </td> <td> " + c.getName() + " </td> <td> " + c.getWeight() + " </td> <td> " + c.getYear() + "</td> </tr>";
+			response += "<tr> <td> " + c.getCourseCode() + " </td> <td> " + c.getName() + " </td> <td> " + c.getWeight() + " </td> <td> " + c.getYear() + "</td> </tr>";
 		}
 		response += "</table>";
 		gradesDB.closeConnection();

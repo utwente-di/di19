@@ -52,7 +52,7 @@ public class GradesDB extends DB {
 				String  name = rs.getString("name");
 				int weight = rs.getInt("weight");
 				int year = rs.getInt("year");
-				result = new Course(coursecode, name, weight, year);
+				result = new Course(coursecode, year, name, weight);
 			}
 			rs.close();
 			st.close();
@@ -227,6 +227,42 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	public Module getModule(int argmoduleCode, int argmoduleYear){
+		Module result = null;
+		String query = "SELECT m.moduleCode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE " +
+		"m.moduleCode = sm.moduleCode AND " + 
+		"m.year = " + argmoduleYear + " AND " + 
+		"m.moduleCode = " + argmoduleCode
+		;
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int moduleCode = rs.getInt("moduleCode");
+				int year = rs.getInt("year");
+				String name = rs.getString("name");
+				Module a = new Module(moduleCode, year, name);
+				result = a;
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		if (result == null){
+			Debug.logln("I tried looking for an assignment with id : " + argmoduleCode + " but didn't find anything.");
+		}
+		return result;
+	}
+	
 	/**
 	 * Gets modules for a certain super module.
 	 * @param argSupermodulecode The id of the supermodule
@@ -293,6 +329,8 @@ public class GradesDB extends DB {
 		
 		return result;
 	}
+	
+	
 	
 	/**
 	 * Gets an assignment with a specific id.
@@ -424,14 +462,14 @@ public class GradesDB extends DB {
 	 */
 	public List<Course> getCoursesForModule(int argModulecode){
 		List<Course> result = new ArrayList<Course>();
-		String query = "SELECT c.* FROM Testi.course c,Testi.hascourses hc WHERE " +
+		String query = "SELECT c.coursecode, c.year, sc.name, sc.weight FROM Testi.course c,Testi.hascourses hc, Testi.supercourse sc WHERE " +
 		"hc.modulecode = " + argModulecode + 
-		" AND c.coursecode = hc.coursecode AND c.year = hc.courseyear";
+		" AND c.coursecode = hc.coursecode  AND c.coursecode = sc.coursecode";
 	
-		//SELECT c.* FROM Testi.course c,Testi.hascourses hc WHERE 
+		//SELECT c.coursecode, c.year, sc.name, sc.weight FROM Testi.course c,Testi.hascourses hc, Testi.supercourse sc WHERE 
 		//hc.modulecode = argModulecode AND 
 		//c.coursecode = hc.coursecode AND 
-		//c.year = hc.courseyear
+		//c.coursecode = sc.coursecode
 		
 		
 		try {
@@ -445,7 +483,7 @@ public class GradesDB extends DB {
 				String coursename = rs.getString("name");
 				int weight = rs.getInt("weight");
 				int year = rs.getInt("year");
-				Course c = new Course(coursecode, coursename, weight, year);
+				Course c = new Course(coursecode, year, coursename, weight);
 				result.add(c);
 			}
 			rs.close();
@@ -783,7 +821,7 @@ public class GradesDB extends DB {
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1,c.getCode());
+			ps.setInt(1,c.getCourseCode());
 			ps.setString(2,c.getName());
 			ps.setInt(3,c.getWeight());
 			ps.setInt(4, c.getYear());

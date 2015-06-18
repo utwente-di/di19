@@ -28,15 +28,15 @@ public class Resulttable extends HttpServlet {
 	private Module module;
 	private ModuleResult moduleResult;
 	
-	protected void setInfo(int moduleID, int personID){
+	protected void setInfo(int moduleID, int personID, int moduleYear){
 		GradesDB gradesDB = new GradesDB();
-		module = gradesDB.getModule(moduleID);
+		module = gradesDB.getModule(moduleID, moduleYear);
 		
 		courses = gradesDB.getCoursesForModule(moduleID);
 		
 		List<Assignment> assignmentList = new ArrayList<Assignment>();
 		for(int i = 0; i < courses.size(); i++){
-			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCode(), courses.get(i).getYear());
+			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCourseCode(), courses.get(i).getYear());
 			if (assignments != null){
 				for (int j = 0; j < assignments.size(); j++) {
 					if(assignments.get(j) != null){
@@ -60,7 +60,7 @@ public class Resulttable extends HttpServlet {
 		}
 		occasions = resultList;
 		
-		moduleResult = gradesDB.getModuleResult(personID,module.getModulecode(),module.getYear());
+		moduleResult = gradesDB.getModuleResult(personID, module.getModulecode(), module.getYear());
 		
 		gradesDB.closeConnection();
 	}
