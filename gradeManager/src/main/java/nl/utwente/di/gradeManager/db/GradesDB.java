@@ -589,6 +589,123 @@ public class GradesDB extends DB {
 		
 	}
 	
+	/**
+	 * Gets a specific module result for a given student and a module he/she did.
+	 * @param argStudentid The student id.
+	 * @param argModuleCode The code of the module.
+	 * @param argModuleYear The year in which the module was given.
+	 * @return The result of a student and the module he did.
+	 */
+	public ModuleResult getModuleResult(int argStudentid, int argModuleCode, int argModuleYear){
+		ModuleResult result = null;
+		
+//		SELECT mr.* FROM Testi.ModuleResult mr WHERE 
+//		mr.studentid = argStudentid AND 
+//		mr.modulecode = argModuleCode AND
+//		mr.year = argModuleYear
+		
+		String query = "SELECT mr.* FROM Testi.ModuleResult mr WHERE " +
+				"mr.studentid = " + argStudentid + " AND " +
+				"mr.modulecode = " + argModuleCode + " AND " +
+				"mr.year = " + argModuleYear;
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				int studentid = rs.getInt("studentid");
+				int modulecode = rs.getInt("modulecode");
+				int year = rs.getInt("year");
+				BigDecimal moduleresult = rs.getBigDecimal("result");
+				result = new ModuleResult(studentid,modulecode,year,moduleresult);
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		
+		if (result == null){
+			Debug.logln("GradesDB: I tried looking for a module result with studentid:" + argStudentid + " module code : " + argModuleCode + " module year " + argModuleYear);
+		}
+		return result;
+		
+	}
+	
+	/**
+	 * Gets all module results for a student
+	 * @param argStudentid The student id of the student.
+	 * @return A list of Module results for a certain student.
+	 */
+	public List<ModuleResult> getModuleResultsForStudent(int argStudentid){
+		List<ModuleResult> result = new ArrayList<ModuleResult>();
+//		SELECT mr.* FROM Testi.ModuleResult mr WHERE 
+//		mr.studentid = argStudentid
+		String query = "SELECT mr.* FROM Testi.ModuleResult mr WHERE " + 
+		"mr.studentid = " + argStudentid;
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				int studentid = rs.getInt("studentid");
+				int modulecode = rs.getInt("modulecode");
+				int year = rs.getInt("year");
+				BigDecimal moduleresult = rs.getBigDecimal("result");
+				result.add(new ModuleResult(studentid,modulecode,year,moduleresult));
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		return result;
+	}
+	
+	/**
+	 * Gets the module results for a certain module
+	 * @param argModulecode The code of the module.
+	 * @param argModuleyear The year in which the module is given.
+	 * @return A list of Module results for the module.
+	 */
+	public List<ModuleResult> getModuleResultsForModule(int argModulecode, int argModuleyear){
+		List<ModuleResult> result = new ArrayList<ModuleResult>();
+//		SELECT mr.* FROM Testi.ModuleResult mr WHERE 
+//		mr.modulecode = argModulecode
+//		mr.year = argModuleYear
+		String query = "SELECT mr.* FROM Testi.ModuleResult mr WHERE " +
+		"mr.modulecode = " + argModulecode + " AND " +
+		"mr.year = " + argModuleyear;
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				int studentid = rs.getInt("studentid");
+				int modulecode = rs.getInt("modulecode");
+				int year = rs.getInt("year");
+				BigDecimal moduleresult = rs.getBigDecimal("result");
+				result.add(new ModuleResult(studentid,modulecode,year,moduleresult));
+			}
+		
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		return result;
+	}
 	
 	/*
 	 *CREATE
@@ -601,10 +718,10 @@ public class GradesDB extends DB {
 	public void addTeacher(Teacher t){
 		//because student numbers always start with a s, remove it in order to get the integer; personid.
 		int personid_int = Integer.parseInt(t.getPersonID().substring(1)); //convert the string without the first character to an integer.
-		
 		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
 		"VALUES (?,?,?,?)";
 		String query2 = "INSERT INTO Testi.teacher (teacherid,administrator) VALUES (?,?)";
+		//No dependencies
 		try{
 			//prepare the two queries.
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -634,10 +751,10 @@ public class GradesDB extends DB {
 	public void addStudent(Student s){
 		//because student numbers always start with a s, remove it in order to get the integer; personid.
 		int personid_int = Integer.parseInt(s.getPersonID().substring(1)); //convert the string without the first character to an integer.
-		
 		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
 		"VALUES (?,?,?,?)";
 		String query2 = "INSERT INTO Testi.student (studentid) VALUES (?)";
+		//No dependencies
 		try{
 			//prepare the two queries.
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -663,7 +780,7 @@ public class GradesDB extends DB {
 	public void addCourse(Course c){
 		String query = "INSERT INTO Testi.Course(coursecode,name,weight,year) " + 
 		"VALUES (?,?,?,?)";
-		
+		//No dependencies
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -682,11 +799,11 @@ public class GradesDB extends DB {
 	}
 	
 	//TODO: test
-	//Note that, when creating an assignment, it has to be part of a course,
-	//therefore, a valid (coursecode,courseyear) tuple has to be given for the assignment to be added succesfully!
 	public void addAssignment(Assignment a){
 		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode, courseyear, name,isgradedassignment, weight, minimumresult)" + 
 		"VALUES(?,?,?,?,?,?,?)";
+		//Note that, when creating an assignment, it has to be part of a course,
+		//therefore, a valid (coursecode,courseyear) tuple has to be given for the assignment to be added succesfully!
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -707,10 +824,11 @@ public class GradesDB extends DB {
 		
 	}
 
-	//TODO: addAssignmentOccasion
+	//TODO: test
 	public void addAssignmentOccasion(AssignmentOccasion ao){
 		String query = "INSERT INTO Testi.assignmentoccasion(assignmentid,occasiondate) " + 
 		"VALUES (?,?)";
+		//Assignmentid for which the ao counts must exist beforehand
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -725,7 +843,7 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 	}
-	//TODO: addAssignmentResult
+	//TODO: test
 	public void addAssignmentResult(AssignmentResult ar){
 		String query = "INSERT INTO Testi.assignmentresult(occasionid,studentid,result) "+ 
 	"VALUES (?,?,?)";
@@ -745,10 +863,11 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 	}
-	//TODO: addSuperModule
+	//TODO: test
 	public void addSuperModule(SuperModule sm){
 		String query = "INSERT INTO Testi.supermodule(modulecode,name) " +
 		"VALUES(?,?)";
+		//no dependencies.
 		try{
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, sm.getModulecode());
@@ -761,8 +880,46 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 	}
-	//TODO: addModule
+	//TODO: test
 	public void addModule(Module m){
+		String query = "INSERT INTO Testi.module(modulecode,year) " + 
+		"VALUES(?,?)";
+		//Note that, super module with the module code must exist before making a module.
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, m.getModulecode());
+			ps.setInt(2, m.getYear());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	}
+	//TODO: test
+	public void addModuleResult(ModuleResult mr){
+		String query = "INSERT INTO Testi.moduleresult(studentid,modulecode,year,result) " + 
+		"VALUES(?,?,?,?)";
+		//Note that:
+		//1. Student id, for which the module result counts, must exist beforehand.
+		//2. the combination (Modulecode,year) needs to be a unique tuple for the student. (a student can't do the same module in the same year twice)
+		//3. the exact combination (Modulecode,year) for which the mr counts, must exist beforehand 
+		try {
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,mr.getStudentID());
+			ps.setInt(2, mr.getModuleCode());
+			ps.setInt(3, mr.getYear());
+			ps.setBigDecimal(4, mr.getResult());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
 		
 	}
+	
 }

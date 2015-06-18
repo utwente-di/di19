@@ -1,5 +1,7 @@
 package nl.utwente.di.gradeManager.model;
 
+import java.math.BigDecimal;
+
 /**
  * Class for the result of a module
  *
@@ -10,7 +12,7 @@ public class ModuleResult {
 	private int studentID;
 	private int moduleCode;
 	private int year;
-	private float result;
+	private BigDecimal result;
 
 	/**
 	 * Constructs a module result
@@ -19,7 +21,7 @@ public class ModuleResult {
 	 * @param argYear The year on which the result was achieved.
 	 * @param argResult The result.
 	 */
-	public ModuleResult(int argStudentID, int argModuleCode, int argYear, int argResult){
+	public ModuleResult(int argStudentID, int argModuleCode, int argYear, BigDecimal argResult){
 		this.studentID = argStudentID;
 		this.moduleCode = argModuleCode;
 		this.year = argYear;
@@ -78,7 +80,7 @@ public class ModuleResult {
 	 * Gets the result of the module.
 	 * @return The result of the module.
 	 */
-	public float getResult(){
+	public BigDecimal getResult(){
 		return this.result;
 	}
 	
@@ -86,7 +88,7 @@ public class ModuleResult {
 	 * Sets the result of the module.
 	 * @param argResult The result of the module.
 	 */
-	public void setResult(float argResult){
+	public void setResult(BigDecimal argResult){
 		this.result = argResult;
 	}
 	
