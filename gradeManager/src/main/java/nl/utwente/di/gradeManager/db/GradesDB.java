@@ -557,7 +557,7 @@ public class GradesDB extends DB {
 		// ao.assignmentid = argAssignmentid AND 
 		// ao.occasionid = ar.occasionid
 		
-		String query = "SELECT ar.*,ao.occasiondate FROM Testi.assignmentresult ar, Testi.assignmentoccasion ao WHERE "
+		String query = "SELECT ar.*,ao.occasiondate,ao.assignmentID FROM Testi.assignmentresult ar, Testi.assignmentoccasion ao WHERE "
 				+ "ar.studentid = " + argStudentid + " AND " 
 				+ "ao.assignmentid = " + argAssignmentid  + " AND "
 				+ "ao.occasionid = ar.occasionid";
@@ -572,7 +572,7 @@ public class GradesDB extends DB {
 				int occasionid = rs.getInt("occasionid");
 				BigDecimal grade = rs.getBigDecimal("result");
 				Date date = rs.getDate("occasiondate");
-				AssignmentResult ar = new AssignmentResult(occasionid, argStudentid, date,grade);
+				AssignmentResult ar = new AssignmentResult(occasionid, argStudentid, date,grade, argAssignmentid);
 				result.add(ar);
 			}
 		

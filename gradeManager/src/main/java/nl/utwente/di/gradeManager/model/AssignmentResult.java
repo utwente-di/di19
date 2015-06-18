@@ -13,21 +13,24 @@ public class AssignmentResult{
 	
 	private int occasionid; 	//PK INT
 	private int studentid; 	//PK INT
+	private int assignmentid;
 	private Date occasiondate;
 	private BigDecimal result;
 	
 	/**
 	 * Constructs the result of an assignment for a student on a date.
-	 * @param argAssignmentID The ID of the assignment.
-	 * @param argOccasionDate The date on which the assignment occurred.
+	 * @param argOccasionID The ID of the occasion.
+	 * @param argOccasionDate The date on which the occasion occurred.
 	 * @param argStudentID The student ID of the student who made the assignment.
 	 * @param argResult The result of the made assignment.
+	 * @param argAssignmentID The ID of the assignment.
 	 */
-	public AssignmentResult(int argOccasionid,int argStudentid,Date argOccasionDate, BigDecimal argResult){
+	public AssignmentResult(int argOccasionid,int argStudentid,Date argOccasionDate, BigDecimal argResult, int argAssignmentid){
 		this.occasionid = argOccasionid;
 		this.studentid = argStudentid;
 		this.occasiondate = argOccasionDate;
 		this.result = argResult;
+		this.assignmentid = argAssignmentid;
 	}
 	
 	/**
@@ -92,5 +95,13 @@ public class AssignmentResult{
 	 */
 	public void setResult(BigDecimal argResult){
 		this.result = argResult;
+	}
+	
+	public int getAssignmentid(){
+		return this.assignmentid;
+	}
+	
+	public void setAssignmentid(int argAssignmentid){
+		this.assignmentid = argAssignmentid;
 	}
 }
