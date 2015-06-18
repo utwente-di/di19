@@ -28,19 +28,12 @@ public class Resulttable extends HttpServlet {
 	private Module module;
 	private ModuleResult moduleResult;
 	
-	protected void setModule(int moduleID){
+	protected void setInfo(int moduleID, int personID){
 		GradesDB gradesDB = new GradesDB();
 		module = gradesDB.getModule(moduleID);
-	}
-	
-	protected void setCourses(int moduleID) {
-		GradesDB gradesDB = new GradesDB();
+		
 		courses = gradesDB.getCoursesForModule(moduleID);
-		gradesDB.closeConnection();
-	}
-	
-	protected void setAssignments() {
-		GradesDB gradesDB = new GradesDB();
+		
 		List<Assignment> assignmentList = new ArrayList<Assignment>();
 		for(int i = 0; i < courses.size(); i++){
 			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCode(), courses.get(i).getYear());
@@ -52,12 +45,8 @@ public class Resulttable extends HttpServlet {
 				}
 			}
 		}
-		gradesDB.closeConnection();
 		assignments = assignmentList;
-	}
-	
-	protected void setResults(int personID){
-		GradesDB gradesDB = new GradesDB();
+		
 		List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
 		for(int i = 0; i < assignments.size(); i++){
 			occasions = gradesDB.getResultsForAssignmentAndStudent(personID, assignments.get(i).getAssignmentID());
@@ -69,14 +58,13 @@ public class Resulttable extends HttpServlet {
 				}
 			}
 		}
-		gradesDB.closeConnection();
 		occasions = resultList;
+		
+		moduleResult = gradesDB.getModuleResult(personID,module.getModulecode(),module.getYear());
+		
+		gradesDB.closeConnection();
 	}
 	
-	protected void setModuleResult(int personID){
-		GradesDB gradesDB = new GradesDB();
-		moduleResult = gradesDB.getModuleResult(personID,module.getModulecode(),module.getYear());
-	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
