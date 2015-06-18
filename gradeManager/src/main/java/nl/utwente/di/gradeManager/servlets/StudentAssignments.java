@@ -14,19 +14,19 @@ public class StudentAssignments {
 		this.assresults = assresults;
 	}
 	
-	public void SetTitle(String title){
+	public void getTitle(String title){
 		this.title = title;
 	}
 	
-	public String GetTitle(){
+	public String getTitle(){
 		return title;
 	}
 	
-	public void SetAssResults(List<AssignmentResult> assresults){
+	public void getAssResults(List<AssignmentResult> assresults){
 	this.assresults = assresults;
 	}
 	
-	public List<AssignmentResult> GetAssignment(){
+	public List<AssignmentResult> getAssResults(){
 		return assresults;
 	}
 }
