@@ -14,6 +14,9 @@ import nl.utwente.di.gradeManager.model.*;
  */
 public class GradesDB extends DB {
 
+	/**
+	 * Constructs the grades DB helper.
+	 */
 	public GradesDB(){
 		super();
 	}
@@ -225,19 +228,15 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Gets a module with a specific module code.
-	 * @param argModulecode The code of the module.
-	 * @return The module which has the specific code.
+	 * Gets modules for a certain super module.
+	 * @param argSupermodulecode The id of the supermodule
+	 * @return A list of modules, which are an instance of a the supermodule.
 	 */
-	public Module getModule(int argModulecode){
-		Module result = null;
+	public List<Module> getModulesForSuperModule(int argSupermodulecode){
+		List<Module> result = new ArrayList<Module>();
 		String query = "SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE "
 				+ "m.modulecode = sm.modulecode AND " 
-				+ "m.modulecode = " + argModulecode;
-		//SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE
-		//m.modulecode = sm.modulecode AND
-		//m.modulecode = argModulecode
-		
+				+ "m.modulecode = " + argSupermodulecode;
 		try{
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
@@ -249,7 +248,7 @@ public class GradesDB extends DB {
 				int year = rs.getInt("year");
 				String name = rs.getString("name");
 				Module m = new Module(modulecode, year, name);
-				result = m;
+				result.add(m);
 			}
 			rs.close();
 			st.close();
@@ -918,8 +917,17 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
-		
-		
+				
 	}
+	//TODO: AddCourseToModule
+//	public void addCourseToModule(int argModulecode, int argCoursecode, int argCourseyear){
+//		String query = "INSERT INTO"
+////		Note that:
+////		1. The modulecode for the module has to exist.
+////		2. The pair (coursecode,courseyear) for the course has to exist.
+//
+//		
+//	}
+	
 	
 }
