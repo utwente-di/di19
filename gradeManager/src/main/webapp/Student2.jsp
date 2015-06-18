@@ -42,23 +42,27 @@
 										"</thead>" 
 						);
 			List<Assignment> assignments = assignmentstoShow.getAssignments();
+			List<AssignmentResult> results = resultstoShow.getAssResults();
+			String backgroundcolour = "";
 				for (Assignment assignment : assignments) {
-					String backgroundcolour = "";
-					if(assignment.getCourseCode() == course.getCode() && assignment.getCourseyear() == course.getYear()){	
-						if(assignment.getMinimumresult().doubleValue() < 5.5) {
-						//result is not passing grade.
-						backgroundcolour = "FF0000"; // red
-						} else {
-						backgroundcolour = "00FF00"; // green
+					for(AssignmentResult result : results){
+						if(assignment.getCourseCode() == course.getCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID()){	
+							if(result.getResult().doubleValue() < 5.5) {
+							//result is not passing grade.
+								backgroundcolour = "FF0000"; // red
+							} else {
+								backgroundcolour = "00FF00"; // green
 					}
 					
 					
 					out.println(		"<tbody>" + 
 											"<tr>"+
 												"<td>" + assignment.getName() + ":</td>"+
-												"<td style=\"background-color:#"+ backgroundcolour + "\">" + assignment.getMinimumresult() + "</td>"+
+												"<td style=\"background-color:#"+ backgroundcolour + "\">" + result.getResult() + "</td>"+
+												"<td>" + result.getOccasiondate() + "</td>" +
 											"</tr>"+
 										"</tbody>");
+						}
 					}
 				}
 			out.println(
