@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import nl.utwente.di.gradeManager.db.GradesDB;
 import nl.utwente.di.gradeManager.model.Assignment;
+import nl.utwente.di.gradeManager.model.AssignmentOccasion;
+import nl.utwente.di.gradeManager.model.AssignmentResult;
 import nl.utwente.di.gradeManager.model.Course;
 import nl.utwente.di.gradeManager.model.Module;
 
@@ -21,7 +23,13 @@ public class Resulttable extends HttpServlet {
 	private final String jsp_address = "Student2.jsp";
 	private List<Course> courses;
 	private List<Assignment> assignments;
+	private List<AssignmentResult> occasions;
 	private Module module;
+	
+	protected void setModule(int moduleID){
+		GradesDB gradesDB = new GradesDB();
+		module = gradesDB.getModule(moduleID);
+	}
 	
 	protected void setCourses(int moduleID) {
 		GradesDB gradesDB = new GradesDB();
@@ -46,11 +54,22 @@ public class Resulttable extends HttpServlet {
 		assignments = assignmentList;
 	}
 	
-	protected void setModule(int moduleID){
+	protected void setResults(int personID){
 		GradesDB gradesDB = new GradesDB();
-		module = gradesDB.getModule(moduleID);
+		List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
+		for(int i = 0; i < assignments.size(); i++){
+			occasions = gradesDB.getResultsForAssignmentAndStudent(personID, assignments.get(i).getAssignmentID());
+			if (occasions != null){
+				for (int j = 0; j < occasions.size(); j++) {
+					if(occasions.get(j) != null){
+						resultList.add(occasions.get(j));
+					}
+				}
+			}
+		}
+		gradesDB.closeConnection();
+		occasions = resultList;
 	}
-	
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -74,17 +93,28 @@ public class Resulttable extends HttpServlet {
 				if (assignments.get(j) != null)
 					assList.add(assignments.get(j));
 			}
-			
+		
 			
 			
 			CourseAssignments bean2 = new CourseAssignments("Dit is een vak", assList);
 			request.setAttribute("assignmentstoShow", bean2);
-			
+		}
+		
 			request.setAttribute("moduletoShow", module);
+			
+		if (occasions != null) {
+				List<AssignmentResult> resList = new ArrayList<AssignmentResult>();
+				for (int j = 0; j < occasions.size(); j++) {
+					if (occasions.get(j) != null)
+						resList.add(occasions.get(j));
+			}
+				
+			StudentAssignments bean4 = new StudentAssignments("Dit is een resultaat", resList);
+			request.setAttribute("resultstoShow", bean4);
+		}
 		
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
 			dispatcher.forward(request, response);
 			
 		}
 	}
-}

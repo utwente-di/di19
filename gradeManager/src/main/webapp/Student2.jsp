@@ -11,6 +11,8 @@
 		scope="request" />
 	<jsp:useBean id="moduletoShow" type="nl.utwente.di.gradeManager.model.Module"
 		scope="request" />
+	<jsp:useBean id="resultstoShow" type="nl.utwente.di.gradeManager.servlets.StudentAssignments"
+		scope="request" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>TOSTi Framework</title>
     <link rel="stylesheet" href="css/foundation.css"/>
