@@ -911,8 +911,13 @@ public class GradesDB extends DB {
 			ps.setInt(2, mr.getModuleCode());
 			ps.setInt(3, mr.getYear());
 			ps.setBigDecimal(4, mr.getResult());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
-		
 		
 		
 	}
