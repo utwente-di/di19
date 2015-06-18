@@ -19,7 +19,7 @@ CREATE TABLE TESTi.Teacher(
 CREATE TABLE TESTi.SuperModule(
 	moduleCode	INTEGER,
 	name		TEXT NOT NULL,	
-	PRIMARY KEY	(ModuleCode));
+	PRIMARY KEY	(moduleCode));
 
 CREATE TABLE TESTi.Module(
 	moduleCode	INTEGER,
@@ -35,33 +35,37 @@ CREATE TABLE TESTi.Teaches(
 	FOREIGN KEY	(personID) REFERENCES TESTi.Person(personID),
 	FOREIGN KEY	(moduleCode, year) REFERENCES TESTi.Module(moduleCode, year),
 	PRIMARY KEY	(personID, moduleCode, year));
+
+CREATE TABLE TESTi.SuperCourse(
+	courseCode	INTEGER,
+	name		TEXT NOT NULL,
+	weight		INT NOT NULL,
+	PRIMARY KEY	(courseCode));
 	
 CREATE TABLE TESTi.Course(
 	courseCode	INTEGER,
-	name		TEXT NOT NULL,
-	weight		INTEGER NOT NULL,
 	year		INTEGER,
-	PRIMARY KEY	(courseCode, year));
+	PRIMARY KEY	(courseCode, year),
+	FOREIGN KEY	(courseCode) REFERENCES TESTi.SuperCourse(courseCode));
 
 CREATE TABLE TESTi.hasCourses(
 	moduleCode	INTEGER,
 	courseCode	INTEGER,
-	courseYear	INTEGER,
-	PRIMARY KEY	(moduleCode, courseCode, courseYear),
+	PRIMARY KEY	(moduleCode, courseCode),
 	FOREIGN KEY	(moduleCode) REFERENCES TESTi.SuperModule(moduleCode),
-	FOREIGN KEY	(courseCode, courseYear) REFERENCES TESTi.Course(courseCode, year));
+	FOREIGN KEY	(courseCode) REFERENCES TESTi.SuperCourse(courseCode));
 
 CREATE TABLE TESTi.Assignment(
 	assignmentID	INTEGER,
 	courseCode	INTEGER,
-	courseyear	INTEGER,
+	year		INTEGER,
 	name		TEXT NOT NULL,
 	isGradedAssignment
 			BOOLEAN NOT NULL,
 	weight		INTEGER NOT NULL,
 	minimumResult	DECIMAL(2,1) NOT NULL,
 	PRIMARY KEY	(assignmentID),
-	FOREIGN KEY	(courseCode, courseYear) REFERENCES TESTi.Course(courseCode, year));
+	FOREIGN KEY	(courseCode, year) REFERENCES TESTi.Course(courseCode, year));
 
 CREATE TABLE TESTi.AssignmentOccasion(
 	occasionID	INTEGER,
