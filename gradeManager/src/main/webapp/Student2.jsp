@@ -25,7 +25,7 @@
 </head>
 <body>
 <script src="js/Navigatiebalk.js"></script>
-<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"><jsp:getProperty name="moduletoShow" property="name"/><jsp:getProperty name="moduleresulttoShow" property="result" /></div></h1>
+<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"><jsp:getProperty name="moduletoShow" property="name"/><jsp:getProperty name="moduleresulttoShow" property="result" /></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
 
 <% List<Course> courses = coursestoShow.getCourses();
