@@ -17,6 +17,7 @@ import nl.utwente.di.gradeManager.model.AssignmentResult;
 import nl.utwente.di.gradeManager.model.Course;
 import nl.utwente.di.gradeManager.model.Module;
 import nl.utwente.di.gradeManager.model.ModuleResult;
+import nl.utwente.di.gradeManager.model.Student;
 
 
 public class Resulttable extends HttpServlet {
@@ -27,12 +28,15 @@ public class Resulttable extends HttpServlet {
 	private List<AssignmentResult> occasions;
 	private Module module;
 	private ModuleResult moduleResult;
+	private Student student;
 	
 	protected void setInfo(int moduleID, int personID, int moduleYear){
 		GradesDB gradesDB = new GradesDB();
 		module = gradesDB.getModule(moduleID, moduleYear);
 		
 		courses = gradesDB.getCoursesForModule(moduleID);
+		
+		student = gradesDB.getStudent(personID);
 		
 		List<Assignment> assignmentList = new ArrayList<Assignment>();
 		for(int i = 0; i < courses.size(); i++){
@@ -110,6 +114,7 @@ public class Resulttable extends HttpServlet {
 		if (moduleResult != null) {
 			request.setAttribute("moduleresulttoShow", moduleResult);
 		}
+			request.setAttribute("student", student);
 		
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
 			dispatcher.forward(request, response);

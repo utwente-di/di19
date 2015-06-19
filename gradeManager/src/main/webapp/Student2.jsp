@@ -15,6 +15,10 @@
 		scope="request" />
 	<jsp:useBean id="moduleresulttoShow" type="nl.utwente.di.gradeManager.model.ModuleResult"
 		scope="request"/>
+	<jsp:useBean id="student" type="nl.utwente.di.gradeManager.model.Student"
+		scope="request"/>
+	<jsp:useBean id="studentModules" type="nl.utwente.di.gradeManager.servlets.StudentModules"
+		scope="request"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>TOSTi Framework</title>
     <link rel="stylesheet" href="css/foundation.css"/>
@@ -24,6 +28,40 @@
     <script src="js/foundation.min.js"></script>
 </head>
 <body>
+<%--<nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="#">TOSTi <%student.getFirstname(); %> <%student.getSurname(); %></a></h1>
+    </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+  </ul>
+
+  <section class="top-bar-section">
+    <!-- Right Nav Section -->
+    <ul class="left">
+      <li class="has-dropdown">
+        <a href="#">Jaar 1</a>
+        <ul class="dropdown">
+          <li><a href="#">Module 1</a></li>
+          <li><a href="#">Module 2</a></li>
+        </ul>
+      </li>
+	  <li class="has-dropdown">
+		<a href="#">Jaar 2</a>
+		<ul class="dropdown">
+			<li><a href="#">Module 1</a>
+			<li><a href="#">Module 2</a>
+			<li><a href="#">Module 3</a>
+	  </ul>
+
+  </section>
+  <section class="top-bar-section">
+  <ul class="right">
+	<li><a href="#">My account</a></li>
+	<li><a href="#">Settings</a></li>
+	</section>
+</nav>--%>
 <script src="js/Navigatiebalk.js"></script>
 <h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"><jsp:getProperty name="moduletoShow" property="name"/><jsp:getProperty name="moduleresulttoShow" property="result" /></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
