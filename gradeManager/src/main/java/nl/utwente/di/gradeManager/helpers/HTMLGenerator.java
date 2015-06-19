@@ -34,7 +34,7 @@ public class HTMLGenerator {
 		html += line + "\n";
 	}
 	
-	public String addImage(String firstLine, String imagename, String secondLine){
-		return firstLine + DepthGenerator.generateLogoLink(depth, imagename) + secondLine + "\n";
+	public void addImage(String firstLine, String imagename, String secondLine){
+		html += firstLine + DepthGenerator.generateLogoLink(depth, imagename) + secondLine + "\n";
 	}
 }
