@@ -10,9 +10,9 @@ import javax.ws.rs.core.MediaType;
 
 import nl.utwente.di.gradeManager.db.LoginDB;
 import nl.utwente.di.gradeManager.debug.Debug;
+import nl.utwente.di.gradeManager.helpers.*;
 import nl.utwente.di.gradeManager.model.Person;
 import nl.utwente.di.gradeManager.model.Teacher;
-import nl.utwente.di.gradeManager.style.Style;
 
 @Path("/login")
 public class Login {
@@ -25,32 +25,21 @@ public class Login {
 	@Path("dologin")
 	@Produces(MediaType.TEXT_HTML)
 	public String ShowLogin(){
-		int depth = 2;
-		return "<html> <head> <meta charset=\"utf-8\"/> " 
-				+ "<meta name=\"viewport\" content=\"width=device-width, initial-scale =1.0\"/>"
-				+ "<title> TOSTi inlog</title>" + Style.generateCSSLink(depth) 
-				+ "<script src=\"js/vendor/modernizr.js\"></script></head>"
-				+ "<body><div style=\"text-align: right; \">"
-				+ "<button type=\"button\" style=\"background-color:transparent; border-color:transparent;\""
-				+ "onclick =\"alert('Hier komt hulp voor het inloggen te staan')\">"
-				+ "<img src=\"" + Style.generateLogoLink(depth, "help.png") + "\"/></button></div>"
-				+ "<div style=\"text-align: center;\">"
-				+ "<div style=\"box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 200px auto auto; pdaaing: 20px; background-color: #E2C800;\">"
-				+ "<form name=\"login\" action = \"try_login\" method = \"post\" accept-charset=\"utf-8\">"
-				+ "<div class=\"row\"><div class=\"large-12 columns\">"
-				+ "<label for=\"userid\"><b><h5>Student of medewerkernummer</b></h5</label>"
-				+ "<input id=\"userid\" type=\"text\" name=\"userid\" size=\"15\" placeholder=\"s0000000\" required autofocus>"
-				+ "<label for=\"password\"><b><h5>Wachtwoord</b></h5></label>"
-				+ "<input id=\"password\" type=\"password\" name=\"password\" placeholder =\"Wachtwoord\" required>"
-				+ "<input type=\"submit\" class=\"button expand\" value=\"Login\">"
-				+ "</div></div></form></div></div>"
-				+ "<br><br><br><br>"
-				+ "<img src=\"" + Style.generateLogoLink(depth, "UT_Logo.png") +"\" width=\"40%\" height=\"40%\"/>"
-				+ "<div class=\"NaamOnderaan\">Gemaakt door groep 19</div>"
-				+ "<script src=\"js/vendor/jquery.js\"></script>"
-				+ "<script src=\"js/foundation.min.js\"></script>"
-				+ "<script>$(document).foundation();</script>";
-				
+		HTMLGenerator html = new HTMLGenerator(2);
+		html.addLine("<div style=\"text-align: center;\">");
+		html.addLine("<div class=\"loginbox\">");
+		html.addLine("<form name=\"login\" action = \"try_login\" method = \"post\" accept-charset=\"utf-8\">");
+		html.addLine("<div class=\"row\"><div class=\"large-12 columns\">");
+		html.addLine("<label for=\"userid\"><h3>Student of medewerkernummer</h3></label>");
+		html.addLine("<input id=\"userid\" type=\"text\" name=\"userid\" size=\"15\" placeholder=\"s0000000\" required autofocus>");
+		html.addLine("<label for=\"password\"><h3>Wachtwoord</h3></label>");
+		html.addLine("<input id=\"password\" type=\"password\" name=\"password\" placeholder =\"Wachtwoord\" required>");
+		html.addLine("<input type=\"submit\" class=\"button expand\" value=\"Login\">");
+		html.addLine("</div></div></form></div></div>");
+		html.addLine("<br><br><br><br>");
+		html.addImage("<img src=\"", "UT_Logo.png", "\" width=\"40%\" height=\"40%\"/>");
+		html.addLine("<div class=\"rechtsonder\">Gemaakt door groep 19</div>");
+		return html.getHTML();				
 	}
 	
 	@Path("try_login")
@@ -59,7 +48,6 @@ public class Login {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public String tryLogin(@FormParam("userid") String userid, @FormParam("password") String password){
 		//uses the number of the account to log in (so only numbers)
-		int depth = 2;
 		String response = "";
 		LoginDB loginDB = new LoginDB();
 		
@@ -91,8 +79,9 @@ public class Login {
 		
 		loginDB.closeConnection();
 		
-		return "<html> <head> " + Style.generateCSSLink(depth) + " </head> <h1> " + response + "</h1> </html>";
-
+		HTMLGenerator html = new HTMLGenerator(2);
+		html.addLine(response);
+		return html.getHTML();
 	}
 	
 	@GET
@@ -111,8 +100,10 @@ public class Login {
 		}
 		personlist+="</ul>";
 		loginDB.closeConnection();
-		return "<html> <head> " + Style.generateCSSLink(depth) + " </head> <body> <h2> The persons are : </h2>" + personlist;
-		
+		HTMLGenerator html = new HTMLGenerator(2);
+		html.addLine("<h2> The persons are : </h2>");
+		html.addLine(personlist);
+		return html.getHTML();	
 	}
 	
 	@GET
@@ -123,13 +114,13 @@ public class Login {
 	 * @return The count of login accounts
 	 */
 	public String getCount(){
-		int depth = 2;
 		LoginDB loginDB = new LoginDB(); 
 		int count = loginDB.getLoginCount();
 		
 		loginDB.closeConnection();
-		
-		return "<html> <head> " + Style.generateCSSLink(depth) + "</head> <h1> There are " + String.valueOf(count) + " login accounts.";
+		HTMLGenerator html = new HTMLGenerator(2);
+		html.addLine("<h1> There are " + String.valueOf(count) + " login accounts.");
+		return html.getHTML();
 	}
 	
 	

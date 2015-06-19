@@ -1,7 +1,3 @@
-
-// Track the element that is being dragged.var
-elementDragged = null;
-
 function createText(elem){
   var text = elem.innerHTML;
   var header = elem.getElementsByTagName("h4");
@@ -17,13 +13,27 @@ function addDrag(elem){
   elem.addEventListener('dragstart', function(e) {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text', createText(this));
-    elementDragged = this;
+    //highLightDroppables(this);
   });
 
   // Event Listener for when the drag interaction finishes.
   elem.addEventListener('dragend', function(e) {
-    elementDragged = null;
+    //deHighLightDroppables();
   });
+}
+
+function highLightDroppables(this){
+
+  elem.className = addClass(elem.className, "active-droppable");
+}
+
+function deHighLightDroppables(){
+  //foreach droppable
+  elem.className = removeClass(elem.className, "active-droppable");
+}
+
+function getEachClassWith(){
+
 }
 
 function setDrag(elems){
@@ -65,17 +75,10 @@ function addDrop(elem){
 
       e.dataTransfer.dropEffect = 'move';
 
-      return false;
-    });
 
-    // Event Listener for when the dragged element enters the drop zone.
-  elem.addEventListener('dragenter', function(e) {
       this.className = addClass(this.className, "droppable");
-    });
 
-    // Event Listener for when the dragged element leaves the drop zone.
-  elem.addEventListener('dragleave', function(e) {
-      this.className = removeClass(this.className, "droppable");
+      return false;
     });
 
     // Event Listener for when the dragged element dropped in the drop zone.
@@ -83,8 +86,6 @@ function addDrop(elem){
       if (e.preventDefault) e.preventDefault(); 
       if (e.stopPropagation) e.stopPropagation();
       //if (isIn(e.target,this.childNodes)) return false;
-
-      this.className = removeClass(this.className, "droppable");
 
       var node = document.createElement("li");
       var textnode = document.createTextNode(e.dataTransfer.getData('text'));

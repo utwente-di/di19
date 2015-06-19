@@ -1,6 +1,20 @@
-package nl.utwente.di.gradeManager.style;
+package nl.utwente.di.gradeManager.helpers;
 
-public class Style {
+public class DepthGenerator {
+	
+	/**
+	 * Generates a link to a JS files
+	 * @param argDepth the depth of the page in which the file is used
+	 * @param filename the name of the js file
+	 * @return the link to the javascript file including tags
+	 */
+	public static String generateJSLink(int argDepth, String filename){
+		String JS = "js/" + filename;
+		for (int i = 0; i < argDepth; i++){
+			JS = "../" + JS;
+		}
+		return "<script src=\"" + JS + "\"></script>\n";
+	}
 	
 	/**
 	 * Generates a link to the css file we use in certain pages
@@ -12,8 +26,7 @@ public class Style {
 		for (int i = 0; i < argDepth; i++){
 			CSS = "../" + CSS;
 		}
-		String CSSLink = "<link rel=\"stylesheet\" href=\"" + CSS + "\"/>";
-		return CSSLink;
+		return "<link rel=\"stylesheet\" href=\"" + CSS + "\"/>\n";
 		
 	}
 	
