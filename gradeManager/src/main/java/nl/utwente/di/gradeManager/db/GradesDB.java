@@ -69,6 +69,42 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	public List<Course> getCoursesForSuperCourse(int argCoursecode){
+		List<Course> result = new ArrayList<Course>();
+		
+		String query = "SELECT c.coursecode,sc.name,sc.weight,c.year FROM Testi.supercourse sc, Testi.course c WHERE " +
+		"c.coursecode = sc.coursecode AND " +
+		"c.coursecode = " + argCoursecode;	
+		
+		//SELECT c.coursecode,sc.name,sc.weight,c.year FROM Testi.supercourse sc, Testi.course c WHERE
+		//c.coursecode = sc.coursecode AND
+		//c.coursecode = argCoursecode
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int coursecode = rs.getInt("coursecode");
+				String name = rs.getString("name");
+				int weight = rs.getInt("weight");
+				int year = rs.getInt("year");
+				result.add(new Course(coursecode, year, name, weight));
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		return result;
+		
+		
+	}
+	
 	/**
 	 * Gets the student from the database with an id.
 	 * @param argStudentid The id of this specific student.
@@ -471,7 +507,6 @@ public class GradesDB extends DB {
 		//c.coursecode = hc.coursecode AND 
 		//c.coursecode = sc.coursecode
 		
-		
 		try {
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
@@ -813,18 +848,37 @@ public class GradesDB extends DB {
 		}		
 	}	
 	
+	//TODO:
+	public void addSuperCourse(SuperCourse sc){
+			String query = "INSERT INTO Testi.supercourse(coursecode,name,weight)" +  
+			"VALUES(?,?,?)";
+			//No dependencies
+			try{
+				PreparedStatement ps = conn.prepareStatement(query);
+				ps.setInt(1,sc.getCourseCode());
+				ps.setString(2, sc.getName());
+				ps.setInt(3, sc.getWeight());
+				Debug.logln("GradesDB: executing statement: " + ps.toString());
+				ps.executeUpdate();
+				ps.close();
+			}  catch (SQLException e) {
+				Debug.logln("GradesDB: Oops: " + e.getMessage());
+				Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+			}	
+			
+	}
+	
 	//TODO: test
 	public void addCourse(Course c){
-		String query = "INSERT INTO Testi.Course(coursecode,name,weight,year) " + 
-		"VALUES (?,?,?,?)";
-		//No dependencies
+		String query = "INSERT INTO Testi.Course(coursecode,year) " + 
+		"VALUES (?,?)";
+		//Note that: Coursecode, for the supercourse must exist.
+		//also; the (coursecode,year) tuple should not exist before.
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1,c.getCourseCode());
-			ps.setString(2,c.getName());
-			ps.setInt(3,c.getWeight());
-			ps.setInt(4, c.getYear());
+			ps.setInt(2, c.getYear());
 			Debug.logln("GradesDB: Executing statement: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
@@ -957,15 +1011,17 @@ public class GradesDB extends DB {
 		}
 				
 	}
-	//TODO: AddCourseToModule
+	
+	
+//	//TODO: AddCourseToModule
 //	public void addCourseToModule(int argModulecode, int argCoursecode, int argCourseyear){
 //		String query = "INSERT INTO"
 ////		Note that:
 ////		1. The modulecode for the module has to exist.
 ////		2. The pair (coursecode,courseyear) for the course has to exist.
-//
+//		
 //		
 //	}
-	
+//	
 	
 }
