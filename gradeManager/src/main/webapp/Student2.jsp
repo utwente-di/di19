@@ -1,4 +1,4 @@
-<%@ page import="java.util.List, nl.utwente.di.gradeManager.servlets.* , nl.utwente.di.gradeManager.model.*"  %>
+<%@ page import="java.util.List, nl.utwente.di.gradeManager.servlets.* , nl.utwente.di.gradeManager.model.*, java.util.ArrayList"  %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,10 +28,10 @@
     <script src="js/foundation.min.js"></script>
 </head>
 <body>
-<%--<nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+<nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
   <ul class="title-area">
     <li class="name">
-      <h1><a href="#">TOSTi <%student.getFirstname(); %> <%student.getSurname(); %></a></h1>
+      <h1><a href="#">TOSTi <jsp:getProperty name="student" property="firstname"/> <jsp:getProperty property="surname" name="student"/></a></h1>
     </li>
      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
     <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -40,20 +40,27 @@
   <section class="top-bar-section">
     <!-- Right Nav Section -->
     <ul class="left">
-      <li class="has-dropdown">
-        <a href="#">Jaar 1</a>
-        <ul class="dropdown">
-          <li><a href="#">Module 1</a></li>
-          <li><a href="#">Module 2</a></li>
-        </ul>
-      </li>
-	  <li class="has-dropdown">
-		<a href="#">Jaar 2</a>
-		<ul class="dropdown">
-			<li><a href="#">Module 1</a>
-			<li><a href="#">Module 2</a>
-			<li><a href="#">Module 3</a>
-	  </ul>
+    
+    <%List<Module> modules = studentModules.getModules();
+    List<Integer> years = new ArrayList<Integer>();
+    for (Module module : modules){
+    	if (!years.contains(module.getYear())){
+    		years.add(module.getYear());
+    	}
+    }
+    for (int i = 0; i <years.size(); i++ ){
+    	out.println("<li class=\"has-dropdown\">" +
+    					"<a href=\"#\">" + years.get(i) + "</a>" +
+    					"<ul class=\"dropdown\">");
+    	for (Module module : modules){
+    		if (module.getYear() == years.get(i)){
+    			out.println("<li><a href=\"#" + module.getModulecode() + "\">" +
+    							module.getName() + "</a></li>");
+    		}
+    	}
+    	out.println("</ul></li>");		
+    }
+    	%>
 
   </section>
   <section class="top-bar-section">
@@ -61,8 +68,8 @@
 	<li><a href="#">My account</a></li>
 	<li><a href="#">Settings</a></li>
 	</section>
-</nav>--%>
-<script src="js/Navigatiebalk.js"></script>
+</nav>
+<%--<script src="js/Navigatiebalk.js"></script>--%>
 <h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"><jsp:getProperty name="moduletoShow" property="name"/><jsp:getProperty name="moduleresulttoShow" property="result" /></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
 

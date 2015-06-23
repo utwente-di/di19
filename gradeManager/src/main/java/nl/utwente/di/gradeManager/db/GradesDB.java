@@ -542,7 +542,7 @@ public class GradesDB extends DB {
 		List<Assignment> result = new ArrayList<Assignment>();
 		String query = "SELECT * FROM Testi.assignment a WHERE "+ 
 		"a.coursecode = " + argCoursecode + " AND " + 
-		"a.courseyear = " +	argCourseyear + 
+		"a.year = " +	argCourseyear + 
 		" ORDER BY assignmentid";
 		
 		//SELECT * FROM Testi.assignment a WHERE 
@@ -559,7 +559,7 @@ public class GradesDB extends DB {
 			while(rs.next()){
 				int assignmentid = rs.getInt("assignmentid");
 				int coursecode = rs.getInt("coursecode");
-				int courseyear = rs.getInt("courseyear");
+				int courseyear = rs.getInt("year");
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getBoolean("isgradedassignment");
 				int weight = rs.getInt("weight");

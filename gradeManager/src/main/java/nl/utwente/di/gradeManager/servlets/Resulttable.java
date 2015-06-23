@@ -29,6 +29,8 @@ public class Resulttable extends HttpServlet {
 	private Module module;
 	private ModuleResult moduleResult;
 	private Student student;
+	private List<Module> studentmodules;
+	StudentModules naam;
 	
 	protected void setInfo(int moduleID, int personID, int moduleYear){
 		GradesDB gradesDB = new GradesDB();
@@ -37,6 +39,8 @@ public class Resulttable extends HttpServlet {
 		courses = gradesDB.getCoursesForModule(moduleID);
 		
 		student = gradesDB.getStudent(personID);
+		
+		studentmodules = gradesDB.getModulesForStudent(personID);
 		
 		List<Assignment> assignmentList = new ArrayList<Assignment>();
 		for(int i = 0; i < courses.size(); i++){
@@ -63,6 +67,8 @@ public class Resulttable extends HttpServlet {
 			}
 		}
 		occasions = resultList;
+		
+		naam = new StudentModules(personID, studentmodules);
 		
 		moduleResult = gradesDB.getModuleResult(personID, module.getModulecode(), module.getYear());
 		
@@ -115,6 +121,8 @@ public class Resulttable extends HttpServlet {
 			request.setAttribute("moduleresulttoShow", moduleResult);
 		}
 			request.setAttribute("student", student);
+			
+			request.setAttribute("studentModules", naam);
 		
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
 			dispatcher.forward(request, response);
