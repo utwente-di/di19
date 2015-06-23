@@ -6,7 +6,7 @@ package nl.utwente.di.gradeManager.model;
  */
 public class Module extends SuperModule{
 	private int year;
-
+	
 	/**
 	 * Constructs a module.
 	 * @param argModulecode The module code of this module.

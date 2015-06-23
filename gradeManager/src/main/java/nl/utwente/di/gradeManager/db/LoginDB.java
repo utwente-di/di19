@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.utwente.di.gradeManager.debug.Debug;
-import nl.utwente.di.gradeManager.model.Person;
-import nl.utwente.di.gradeManager.model.Student;
-import nl.utwente.di.gradeManager.model.Teacher;
+import nl.utwente.di.gradeManager.model.*;
 
 /**
  * Extension of DB for use of the Login page.
@@ -117,4 +115,43 @@ public class LoginDB extends DB {
 		return result;
 	}
 	
+	public String getLoggedInPersonid(String sessionid){
+		String query = "SELECT ls.personid FROM Testi.loginsession ls WHERE " + 
+		"ls.sessionid = '" + sessionid + "'";
+		String personid = "";
+	
+	try{
+		//execute the query in the connected database.
+		Statement st = conn.createStatement();
+		Debug.logln("LoginDB: Executing session query : " + query);
+		ResultSet rs = st.executeQuery(query);
+		while(rs.next()){
+			 personid = rs.getString("personid");
+		}
+		//close resultset and statement.
+		rs.close();
+		st.close();
+	} catch (SQLException e) {
+		//something went wrong with executing the query.s
+		Debug.logln("LoginDB: Oops: " + e.getMessage() );
+		Debug.logln("LoginDB: SQLState" + e.getSQLState() );
+	}
+	
+	return personid;
+	}
+	
+	public void addSession(LoginSession ls){
+		String query = "INSERT INTO Testi.loginsession(sessionid,personid) VALUES (?,?)";
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, ls.getSessionid());
+			ps.setString(2, ls.getPersonid());
+			Debug.logln("LoginDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("LoginDB: Oops: " + e.getMessage());
+			Debug.logln("LoginDB: SQLState: " + e.getSQLState());
+		}
+	}
 }
