@@ -7,19 +7,19 @@ import nl.utwente.di.gradeManager.model.Course;
 
 public class StudentCourses {
 
-	private String title;
+	private Integer title;
 	private List<Course> courses;
 	
-	public StudentCourses(String title, List<Course> courses) {
+	public StudentCourses(Integer title, List<Course> courses) {
 		this.title=title;
 		this.courses=courses;
 	}
 	
-	public void setTitle(String title) {
+	public void setTitle(Integer title) {
 		this.title=title;
 	}
 	
-	public String getTitle() {
+	public Integer getTitle() {
 		return title;		
 	}
 	

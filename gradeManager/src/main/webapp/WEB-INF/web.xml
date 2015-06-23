@@ -14,7 +14,12 @@
   <servlet>
 		<servlet-name>Proeftabel</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.Proeftabel</servlet-class>
-	</servlet>
+  </servlet>
+  
+  <servlet>
+		<servlet-name>Resulttabel</servlet-name>
+		<servlet-class>nl.utwente.di.gradeManager.servlets.Resulttable</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>gradeManagerPages</servlet-name>
@@ -23,5 +28,9 @@
   <servlet-mapping>
 		<servlet-name>Proeftabel</servlet-name>
 		<url-pattern>/proefTabel</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Resulttabel</servlet-name>
+		<url-pattern>/Resulttabel</url-pattern>
 	</servlet-mapping>
 </web-app> 

@@ -32,7 +32,8 @@ public class Resulttable extends HttpServlet {
 	private List<Module> studentmodules;
 	StudentModules naam;
 	
-	protected void setInfo(int moduleID, int personID, int moduleYear){
+	protected void setInfo(int personID, int moduleID, int moduleYear){
+		
 		GradesDB gradesDB = new GradesDB();
 		module = gradesDB.getModule(moduleID, moduleYear);
 		
@@ -79,6 +80,13 @@ public class Resulttable extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		Integer moduleid = Integer.parseInt(request.getParameter("moduleid"));
+		Integer moduleyear = Integer.parseInt(request.getParameter("moduleyear"));
+		Integer SID = 3;
+		//String SID = request.getAttribute("studentID").toString();
+		
+		setInfo(SID, moduleid, moduleyear);
+		
 		if (courses != null) {
 			List<Course> coursesList = new ArrayList<Course>();
 			for (int i = 0; i < courses.size(); i++) {
@@ -86,8 +94,7 @@ public class Resulttable extends HttpServlet {
 					coursesList.add(courses.get(i));
 			}
 			
-			//String SID = request.getAttribute("studentID").toString();
-			String SID = "Tim";
+			
 			StudentCourses bean = new StudentCourses(SID, coursesList);
 			request.setAttribute("coursestoShow", bean);
 		}
