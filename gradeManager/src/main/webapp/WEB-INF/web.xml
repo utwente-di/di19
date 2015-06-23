@@ -9,7 +9,7 @@
         <param-value>nl.utwente.di.gradeManager.pages</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-    
+    </servlet>
   <servlet>
 		<servlet-name>Proeftabel</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.Proeftabel</servlet-class>
