@@ -1,5 +1,6 @@
 package nl.utwente.di.gradeManager.pages;
 
+import javax.servlet.http.Cookie;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -78,6 +79,13 @@ public class Login {
 		}
 		
 		loginDB.closeConnection();
+		
+//		//Keep track of the session.
+//		if(login_success){
+//			Cookie c = new Cookie("userid", Security.MD5(userid));
+//			c.setMaxAge(60*60);
+//			response.add
+//		}
 		
 		HTMLGenerator html = new HTMLGenerator(2);
 		html.addLine(response);

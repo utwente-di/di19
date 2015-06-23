@@ -10,7 +10,6 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
     
-  </servlet>
   <servlet>
 		<servlet-name>Proeftabel</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.Proeftabel</servlet-class>
@@ -20,17 +19,27 @@
 		<servlet-name>Resulttabel</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.Resulttable</servlet-class>
   </servlet>
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>nl.utwente.di.gradeManager.servlets.Login</servlet-class>
+	</servlet>
   
   <servlet-mapping>
     <servlet-name>gradeManagerPages</servlet-name>
     <url-pattern>/pages/*</url-pattern>
   </servlet-mapping>
+
   <servlet-mapping>
 		<servlet-name>Proeftabel</servlet-name>
 		<url-pattern>/proefTabel</url-pattern>
-	</servlet-mapping>
+</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>Resulttabel</servlet-name>
 		<url-pattern>/Resulttabel</url-pattern>
-	</servlet-mapping>
+</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login</url-pattern>
+</servlet-mapping>
 </web-app> 
