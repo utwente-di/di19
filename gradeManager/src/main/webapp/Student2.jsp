@@ -75,6 +75,7 @@
 
 <% List<Course> courses = coursestoShow.getCourses();
 		for (Course course : courses) {
+			if(course.getYear() == moduletoShow.getYear()){
 			String courseNameID = course.getName().replaceAll("\\s","");
 			out.println("<li class=\"accordion-navigation\">" + 
 							"<a href=\"#" + courseNameID + "\"> " + course.getName() + "</a>"+
@@ -93,7 +94,7 @@
 			String backgroundcolour = "";
 				for (Assignment assignment : assignments) {
 					for(AssignmentResult result : results){
-						if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID()){	
+						if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear()){	
 							if(result.getResult().doubleValue() < 5.5) {
 							//result is not passing grade.
 								backgroundcolour = "FF0000"; // red
@@ -117,6 +118,7 @@
 								"</div>"+
 							"</li>"
 			);
+		}
 		}
 %>
 	</ul>
