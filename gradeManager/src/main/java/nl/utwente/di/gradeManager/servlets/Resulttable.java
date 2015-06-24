@@ -24,7 +24,7 @@ import nl.utwente.di.gradeManager.db.LoginDB;
 
 public class Resulttable extends HttpServlet {
 	
-	private final String jsp_address = "Student2.jsp";
+	private final String jsp_address = "Student.jsp";
 	private List<Course> courses;
 	private List<Assignment> assignments;
 	private List<AssignmentResult> occasions;
