@@ -13,12 +13,18 @@ import nl.utwente.di.gradeManager.model.*;
 
 public class Login extends HttpServlet {
 	private final String jsp_address = "Login.jsp";
+	private final String student_address = "Student.jsp";
+	private final String teacher_address = "Teacher.jsp";
+	private final String manager_address = "Manager.jsp";
 	
 	public void init(ServletConfig config){
 		Debug.logln("Login servlet: init called.");
 		
 	}
 	
+	/**
+	 * GET for the login page, show the login form.
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response){
 		Debug.logln("Login servlet: doGet.");
 		
@@ -40,6 +46,8 @@ public class Login extends HttpServlet {
 					if (p.getPersonID().equals(personid)){
 
 						Debug.logln("He is logged in as " + p.getFirstname() + " " + p.getSurname());
+						int personid_asinteger = Integer.parseInt(personid.substring(1));
+						Debug.logln("Permissions: student: " + loginDB.isStudent(personid_asinteger) + " teacher : " + loginDB.isTeacher(personid_asinteger) + " manager: " + loginDB.isManager(personid_asinteger));
 					}
 				}
 			}
@@ -50,14 +58,15 @@ public class Login extends HttpServlet {
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * POST for the login page, send the information to the server.
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response){
 		Debug.logln("Login servlet: doPost.");
 		//log in
@@ -74,7 +83,31 @@ public class Login extends HttpServlet {
 					HttpSession session = request.getSession(true);
 					LoginSession ls = new LoginSession(session.getId(),username);
 					loginDB.addSession(ls);
-	
+					int personid_asinteger = Integer.parseInt(username.substring(1));
+					boolean student = loginDB.isStudent(personid_asinteger);
+					boolean teacher = loginDB.isTeacher(personid_asinteger);
+					boolean manager = loginDB.isManager(personid_asinteger);
+					
+					Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
+					RequestDispatcher dispatcher;
+					if(manager){
+						//redirect naar manager pagina.
+						dispatcher = request.getRequestDispatcher(manager_address);
+					} else if(teacher){
+						//redirect naar teacher pagina.
+						dispatcher = request.getRequestDispatcher(teacher_address);
+					} else {
+						//redirect naar student pagina.
+						dispatcher = request.getRequestDispatcher(student_address);
+					}
+					//Redirect to the page.
+					try {
+						dispatcher.forward(request, response);
+					} catch (ServletException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}				
 			}			
 		}

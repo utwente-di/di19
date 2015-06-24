@@ -164,4 +164,95 @@ public class LoginDB extends DB {
 			Debug.logln("LoginDB: SQLState: " + e.getSQLState());
 		}
 	}
+	
+	/**
+	 * Finds out of the person with the given personid is a teacher.
+	 * @param argPersonid The identifier of the person.
+	 * @return Whether the person is a teacher.
+	 */
+	public boolean isTeacher(int argPersonid){
+		boolean result = false;
+		//Look if the personid corresponds with a record in the teacher table
+		String query = "SELECT 1 FROM Testi.teacher WHERE Testi.teacher.teacherid = " + argPersonid;
+		
+		try{
+			//execute the query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("LoginDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				result = true;
+			}
+			//close resultset and statement.
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			//something went wrong with executing the query.s
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Finds out of the person with the given personid is a student.
+	 * @param argPersonid The identifier of the person.
+	 * @return Whether the person is a student.
+	 */
+	public boolean isStudent(int argPersonid){
+		boolean result = false;
+		String query = "SELECT 1 FROM Testi.student WHERE Testi.student.studentid = " + argPersonid;
+		//Look if the personid corresponds with a record in the student table
+		
+		try{
+			//execute the query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("LoginDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				result = true;
+			}
+			//close resultset and statement.
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			//something went wrong with executing the query.s
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Finds out of the person with the given personid is a manager
+	 * @param argPersonid The identifier of the person.
+	 * @return The manager state of the person.
+	 */
+	public boolean isManager(int argPersonid){
+		boolean result = false;
+		//Look if the personid corresponds with a record in the teacher table
+		//Then, look if the manager field is true.
+		String query = "SELECT 1 FROM Testi.teacher WHERE Testi.teacher.administrator = true AND Testi.teacher.teacherid = " + argPersonid;
+		
+		try{
+			//execute the query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("LoginDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				 result = true;
+			}
+			//close resultset and statement.
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			//something went wrong with executing the query.s
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
+		}
+		
+		return result;
+	}
 }
