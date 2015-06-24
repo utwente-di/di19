@@ -13,14 +13,14 @@
 <div style="text-align: right; ">
     <button type="button" style="background-color:transparent; border-color:transparent;"
             onclick="alert('Hier komt hulp voor het inloggen te staan')">
-        <img src="help.png"/>
+        <img src="images/help.png"/>
     </button>
 </div>
 
 <div class="loginbox">
     <form name="login" action="login" method="post" accept-charset="utf-8">
 		    <label for="username"><h3>Student of medewerkernummer</h3></label>
-                    <input id="username" type="text" name="username" size="15" placeholder="s0000000" required>
+                    <input id="username" type="text" name="username" size="15" placeholder="s0000000" required autofocus>
 		    <label for="password"><h3>Wachtwoord</h3></label>
 		    <input id="password" type="password" name="password" placeholder="Wachtwoord" required>
                     <input type="submit" class="button expand" value="Login">
