@@ -47,7 +47,43 @@ public class Login extends HttpServlet {
 
 						Debug.logln("He is logged in as " + p.getFirstname() + " " + p.getSurname());
 						int personid_asinteger = Integer.parseInt(personid.substring(1));
-						Debug.logln("Permissions: student: " + loginDB.isStudent(personid_asinteger) + " teacher : " + loginDB.isTeacher(personid_asinteger) + " manager: " + loginDB.isManager(personid_asinteger));
+						boolean student = loginDB.isStudent(personid_asinteger);
+						boolean teacher = loginDB.isTeacher(personid_asinteger);
+						boolean manager = loginDB.isManager(personid_asinteger);
+						
+						Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
+						if(manager){
+							//redirect naar manager pagina.
+							Debug.logln("Login: Redirecting to manager page!");
+							try {
+								response.sendRedirect(manager_address);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							return;
+						} 
+						if(teacher){
+							//redirect naar teacher pagina.
+							Debug.logln("Login: Redirecting to teacher page!");
+							try {
+								response.sendRedirect(teacher_address);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							return;
+						} else {
+							//redirect naar student pagina.
+
+							Debug.logln("Login: Redirecting to student page!");
+							try {
+								response.sendRedirect(student_address);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							return;
+						}
+					
+					
 					}
 				}
 			}
@@ -69,6 +105,8 @@ public class Login extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response){
 		Debug.logln("Login servlet: doPost.");
+		
+		
 		//log in
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
