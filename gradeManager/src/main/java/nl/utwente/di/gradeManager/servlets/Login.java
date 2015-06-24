@@ -89,24 +89,35 @@ public class Login extends HttpServlet {
 					boolean manager = loginDB.isManager(personid_asinteger);
 					
 					Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
-					RequestDispatcher dispatcher;
 					if(manager){
 						//redirect naar manager pagina.
-						dispatcher = request.getRequestDispatcher(manager_address);
-					} else if(teacher){
+						Debug.logln("Login: Redirecting to manager page!");
+						try {
+							response.sendRedirect(manager_address);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						return;
+					} 
+					if(teacher){
 						//redirect naar teacher pagina.
-						dispatcher = request.getRequestDispatcher(teacher_address);
+						Debug.logln("Login: Redirecting to teacher page!");
+						try {
+							response.sendRedirect(teacher_address);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						return;
 					} else {
 						//redirect naar student pagina.
-						dispatcher = request.getRequestDispatcher(student_address);
-					}
-					//Redirect to the page.
-					try {
-						dispatcher.forward(request, response);
-					} catch (ServletException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
+
+						Debug.logln("Login: Redirecting to student page!");
+						try {
+							response.sendRedirect(student_address);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						return;
 					}
 				}				
 			}			
