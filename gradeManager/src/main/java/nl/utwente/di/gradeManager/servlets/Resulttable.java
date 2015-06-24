@@ -37,13 +37,16 @@ public class Resulttable extends HttpServlet {
 	protected void setInfo(int personID, int moduleID, int moduleYear){
 		
 		GradesDB gradesDB = new GradesDB();
+		
+		if(studentmodules == null){
+			studentmodules = gradesDB.getModulesForStudent(personID);
+		}
+		
 		module = gradesDB.getModule(moduleID, moduleYear);
 		
 		courses = gradesDB.getCoursesForModule(moduleID);
 		
 		student = gradesDB.getStudent(personID);
-		
-		studentmodules = gradesDB.getModulesForStudent(personID);
 		
 		List<Assignment> assignmentList = new ArrayList<Assignment>();
 		for(int i = 0; i < courses.size(); i++){
@@ -82,13 +85,28 @@ public class Resulttable extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		Integer moduleid = Integer.parseInt(request.getParameter("moduleid"));
-		Integer moduleyear = Integer.parseInt(request.getParameter("moduleyear"));
-
 		HttpSession session = request.getSession(false);
 		String sessionid = session.getId();
 		LoginDB logindb = new LoginDB();
 		Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
+		logindb.closeConnection();
+		
+		Integer moduleid;
+		Integer moduleyear;
+		
+		
+		if (request.getParameter("moduleid") == null || request.getParameter("moduleyear") == null){
+			GradesDB gradesDB = new GradesDB();
+			studentmodules = gradesDB.getModulesForStudent(SID);
+			moduleid = studentmodules.get(0).getModulecode();
+			moduleyear = studentmodules.get(0).getYear();
+			gradesDB.closeConnection();
+		}else{
+			moduleid = Integer.parseInt(request.getParameter("moduleid"));
+			moduleyear = Integer.parseInt(request.getParameter("moduleyear"));
+		}
+		
+	
 		
 		setInfo(SID, moduleid, moduleyear);
 		

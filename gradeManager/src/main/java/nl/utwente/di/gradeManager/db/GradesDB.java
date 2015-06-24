@@ -459,7 +459,8 @@ public class GradesDB extends DB {
 		"mr.studentid = " + argStudentID + " AND " +
 		"mr.modulecode = m.modulecode AND " + 
 		"mr.year = m.year AND " + 
-		"m.modulecode = sm.modulecode";
+		"m.modulecode = sm.modulecode " +
+		"ORDER BY m.year DESC";
 		
 		//SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.moduleresult mr, Testi.supermodule sm WHERE 
 		//mr.studentid = argStudentID AND
