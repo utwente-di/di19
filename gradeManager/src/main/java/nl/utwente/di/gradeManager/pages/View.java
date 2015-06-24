@@ -9,15 +9,21 @@ import nl.utwente.di.gradeManager.helpers.*;
 import nl.utwente.di.gradeManager.model.*;
 
 @Path("/view")
+/**
+ * Helper class for viewing objects (as well as making their relations clearer.)
+ * Note that this is just a test, and by no means intended to be used, ever.
+ *
+ */
 public class View {
-	//serves as a helper class for testing gradesDB
-	//as well as viewing information in database.
 	
 	@GET
 	@Path("students")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * Shows the students.
+	 * @return A HTML page containing information on all the students.
+	 */
 	public String showStudents(){
-		int depth = 2;
 		GradesDB gradesDB = new GradesDB();
 		String response = "";//"<html> <head> " + Style.generateCSSLink(depth) + "</head> <body> ";
 		response += "<h1> All students in database : </h1> </br>";
@@ -33,8 +39,11 @@ public class View {
 	@GET
 	@Path("teachers")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * Shows the teachers
+	 * @return A HTML page containing information on all the teachers.
+	 */
 	public String showTeachers(){
-		int depth = 2;
 		GradesDB gradesDB = new GradesDB();
 		String response = "";//"<html> <head> " + Style.generateCSSLink(depth) + "</head> <body> ";
 		response += "<h1> All teachers in database : </h1> </br>";
@@ -50,8 +59,12 @@ public class View {
 	@GET
 	@Path("modulesforstudent/{studentid}")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * Show the modules which a certain student is being taught.
+	 * @param argStudentid The identifier of the student.
+	 * @return A HTML page containing information on the modules which the student attends.
+	 */
 	public String showModulesForStudent(@PathParam("studentid") String argStudentid){
-		int depth = 3;
 		GradesDB gradesDB = new GradesDB();
 		Student student = gradesDB.getStudent(Integer.parseInt(argStudentid));
 		List<Module> modules = gradesDB.getModulesForStudent(Integer.parseInt(argStudentid));
@@ -70,9 +83,14 @@ public class View {
 	@GET
 	@Path("coursesformodule/{moduleid}")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * Shows the courses which are part of a given module.
+	 * @param argModuleid The identifier of the module.
+	 * @param argModuleYear The year in which the module is given.
+	 * @return A HTML page containing information on what courses are in the module.
+	 */
 	public String showCoursesForModule(@PathParam("moduleid") String argModuleid, @PathParam("moduleyear") String argModuleYear){
 		
-		int depth = 3;
 		GradesDB gradesDB = new GradesDB();
 		Module module = gradesDB.getModule(Integer.parseInt(argModuleid), Integer.parseInt(argModuleYear) );
 		List<Course> courses = gradesDB.getCoursesForModule(Integer.parseInt(argModuleid));
@@ -91,9 +109,14 @@ public class View {
 	@GET
 	@Path("assignmentsforcourse/{courseid}/{courseyear}")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * Show the assignments which are part of a given course.
+	 * @param argCourseid The identifier of the course.
+	 * @param argCourseyear The year in which the course is given.
+	 * @return A HTML page containing information on the assignments which are part of the given course.
+	 */
 	public String showAssignmentsForCourse(@PathParam("courseid") String argCourseid, @PathParam("courseyear") String argCourseyear){
 		
-		int depth = 4;
 		GradesDB gradesDB = new GradesDB();
 		Course course = gradesDB.getCourse(Integer.parseInt(argCourseid),Integer.parseInt(argCourseyear));
 		List<Assignment> assignments = gradesDB.getAssignmentsForCourse(Integer.parseInt(argCourseid),Integer.parseInt(argCourseyear));
@@ -113,9 +136,13 @@ public class View {
 	@GET
 	@Path("occasionsforassignment/{assignmentid}")
 	@Produces(MediaType.TEXT_HTML)
+	/**
+	 * Show the Occasions for a given assignment.
+	 * @param argAssignmentid The identifier of the assignment.
+	 * @return A HTML page containing information on the occasions of this assignment.
+	 */
 	public String showOccasionsForAssignment(@PathParam("assignmentid") String argAssignmentid){
 		
-		int depth = 3;
 		GradesDB gradesDB = new GradesDB();
 		Assignment assignment = gradesDB.getAssignment(Integer.parseInt(argAssignmentid));
 		List<AssignmentOccasion> assignmentoccasions = gradesDB.getOccasionsForAssignment(Integer.parseInt(argAssignmentid));

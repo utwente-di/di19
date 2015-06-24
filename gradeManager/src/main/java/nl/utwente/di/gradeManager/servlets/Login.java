@@ -86,10 +86,8 @@ public class Login extends HttpServlet {
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -99,7 +97,6 @@ public class Login extends HttpServlet {
 	
 	public void destroy(){
 		Debug.logln("Login servlet: destroy.");
-	}
-	
+	}	
 	
 }

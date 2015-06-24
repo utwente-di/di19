@@ -12,6 +12,7 @@ import nl.utwente.di.gradeManager.helpers.*;
 @Path("/hello")
 /**
  * Simple hello world page.
+ * Note that this is just a test and is not intended to be used, ever.
  *
  */
 public class Hello {
