@@ -71,7 +71,7 @@
 	</section>
 </nav>
 <%--<script src="js/Navigatiebalk.js"></script>--%>
-<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"><jsp:getProperty name="moduletoShow" property="name"/><jsp:getProperty name="moduleresulttoShow" property="result" /></h1>
+<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"> <div style="float:left; width: 47%; background-color:#FF0000"><jsp:getProperty name="moduletoShow" property="name"/></div> <jsp:getProperty name="moduleresulttoShow" property="result"/></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
 
 <% List<Course> courses = coursestoShow.getCourses();
