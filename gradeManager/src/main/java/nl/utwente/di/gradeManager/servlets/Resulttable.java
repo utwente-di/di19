@@ -88,7 +88,7 @@ public class Resulttable extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		String sessionid = session.getId();
 		LoginDB logindb = new LoginDB();
-		Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid));
+		Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
 		
 		setInfo(SID, moduleid, moduleyear);
 		
