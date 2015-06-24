@@ -54,7 +54,7 @@
     					"<ul class=\"dropdown\">");
     	for (Module module : modules){
     		if (module.getYear() == years.get(i)){
-    			out.println("<li><a href=\"#" + module.getModulecode() + "\">" +
+    			out.println("<li><a href=\"Resulttabel?moduleid=" +  module.getModulecode() + "&moduleyear=" + module.getYear() + "\">" +
     							module.getName() + "</a></li>");
     		}
     	}

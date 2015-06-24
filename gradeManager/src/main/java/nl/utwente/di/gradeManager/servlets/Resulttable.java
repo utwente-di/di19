@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import nl.utwente.di.gradeManager.db.GradesDB;
 import nl.utwente.di.gradeManager.model.Assignment;
@@ -18,6 +19,7 @@ import nl.utwente.di.gradeManager.model.Course;
 import nl.utwente.di.gradeManager.model.Module;
 import nl.utwente.di.gradeManager.model.ModuleResult;
 import nl.utwente.di.gradeManager.model.Student;
+import nl.utwente.di.gradeManager.db.LoginDB;
 
 
 public class Resulttable extends HttpServlet {
@@ -82,8 +84,11 @@ public class Resulttable extends HttpServlet {
 		
 		Integer moduleid = Integer.parseInt(request.getParameter("moduleid"));
 		Integer moduleyear = Integer.parseInt(request.getParameter("moduleyear"));
-		Integer SID = 3;
-		//String SID = request.getAttribute("studentID").toString();
+
+		HttpSession session = request.getSession(false);
+		String sessionid = session.getId();
+		LoginDB logindb = new LoginDB();
+		Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid));
 		
 		setInfo(SID, moduleid, moduleyear);
 		
