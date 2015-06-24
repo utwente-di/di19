@@ -19,7 +19,7 @@
 
 <div style="text-align: center; ">
     <div style="box-sizing: border-box; max-width: 480px; border: 5px solid #6249BB; border-radius: 10px; margin: 200px auto auto; padding: 20px; background-color: #E2C800;">
-        <form name="login" action="Login" method="post" accept-charset="utf-8">
+        <form name="login" action="login" method="post" accept-charset="utf-8">
             <div class="row">
                 <div class="large-12 columns">
 		    <label for="username"><h5>Student of medewerkernummer</h5></label>

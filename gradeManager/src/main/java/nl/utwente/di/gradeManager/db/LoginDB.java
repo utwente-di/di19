@@ -115,6 +115,12 @@ public class LoginDB extends DB {
 		return result;
 	}
 	
+	/**
+	 * Looks in the database for a session with a corresponding session id
+	 * In order to find out who is the potential logged in user.
+	 * @param sessionid The session id of the user of the web app
+	 * @return The identifier of the person, who is logged in, or "" if no one is logged in.
+	 */
 	public String getLoggedInPersonid(String sessionid){
 		String query = "SELECT ls.personid FROM Testi.loginsession ls WHERE " + 
 		"ls.sessionid = '" + sessionid + "'";
@@ -140,6 +146,10 @@ public class LoginDB extends DB {
 	return personid;
 	}
 	
+	/**
+	 * Adds a LoginSession to the database. (Table: loginsession)
+	 * @param ls The LoginSession to be added to the database.
+	 */
 	public void addSession(LoginSession ls){
 		String query = "INSERT INTO Testi.loginsession(sessionid,personid) VALUES (?,?)";
 		try{
