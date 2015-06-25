@@ -447,6 +447,35 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	public List<AssignmentResult> getResultsForAssignment(int assignmentid){
+		List<AssignmentResult> result = new ArrayList<AssignmentResult>();
+		String query = "Select * FROM AssignmentResult ar WHERE " +
+		assignmentid +  "= ar.assigmentid";
+		
+		try{
+			//execute query in the connected database
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int occasionid = rs.getInt("occasionid");
+				int studentid = rs.getInt("studentid");
+				Date occasiondate = rs.getDate("occasiondate");
+				BigDecimal assignmentresult = rs.getBigDecimal("result");
+				AssignmentResult ar = new AssignmentResult(occasionid, studentid, occasiondate, assignmentresult,  assignmentid);
+				result.add(ar);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+	}
+		
+		return result;
+	}
+	
 	/**
 	 * Gets the modules, which docent teaches is doing.
 	 * @param argDocentID The ID of the teacher.
