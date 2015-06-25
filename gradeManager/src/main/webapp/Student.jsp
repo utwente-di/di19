@@ -1,7 +1,6 @@
 <%-- This page should be for the students. --%>
 <%@ page import="java.util.List, nl.utwente.di.gradeManager.servlets.* , nl.utwente.di.gradeManager.model.*, java.util.ArrayList"  %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,7 +20,7 @@
 	<jsp:useBean id="studentModules" type="nl.utwente.di.gradeManager.servlets.StudentModules"
 		scope="request"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>TOSTi Framework</title>
+    <title>TOSTi GradeManagement</title>
     <link rel="stylesheet" href="css/foundation.css"/>
     <script src="js/vendor/modernizr.js"></script>
     <script src="js/vendor/jquery.js"></script>
@@ -68,6 +67,7 @@
   <ul class="right">
 	<li><a href="#">My account</a></li>
 	<li><a href="#">Settings</a></li>
+	</ul>
 	</section>
 </nav>
 <% String backgroundcolor;

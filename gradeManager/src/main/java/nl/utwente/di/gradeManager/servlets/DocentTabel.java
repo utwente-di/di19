@@ -17,6 +17,7 @@ import nl.utwente.di.gradeManager.model.Assignment;
 import nl.utwente.di.gradeManager.model.AssignmentResult;
 import nl.utwente.di.gradeManager.model.Course;
 import nl.utwente.di.gradeManager.model.Module;
+import nl.utwente.di.gradeManager.model.Student;
 import nl.utwente.di.gradeManager.model.Teacher;
 
 public class DocentTabel extends HttpServlet {
@@ -29,6 +30,7 @@ public class DocentTabel extends HttpServlet {
 	private List<Module> docentmodules;
 	private Teacher docent;
 	private StudentModules naam;
+	private List<Student> students;
 	
 	protected void setInfo(int personID, int moduleID, int moduleYear){
 		//Database connectie aanmaken
@@ -51,6 +53,7 @@ public class DocentTabel extends HttpServlet {
 				}
 			}
 		}
+		assignments = assignmentList;
 		
 		List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
 		for(int i = 0; i < assignments.size(); i++){
@@ -63,6 +66,21 @@ public class DocentTabel extends HttpServlet {
 				}
 			}
 		}
+		results = resultList;
+
+		
+		List<Student> studentList = new ArrayList<Student>();
+		for(int i = 0; i < courses.size(); i++){
+			students = gradesDB.getStudentsForCourse(courses.get(i).getCourseCode());
+			if (students != null){
+				for (int j = 0; j < students.size(); j++) {
+					if(students.get(j) != null){
+						studentList.add(students.get(j));
+					}
+				}
+			}
+		}
+		students = studentList;
 		
 		naam = new StudentModules(personID, docentmodules);
 		
@@ -129,6 +147,16 @@ public class DocentTabel extends HttpServlet {
 				
 			StudentAssignments bean4 = new StudentAssignments("Dit is een resultaat", resList);
 			request.setAttribute("resultstoShow", bean4);
+		}
+		
+		if (students != null) {
+			List<Student> studentList = new ArrayList<Student>();
+			for (int i = 0; i < students.size(); i++) {
+				if (students.get(i) != null)
+					studentList.add(students.get(i));
+			}
+			CourseStudents bean5 = new CourseStudents("Dit is een student", studentList);
+			request.setAttribute("studentstoShow", bean5);
 		}
 
 			request.setAttribute("docent", docent);
