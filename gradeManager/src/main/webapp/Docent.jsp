@@ -11,7 +11,7 @@
 		scope="request" />
 	<jsp:useBean id="resultstoShow" type="nl.utwente.di.gradeManager.servlets.StudentAssignments"
 		scope="request" />
-	<jsp:useBean id="docent" type="nl.utwente.di.gradeManager.model.Student"
+	<jsp:useBean id="docent" type="nl.utwente.di.gradeManager.model.Teacher"
 		scope="request"/>
 	<jsp:useBean id="docentModules" type="nl.utwente.di.gradeManager.servlets.StudentModules"
 		scope="request"/>
@@ -19,7 +19,7 @@
 		scope="request"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOSTi GradeManagement</title>
-    <link rel="stylesheet" href="Student_files/foundation.css">
+    <link rel="stylesheet" href="css/foundation.css"/>
     <script src="js/d3.js"></script>
     <script src="js/d3.min.js"></script>
     <script src="js/Teacher_module_overview.js"></script>
@@ -80,37 +80,42 @@
 	for (Course course : courses) {
 		if(course.getYear() == moduletoShow.getYear()){
 			String courseNameID = course.getName().replaceAll("\\s","");
-		}
 		out.println("<li class=\"accordion-navigation\">" +
-						"<a aria-expanded=\"false\" href=#Assignment" + courseNameID + ">" + course.getName() + "</a>" + 
-							"<div style=\"background-color:white\" id=#Assignment" + courseNameID + " class=\"content\">" +
+						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" + 
+							"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">" +
 								"<table>" +
 								 	"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>"
-		)
+		);
 		List<Assignment> assignments = assignmentstoShow.getAssignments();
 		List<AssignmentResult> results = resultstoShow.getAssResults();
+		List<Student> students = studentstoShow.getStudents();
 		for (Assignment assignment : assignments) {
 			for(AssignmentResult result : results){
-				if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear()){
+				for(Student student : students){
+					if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear() && result.getStudentid() == Integer.parseInt(student.getPersonID().substring(1))){
 					out.println("<tbody>" + 
 									"<tr>" +
-										"<td>" + 
-							
-					)
-										
+										"<td>" + student.getFirstname() + " " + student.getSurname() + "</td>" + 
+										"<td>" + student.getPersonID() + "</td>" +
+										"<td>" + result.getOccasiondate() + "</td>" +
+										"<td class=\"grade\">" + result.getResult() + "</td>" +
+									"</tr>" +
+								"</tbody>"
+								);
+					}
 				}
 			}
-		
 		}
-      <table>
-        <thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>
-        <tbody><tr><td>Mark</td><td>s1380087</td><td>2015-08-08</td><td class="grade">10</td></tr></tbody>
-      </table>
-    </div>
-  </li>
+		out.println( "</table>"+
+				"</div>"+
+			"</li>"
+		);
+		}
+	}
+%>
 </ul>
 
-%>
+
 <div class="databox">
   <h3>Cijfer verdeling</h3>
   <svg id="graphbox">

@@ -23,6 +23,10 @@
 		<servlet-name>Login</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.Login</servlet-class>
 	</servlet>
+ <servlet>
+		<servlet-name>DocentTabel</servlet-name>
+		<servlet-class>nl.utwente.di.gradeManager.servlets.DocentTabel</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>gradeManagerPages</servlet-name>
@@ -42,4 +46,8 @@
 		<servlet-name>Login</servlet-name>
 		<url-pattern>/login</url-pattern>
 </servlet-mapping>
+<servlet-mapping>
+    <servlet-name>DocentTabel</servlet-name>
+    <url-pattern>/DocentTabel</url-pattern>
+  </servlet-mapping>
 </web-app> 

@@ -14,7 +14,7 @@ import nl.utwente.di.gradeManager.model.*;
 public class Login extends HttpServlet {
 	private final String jsp_address = "Login.jsp";
 	private final String student_address = "Resulttabel";
-	private final String teacher_address = "Teacher.jsp";
+	private final String teacher_address = "DocentTabel";
 	private final String manager_address = "Manager.jsp";
 	
 	public void init(ServletConfig config){

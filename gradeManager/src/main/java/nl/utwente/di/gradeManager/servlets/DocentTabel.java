@@ -22,7 +22,7 @@ import nl.utwente.di.gradeManager.model.Teacher;
 
 public class DocentTabel extends HttpServlet {
 	
-	private final String jsp_address = "docent.jsp";
+	private final String jsp_address = "Docent.jsp";
 	private List<AssignmentResult> results;
 	private List<Assignment> assignments;
 	private Module module;
@@ -71,7 +71,7 @@ public class DocentTabel extends HttpServlet {
 		
 		List<Student> studentList = new ArrayList<Student>();
 		for(int i = 0; i < courses.size(); i++){
-			students = gradesDB.getStudentsForCourse(courses.get(i).getCourseCode());
+			students = gradesDB.getStudentsForCourse(courses.get(i).getCourseCode(), courses.get(i).getYear());
 			if (students != null){
 				for (int j = 0; j < students.size(); j++) {
 					if(students.get(j) != null){

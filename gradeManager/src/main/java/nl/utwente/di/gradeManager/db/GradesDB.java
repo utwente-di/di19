@@ -452,8 +452,9 @@ public class GradesDB extends DB {
 	 */
 	public List<AssignmentResult> getResultsForAssignment(int assignmentid){
 		List<AssignmentResult> result = new ArrayList<AssignmentResult>();
-		String query = "Select * FROM AssignmentResult ar WHERE " +
-		assignmentid +  "= ar.assigmentid";
+		String query = "Select * FROM Testi.AssignmentResult ar, Testi.AssignmentOccasion ac WHERE " +
+		assignmentid +  "= ac.assignmentid" + 
+		" AND ac.occasionid = ar.occasionid";
 		
 		try{
 			//execute query in the connected database
@@ -487,11 +488,13 @@ public class GradesDB extends DB {
 	 */
 	public List<Student> getStudentsForCourse(int coursecode, int year){
 		List<Student> result = new ArrayList<Student>();
-		String query = "SELECT s.studentid, s.firstname, s.surname FROM Student s, hasCourses hc, ModuleResult mr, Course c" +
+		String query = "SELECT s.studentid, p.firstname, p.surname FROM Testi.Student s, Testi.Person p, Testi.hasCourses hc, Testi.ModuleResult mr, Testi.Course c " +
 		"WHERE hc.courseCode = " + coursecode +
-		"AND c.courseCode = hc.courseCode" +
+		" "
+		+ "AND c.courseCode = hc.courseCode " +
 		"AND c.year = " + year +
-		"AND s.studentid = mr.studentid AND mr.modulecode = hc.modulecode ";
+		" AND s.studentid = mr.studentid AND mr.modulecode = hc.modulecode" + 
+		" AND p.personid = s.studentid";
 		try{
 			//execute query in the connected database.
 			Statement st = conn.createStatement();
@@ -523,9 +526,9 @@ public class GradesDB extends DB {
 	public List<Module> getModulesForDocent(int argDocentID){
 		List<Module> result = new ArrayList<Module>();
 		String query = "SELECT m.modulecode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm, Testi.teaches t WHERE " +
-		"m.modulecode = sm.modulecode AND" +
-		"t.modulecode = m.modulecode AND" +
-		"t.docentID = " + argDocentID;		
+		"m.modulecode = sm.modulecode AND " +
+		"t.modulecode = m.modulecode AND " +
+		"t.personID = " + argDocentID;		
 		
 		try{
 			//execute query in the connected database.
