@@ -70,8 +70,14 @@
 	<li><a href="#">Settings</a></li>
 	</section>
 </nav>
+<% String backgroundcolor;
+if (moduleresulttoShow.getResult().doubleValue() < 5.5){
+	backgroundcolor = "FF0000";
+} else {
+	backgroundcolor = "00FF00";}%>
+
 <%--<script src="js/Navigatiebalk.js"></script>--%>
-<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"> <div style="float:left; width: 47%; background-color:#FF0000"><jsp:getProperty name="moduletoShow" property="name"/></div> <jsp:getProperty name="moduleresulttoShow" property="result"/></h1>
+<h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"> <div style="float:left; width: 47%"><jsp:getProperty name="moduletoShow" property="name"/></div> <div style="width:4.05%; float:left; background-color:#<%out.println(backgroundcolor);%>"><jsp:getProperty name="moduleresulttoShow" property="result"/></div></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
 
 <% List<Course> courses = coursestoShow.getCourses();
