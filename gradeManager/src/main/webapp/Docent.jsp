@@ -56,12 +56,11 @@
 <h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA">Module name</h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion="">
   <li class="accordion-navigation">
-    <a aria-expanded="false" href="#Assignment1"> Assignment 1</a>
-    <input id="Assignment1-data" type="hidden" data='[1.5,1,5.5,1,4,5]'/>
-    <div style="background-color:white" id="Assignment1" class="content">
+    <a aria-expanded="false" href="#Assignment1"> Assignment 1</a> <!-- href should be "#Assignment"+id -->
+    <div style="background-color:white" id="Assignment1" class="content"> <!-- id should be "#Assignment"+id -->
       <table>
         <thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>
-        <tbody><tr><td>Mark</td><td>s1380087</td><td class="grade">2015-08-08</td><td>10</td></tr></tbody>
+        <tbody><tr><td>Mark</td><td>s1380087</td><td>2015-08-08</td><td class="grade">10</td></tr></tbody>
       </table>
     </div>
   </li>
@@ -77,7 +76,7 @@
 
 
   <script>
-    $(document).ready(prepare());
+    $(document).ready(prepare()); //will add listeners soon
     $(document).foundation();
   </script>
 </body></html>
