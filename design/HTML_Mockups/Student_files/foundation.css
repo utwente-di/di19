@@ -6233,3 +6233,30 @@ th.hide-for-touch {
 .loginbox h3 {
     color: #FFFFFF;
 }
+
+.databox {
+  background-color: #CCCCCC;
+  float: right;
+  width: 45%;
+}
+
+#graphbox{
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+#graphbox h3 {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+#graphbox rect {
+  fill: steelblue;
+}
+
+#graphbox text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
