@@ -446,7 +446,10 @@ public class GradesDB extends DB {
 		
 		return result;
 	}
-	
+	/**
+	 * Gets the AssignmentResults corresponding to the assignmentid
+	 * @return an ArrayList, containing assignmentresults with the given assignmentid's
+	 */
 	public List<AssignmentResult> getResultsForAssignment(int assignmentid){
 		List<AssignmentResult> result = new ArrayList<AssignmentResult>();
 		String query = "Select * FROM AssignmentResult ar WHERE " +
@@ -472,6 +475,42 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 	}
+		
+		return result;
+	}
+	
+	/**
+	 * Gets the Students that are attending the given course
+	 * @param argCoursecode The ID of the SuperCourse
+	 * @param argYear The year of this course
+	 * @return A list of students who are following this course
+	 */
+	public List<Student> getStudentsForCourse(int coursecode, int year){
+		List<Student> result = new ArrayList<Student>();
+		String query = "SELECT s.studentid, s.firstname, s.surname FROM Student s, hasCourses hc, ModuleResult mr, Course c" +
+		"WHERE hc.courseCode = " + coursecode +
+		"AND c.courseCode = hc.courseCode" +
+		"AND c.year = " + year +
+		"AND s.studentid = mr.studentid AND mr.modulecode = hc.modulecode ";
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int studentid = rs.getInt("studentid");
+				String firstname = rs.getString("firstname");
+				String surname = rs.getString("surname");
+				Student s = new Student(studentid, firstname, surname, "");
+				result.add(s);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
 		
 		return result;
 	}
