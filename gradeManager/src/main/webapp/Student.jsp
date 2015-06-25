@@ -128,6 +128,7 @@ if (moduleresulttoShow.getResult().doubleValue() < 5.5){
 		}
 		}
 %>
+
 	</ul>
 	<table style="float:right; width=50%">
 	<tbody>
