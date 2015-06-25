@@ -12,41 +12,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import nl.utwente.di.gradeManager.db.GradesDB;
+import nl.utwente.di.gradeManager.db.LoginDB;
 import nl.utwente.di.gradeManager.model.Assignment;
-import nl.utwente.di.gradeManager.model.AssignmentOccasion;
 import nl.utwente.di.gradeManager.model.AssignmentResult;
 import nl.utwente.di.gradeManager.model.Course;
 import nl.utwente.di.gradeManager.model.Module;
-import nl.utwente.di.gradeManager.model.ModuleResult;
-import nl.utwente.di.gradeManager.model.Student;
-import nl.utwente.di.gradeManager.db.LoginDB;
+import nl.utwente.di.gradeManager.model.Teacher;
 
-
-public class Resulttable extends HttpServlet {
+public class DocentTabel extends HttpServlet {
 	
-	private final String jsp_address = "Student.jsp";
-	private List<Course> courses;
+	private final String jsp_address = "docent.jsp";
+	private List<AssignmentResult> results;
 	private List<Assignment> assignments;
-	private List<AssignmentResult> occasions;
 	private Module module;
-	private ModuleResult moduleResult;
-	private Student student;
-	private List<Module> studentmodules;
+	private List<Course> courses;
+	private List<Module> docentmodules;
+	private Teacher docent;
 	private StudentModules naam;
 	
 	protected void setInfo(int personID, int moduleID, int moduleYear){
-		
+		//Database connectie aanmaken
 		GradesDB gradesDB = new GradesDB();
-		
-		if(studentmodules == null){
-			studentmodules = gradesDB.getModulesForStudent(personID);
-		}
 		
 		module = gradesDB.getModule(moduleID, moduleYear);
 		
 		courses = gradesDB.getCoursesForModule(moduleID);
 		
-		student = gradesDB.getStudent(personID);
+		docent = gradesDB.getTeacher(personID);
 		
 		List<Assignment> assignmentList = new ArrayList<Assignment>();
 		for(int i = 0; i < courses.size(); i++){
@@ -59,32 +51,28 @@ public class Resulttable extends HttpServlet {
 				}
 			}
 		}
-		assignments = assignmentList;
 		
 		List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
 		for(int i = 0; i < assignments.size(); i++){
-			occasions = gradesDB.getResultsForAssignmentAndStudent(personID, assignments.get(i).getAssignmentID());
-			if (occasions != null){
-				for (int j = 0; j < occasions.size(); j++) {
-					if(occasions.get(j) != null){
-						resultList.add(occasions.get(j));
+			results = gradesDB.getResultsForAssignment(assignments.get(i).getAssignmentID());
+			if (results != null){
+				for (int j = 0; j < results.size(); j++) {
+					if(results.get(j) != null){
+						resultList.add(results.get(j));
 					}
 				}
 			}
 		}
-		occasions = resultList;
 		
-		naam = new StudentModules(personID, studentmodules);
+		naam = new StudentModules(personID, docentmodules);
 		
-		moduleResult = gradesDB.getModuleResult(personID, module.getModulecode(), module.getYear());
-		
+		//Database connectie sluiten
 		gradesDB.closeConnection();
 	}
 	
-	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		//session opvragen en SID instellen
 		HttpSession session = request.getSession(false);
 		String sessionid = session.getId();
 		LoginDB logindb = new LoginDB();
@@ -93,21 +81,19 @@ public class Resulttable extends HttpServlet {
 		
 		Integer moduleid;
 		Integer moduleyear;
-		
-		
+		//Als alleen gradeManager/docenttabel zonder parameters wordt aangeroepen, automatisch doorsturen naar de meest recente module. Anders gewoon de gespecifeerde parameters volgen.	
 		if (request.getParameter("moduleid") == null || request.getParameter("moduleyear") == null){
 			GradesDB gradesDB = new GradesDB();
-			studentmodules = gradesDB.getModulesForStudent(SID);
-			moduleid = studentmodules.get(0).getModulecode();
-			moduleyear = studentmodules.get(0).getYear();
+			docentmodules = gradesDB.getModulesForDocent(SID);
+			moduleid = docentmodules.get(0).getModulecode();
+			moduleyear = docentmodules.get(0).getYear();
 			gradesDB.closeConnection();
 		}else{
 			moduleid = Integer.parseInt(request.getParameter("moduleid"));
 			moduleyear = Integer.parseInt(request.getParameter("moduleyear"));
 		}
 		
-	
-		
+		//SetInfo aanroepen zodat alle gegevens uit de database getrokken worden en de beans gevuld kunnen worden
 		setInfo(SID, moduleid, moduleyear);
 		
 		if (courses != null) {
@@ -128,34 +114,29 @@ public class Resulttable extends HttpServlet {
 				if (assignments.get(j) != null)
 					assList.add(assignments.get(j));
 			}
-		
-			
-			
 			CourseAssignments bean2 = new CourseAssignments("Dit is een vak", assList);
 			request.setAttribute("assignmentstoShow", bean2);
 		}
 		
 			request.setAttribute("moduletoShow", module);
 			
-		if (occasions != null) {
+		if (results != null) {
 				List<AssignmentResult> resList = new ArrayList<AssignmentResult>();
-				for (int j = 0; j < occasions.size(); j++) {
-					if (occasions.get(j) != null)
-						resList.add(occasions.get(j));
+				for (int j = 0; j < results.size(); j++) {
+					if (results.get(j) != null)
+						resList.add(results.get(j));
 			}
 				
 			StudentAssignments bean4 = new StudentAssignments("Dit is een resultaat", resList);
 			request.setAttribute("resultstoShow", bean4);
 		}
-		if (moduleResult != null) {
-			request.setAttribute("moduleresulttoShow", moduleResult);
-		}
-			request.setAttribute("student", student);
+
+			request.setAttribute("docent", docent);
 			
-			request.setAttribute("studentModules", naam);
+			request.setAttribute("docentModules", naam);
 		
-			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
-			dispatcher.forward(request, response);
-			
-		}
+		//Response teruggeven en sturen naar de juiste jsp pagina.
+		RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
+		dispatcher.forward(request, response);
 	}
+}
