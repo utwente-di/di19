@@ -85,8 +85,9 @@ List<Student> students = studentstoShow.getStudents();
 		if(course.getYear() == moduletoShow.getYear()){
 			String courseNameID = course.getName().replaceAll("\\s","");
 		out.println("<li class=\"accordion-navigation\">" +
-						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>");
-		
+						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" +
+		"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">");
+		out.println("<ul class=\"accordion\" data-accordion=\"\">");
 		for (Assignment assignment : assignments) {
 			if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear()){
 				out.println("<li class=\"accordion-navigation\">" +
@@ -111,7 +112,7 @@ List<Student> students = studentstoShow.getStudents();
 				}out.println("</table>" + 
 						"</div> </li>");
 			}
-		}out.println("</li>");
+		}out.println("</li></ul>");
 		}
 	}
 %>
