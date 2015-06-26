@@ -90,9 +90,10 @@ List<Student> students = studentstoShow.getStudents();
 		out.println("<ul class=\"accordion\" data-accordion=\"\">");
 		for (Assignment assignment : assignments) {
 			if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear()){
+				String assNameID = assignment.getName().replaceAll("\\s","");
 				out.println("<li class=\"accordion-navigation\">" +
-							"<a aria-expanded=\"false\" href=\"#" + assignment.getAssignmentID() + "\">" + assignment.getName() + "</a> " + 
-							"<div style=\"background-color:white\" id=\"" + assignment.getAssignmentID() + "\" class=\"content\">" +
+							"<a aria-expanded=\"false\" href=\"#" + assNameID + "\">" + assignment.getName() + "</a> " + 
+							"<div style=\"background-color:white\" id=\"" + assNameID + "\" class=\"content\">" +
 							"<table>" +
 							 	"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>");
 				for(AssignmentResult result : results){

@@ -89,12 +89,13 @@ public class DocentTabel extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//session opvragen en SID instellen
-		HttpSession session = request.getSession(false);
-		String sessionid = session.getId();
-		LoginDB logindb = new LoginDB();
-		Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
-		logindb.closeConnection();
+		//HttpSession session = request.getSession(false);
+		//String sessionid = session.getId();
+		//LoginDB logindb = new LoginDB();
+		//Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
+		//logindb.closeConnection();
 		
+		Integer SID  = 9876;
 		Integer moduleid;
 		Integer moduleyear;
 		//Als alleen gradeManager/docenttabel zonder parameters wordt aangeroepen, automatisch doorsturen naar de meest recente module. Anders gewoon de gespecifeerde parameters volgen.	
