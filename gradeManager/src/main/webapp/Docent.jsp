@@ -78,39 +78,40 @@
 <ul style="float:left; width: 50%" class="accordion" data-accordion="">
 
 <%List<Course> courses = coursestoShow.getCourses();
+List<Assignment> assignments = assignmentstoShow.getAssignments();
+List<AssignmentResult> results = resultstoShow.getAssResults();
+List<Student> students = studentstoShow.getStudents();
 	for (Course course : courses) {
 		if(course.getYear() == moduletoShow.getYear()){
 			String courseNameID = course.getName().replaceAll("\\s","");
 		out.println("<li class=\"accordion-navigation\">" +
-						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" + 
-							"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">" +
-								"<table>" +
-								 	"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>"
-		);
-		List<Assignment> assignments = assignmentstoShow.getAssignments();
-		List<AssignmentResult> results = resultstoShow.getAssResults();
-		List<Student> students = studentstoShow.getStudents();
+						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>");
+		
 		for (Assignment assignment : assignments) {
-			for(AssignmentResult result : results){
-				for(Student student : students){
-					if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear() && result.getStudentid() == Integer.parseInt(student.getPersonID().substring(1))){
-					out.println("<tbody>" + 
-									"<tr>" +
-										"<td>" + student.getFirstname() + " " + student.getSurname() + "</td>" + 
-										"<td>" + student.getPersonID() + "</td>" +
-										"<td>" + result.getOccasiondate() + "</td>" +
-										"<td class=\"grade\">" + result.getResult() + "</td>" +
-									"</tr>" +
-								"</tbody>"
-								);
+			if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear()){
+				out.println("<li class=\"accordion-navigation\">" +
+							"<a aria-expanded=\"false\" href=\"#" + assignment.getAssignmentID() + "\">" + assignment.getName() + "</a> " + 
+							"<div style=\"background-color:white\" id=\"" + assignment.getAssignmentID() + "\" class=\"content\">" +
+							"<table>" +
+							 	"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>");
+				for(AssignmentResult result : results){
+					for(Student student : students){
+						if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear() && result.getStudentid() == Integer.parseInt(student.getPersonID().substring(1))){
+						out.println("<tbody>" + 
+										"<tr>" +
+											"<td>" + student.getFirstname() + " " + student.getSurname() + "</td>" + 
+											"<td>" + student.getPersonID() + "</td>" +
+											"<td>" + result.getOccasiondate() + "</td>" +
+											"<td class=\"grade\">" + result.getResult() + "</td>" +
+										"</tr>" +
+									"</tbody>"
+									);
+						}
 					}
-				}
+				}out.println("</table>" + 
+						"</div> </li>");
 			}
-		}
-		out.println( "</table>"+
-				"</div>"+
-			"</li>"
-		);
+		}out.println("</li>");
 		}
 	}
 %>
