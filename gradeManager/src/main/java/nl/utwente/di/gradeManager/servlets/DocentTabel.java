@@ -70,8 +70,7 @@ public class DocentTabel extends HttpServlet {
 
 		
 		List<Student> studentList = new ArrayList<Student>();
-		for(int i = 0; i < courses.size(); i++){
-			students = gradesDB.getStudentsForCourse(courses.get(i).getCourseCode(), courses.get(i).getYear());
+			students = gradesDB.getStudents();
 			if (students != null){
 				for (int j = 0; j < students.size(); j++) {
 					if(students.get(j) != null){
@@ -79,9 +78,8 @@ public class DocentTabel extends HttpServlet {
 					}
 				}
 			}
-		}
 		students = studentList;
-		
+		System.out.println(students.get(0).toString() + "  " + students.get(1).toString() + " " + students.size());
 		naam = new StudentModules(personID, docentmodules);
 		
 		//Database connectie sluiten

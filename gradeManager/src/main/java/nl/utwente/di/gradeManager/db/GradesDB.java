@@ -488,7 +488,7 @@ public class GradesDB extends DB {
 	 */
 	public List<Student> getStudentsForCourse(int coursecode, int year){
 		List<Student> result = new ArrayList<Student>();
-		String query = "SELECT s.studentid, p.firstname, p.surname FROM Testi.Student s, Testi.Person p, Testi.hasCourses hc, Testi.ModuleResult mr, Testi.Course c " +
+		String query = "SELECT DISTINCT s.studentid, p.firstname, p.surname FROM Testi.Student s, Testi.Person p, Testi.hasCourses hc, Testi.ModuleResult mr, Testi.Course c " +
 		"WHERE hc.courseCode = " + coursecode +
 		" "
 		+ "AND c.courseCode = hc.courseCode " +
@@ -500,6 +500,7 @@ public class GradesDB extends DB {
 			Statement st = conn.createStatement();
 			Debug.logln("GradesDB: Executing query : " + query);
 			ResultSet rs = st.executeQuery(query);
+			
 			
 			while(rs.next()){
 				int studentid = rs.getInt("studentid");
