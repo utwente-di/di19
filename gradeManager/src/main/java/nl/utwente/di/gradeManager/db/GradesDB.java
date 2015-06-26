@@ -3,9 +3,11 @@ package nl.utwente.di.gradeManager.db;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 import nl.utwente.di.gradeManager.debug.Debug;
+import nl.utwente.di.gradeManager.helpers.Security;
 import nl.utwente.di.gradeManager.model.*;
 
 /**
@@ -132,7 +134,8 @@ public class GradesDB extends DB {
 				String firstname = rs.getString("firstname");
 				String surname = rs.getString("surname");
 				String password = rs.getString("password");
-				Student s = new Student(personid, firstname, surname, password);
+				String salt = rs.getString("salt");
+				Student s = new Student(personid, firstname, surname, password, salt);
 				result = s;
 			}
 			rs.close();
@@ -170,7 +173,8 @@ public class GradesDB extends DB {
 				String firstname = rs.getString("firstname");
 				String surname = rs.getString("surname");
 				String password = rs.getString("password");
-				Student s = new Student(personid, firstname, surname, password);
+				String salt = rs.getString("salt");
+				Student s = new Student(personid, firstname, surname, password, salt);
 				result.add(s);
 			}
 			rs.close();
@@ -210,8 +214,9 @@ public class GradesDB extends DB {
 				String firstname = rs.getString("firstname");
 				String surname = rs.getString("surname");
 				String password = rs.getString("password");
+				String salt = rs.getString("salt");
 				boolean administrator = rs.getBoolean("administrator");
-				Teacher t = new Teacher(personid, firstname, surname, password,administrator);
+				Teacher t = new Teacher(personid, firstname, surname, password,salt,administrator);
 				result = t;
 			}
 			rs.close();
@@ -249,8 +254,9 @@ public class GradesDB extends DB {
 				String firstname = rs.getString("firstname");
 				String surname = rs.getString("surname");
 				String password = rs.getString("password");
+				String salt = rs.getString("salt");
 				boolean administrator = rs.getBoolean("administrator");
-				Teacher t = new Teacher(personid,firstname,surname,password,administrator);
+				Teacher t = new Teacher(personid,firstname,surname,password,salt,administrator);
 				result.add(t);
 			}
 			rs.close();
@@ -506,7 +512,7 @@ public class GradesDB extends DB {
 				int studentid = rs.getInt("studentid");
 				String firstname = rs.getString("firstname");
 				String surname = rs.getString("surname");
-				Student s = new Student(studentid, firstname, surname, "");
+				Student s = new Student(studentid, firstname, surname, "","");
 				result.add(s);
 			}
 			rs.close();
@@ -898,10 +904,11 @@ public class GradesDB extends DB {
 	public void addTeacher(Teacher t){
 		//because student numbers always start with a s, remove it in order to get the integer; personid.
 		int personid_int = Integer.parseInt(t.getPersonID().substring(1)); //convert the string without the first character to an integer.
-		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
-		"VALUES (?,?,?,?)";
+		String query = "INSERT INTO Testi.person(personid,firstname,surname,password,salt) " + 
+		"VALUES (?,?,?,?,?)";
 		String query2 = "INSERT INTO Testi.teacher (teacherid,administrator) VALUES (?,?)";
 		//No dependencies
+		
 		try{
 			//prepare the two queries.
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -910,6 +917,7 @@ public class GradesDB extends DB {
 			ps.setString(2,t.getFirstname());
 			ps.setString(3,t.getSurname());
 			ps.setString(4, t.getPassword());
+			ps.setString(5, t.getSalt());
 			ps2.setInt(1,personid_int);
 			ps2.setBoolean(2, t.isManager()); 
 			Debug.logln("GradesDB: Executing query 1 : " + ps.toString());
@@ -931,10 +939,12 @@ public class GradesDB extends DB {
 	public void addStudent(Student s){
 		//because student numbers always start with a s, remove it in order to get the integer; personid.
 		int personid_int = Integer.parseInt(s.getPersonID().substring(1)); //convert the string without the first character to an integer.
-		String query = "INSERT INTO Testi.person(personid,firstname,surname,password) " + 
-		"VALUES (?,?,?,?)";
+		String query = "INSERT INTO Testi.person(personid,firstname,surname,password,salt) " + 
+		"VALUES (?,?,?,?,?)";
 		String query2 = "INSERT INTO Testi.student (studentid) VALUES (?)";
 		//No dependencies
+		
+		
 		try{
 			//prepare the two queries.
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -943,6 +953,7 @@ public class GradesDB extends DB {
 			ps.setString(2,s.getFirstname());
 			ps.setString(3,s.getSurname());
 			ps.setString(4, s.getPassword());
+			ps.setString(5, s.getSalt());
 			ps2.setInt(1,personid_int);
 			Debug.logln("GradesDB: Executing prepared statement 1.");
 			ps.executeUpdate();

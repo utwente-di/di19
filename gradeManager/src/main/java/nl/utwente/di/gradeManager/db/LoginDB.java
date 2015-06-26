@@ -1,11 +1,13 @@
 package nl.utwente.di.gradeManager.db;
 
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.utwente.di.gradeManager.debug.Debug;
+import nl.utwente.di.gradeManager.helpers.Security;
 import nl.utwente.di.gradeManager.model.*;
 
 /**
@@ -58,57 +60,20 @@ public class LoginDB extends DB {
 	 * @return A List of persons who are in the database.
 	 */
 	public List<Person> getLogins(){
-		//ik doe het nu als twee aparte queries,
-		//eentje voor de studenten en eentje voor de docenten
-		//omdat een Person zelf abstract is en het niet de bedoeling is een student en een docent allebei als student of allebei als docent op te slaan.
-		List<Person> result = new ArrayList<Person>();
-		//Eerste query, voor de studenten
-		String studentquery = "SELECT DISTINCT Person.personid, Person.firstname, Person.surname, Person.password FROM Testi.Person, Testi.Student WHERE Person.personid IN (SELECT Student.studentid FROM Testi.Student) ORDER BY personid";
-		try {
-			//execute the query in the connected database.
-			Statement st = conn.createStatement();
-			Debug.logln("LoginDB: Executing student query : " + studentquery);
-			ResultSet rs = st.executeQuery(studentquery);
-			while(rs.next()){
-				int studentID = rs.getInt("personid");
-				String firstname = rs.getString("firstname");
-				String surname = rs.getString("surname");
-				String password = rs.getString("password");
-				Person p = new Student(studentID, firstname, surname, password);
-				result.add(p);
-				
-			}
-			//close resultset and statement.
-			rs.close();
-			st.close();
-		} catch (SQLException e) {
-			//something went wrong with executing the query.s
-			Debug.logln("LoginDB: Oops: " + e.getMessage() );
-			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
-		}
+		GradesDB gradesDB = new GradesDB();
 		
-		//en nu voor de teachers
-		String teacherquery = "SELECT DISTINCT Person.personid, Person.firstname, Person.surname, Person.password FROM Testi.Person, Testi.Teacher WHERE Person.personid IN (SELECT Teacher.teacherid FROM Testi.Teacher) ORDER BY personid";
-		try { 
-			//execute the query in the connected database.
-			Statement st = conn.createStatement();
-			Debug.logln("LoginDB: Executing teacher query : " + teacherquery);
-			ResultSet rs = st.executeQuery(teacherquery);
-			while(rs.next()){
-				int teacherId = rs.getInt("personid");
-				String firstname = rs.getString("firstname");
-				String surname = rs.getString("surname");
-				String password = rs.getString("password");
-				Person p = new Teacher(teacherId, firstname, surname, password);
-				result.add(p);
-			}
-			//close the resultset and statement.
-			rs.close();
-			st.close();
-		} catch (SQLException e) {
-			//something went wrong with executing the query.
-			Debug.logln("LoginDB: Oops: " + e.getMessage() );
-			Debug.logln("LoginDB: SQLState: " + e.getSQLState() );
+		List<Person> result = new ArrayList<Person>();
+		List<Student> students = gradesDB.getStudents();
+		List<Teacher> teachers = gradesDB.getTeachers();
+		for (Student s : students){
+			int personid_asinteger = Integer.parseInt(s.getPersonID().substring(1));
+			Person p = new Student(personid_asinteger, s.getFirstname(), s.getSurname(), s.getPassword(), s.getSalt());
+			result.add(s);
+		}
+		for (Teacher t : teachers){
+			int personid_asinteger = Integer.parseInt(t.getPersonID().substring(1));
+			Person p = new Teacher(personid_asinteger, t.getFirstname(), t.getSurname(), t.getPassword(), t.getSalt(),t.isManager());
+			result.add(t);
 		}
 		
 		//return the list of persons who are in the database.
@@ -138,7 +103,7 @@ public class LoginDB extends DB {
 		rs.close();
 		st.close();
 	} catch (SQLException e) {
-		//something went wrong with executing the query.s
+		//something went wrong with executing the query.
 		Debug.logln("LoginDB: Oops: " + e.getMessage() );
 		Debug.logln("LoginDB: SQLState" + e.getSQLState() );
 	}
@@ -187,7 +152,7 @@ public class LoginDB extends DB {
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
-			//something went wrong with executing the query.s
+			//something went wrong with executing the query.
 			Debug.logln("LoginDB: Oops: " + e.getMessage() );
 			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
 		}
@@ -217,7 +182,7 @@ public class LoginDB extends DB {
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
-			//something went wrong with executing the query.s
+			//something went wrong with executing the query.
 			Debug.logln("LoginDB: Oops: " + e.getMessage() );
 			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
 		}
@@ -248,11 +213,98 @@ public class LoginDB extends DB {
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
-			//something went wrong with executing the query.s
+			//something went wrong with executing the query.
 			Debug.logln("LoginDB: Oops: " + e.getMessage() );
 			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
 		}
 		
 		return result;
 	}
+	
+	/**
+	 * Queries the database to get the salt corresponding to a person in the database.
+	 * @param argPersonid The identifier of the person.
+	 * @return The salt which belongs to the person in the database.
+	 */
+	public String getSalt(int argPersonid){
+		String result = "";
+		String query = "SELECT p.salt FROM Testi.person p WHERE p.personid = " + argPersonid;
+		
+		try{
+			//execute the query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("LoginDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				 result = rs.getString("salt");
+			}
+			//close resultset and statement.
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			//something went wrong with executing the query.
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Gets the password of a certain person
+	 * @param argPersonid The identifier of this person
+	 * @return The password of the person. 
+	 */
+	public String getPassword(int argPersonid){
+		String result = "";
+		String query = "SELECT p.password FROM Testi.person p WHERE p.personid = " + argPersonid;
+		
+		try{
+			//execute the query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("LoginDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next()){
+				 result = rs.getString("password");
+			}
+			//close resultset and statement.
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			//something went wrong with executing the query.s
+			Debug.logln("LoginDB: Oops: " + e.getMessage() );
+			Debug.logln("LoginDB: SQLState" + e.getSQLState() );
+		}
+		
+		return result;
+		
+	}
+	
+	/**
+	 * Tests whether a password is valid for a certain person.
+	 * @param argPersonid The identifier of this person
+	 * @param argPassword The password to be tested, which should not be the SHA-512 hash, but the actual password to test.
+	 * @return Whether the password was entered correctly, or not.
+	 */
+	public boolean checkPassword(int argPersonid, String argPassword){
+		//get the salt for the specific person.
+		String salt = getSalt(argPersonid);
+		
+		//generate the SHA-512 hash, based on the password and the salt.
+		String hash = "";
+		try {
+			hash = Security.getSHA512(argPassword, salt);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Debug.logln("Login attempt: comparing " + getPassword(argPersonid) + " with " + hash + " result = " + (getPassword(argPersonid).equals(hash)));
+		
+		//Compare this hash to the stored hash in the database.
+		return getPassword(argPersonid).equals(hash);
+		
+	}
+	
+	
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 
 import nl.utwente.di.gradeManager.db.LoginDB;
 import nl.utwente.di.gradeManager.debug.Debug;
+import nl.utwente.di.gradeManager.helpers.Security;
 import nl.utwente.di.gradeManager.model.*;
 
 public class Login extends HttpServlet {
@@ -107,21 +108,25 @@ public class Login extends HttpServlet {
 		Debug.logln("Login servlet: doPost.");
 		
 		
-		//log in
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
+		
+
+		//Sanitize the user input.
+		username = Security.sanitizeString(username);
+		password = Security.sanitizeString(password);
 		
 		LoginDB loginDB = new LoginDB();
 		
 		//it does not take into account whether the user already has a session here.
 		for(Person p : loginDB.getLogins()){
 			if (p.getPersonID().toLowerCase().equals(username.toLowerCase())){
-				if(p.getPassword().equals(password)){
+				int personid_asinteger = Integer.parseInt(username.substring(1));
+				if(loginDB.checkPassword(personid_asinteger, password)){
 					Debug.logln("Login servlet: login was a success.. creating session for you right now!");
 					HttpSession session = request.getSession(true);
 					LoginSession ls = new LoginSession(session.getId(),username);
 					loginDB.addSession(ls);
-					int personid_asinteger = Integer.parseInt(username.substring(1));
 					boolean student = loginDB.isStudent(personid_asinteger);
 					boolean teacher = loginDB.isTeacher(personid_asinteger);
 					boolean manager = loginDB.isManager(personid_asinteger);

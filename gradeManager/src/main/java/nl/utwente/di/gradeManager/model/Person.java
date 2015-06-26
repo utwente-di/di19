@@ -12,6 +12,7 @@ public abstract class Person {
 	private String firstname;
 	private String surname;
 	private String password;
+	private String salt;
 	
 	/**
 	 * @param argPersonID the number of the person, format: s0000000 or m0000000
@@ -19,11 +20,12 @@ public abstract class Person {
 	 * @param argSurname the surname of the person
 	 * @param password the password of the person
 	 */
-	public Person(String argPersonID, String argFirstname, String argSurname, String argPassword){
+	public Person(String argPersonID, String argFirstname, String argSurname, String argPassword, String argSalt){
 		this.setPersonID(argPersonID);
 		this.firstname = argFirstname;
 		this.surname = argSurname;
 		this.password = argPassword;
+		this.salt = argSalt;
 	}
 		
 	/**
@@ -39,6 +41,21 @@ public abstract class Person {
 	 */
 	public void setPassword(String argPassword){
 		this.password = argPassword;
+	}
+	
+	/**
+	 * Gets the salt for this person.
+	 * @return The salt of this person.
+	 */
+	public String getSalt(){
+		return salt;
+	}
+	/**
+	 * Sets the new salt for this person.
+	 * @param argSalt The new salt.
+	 */
+	public void setSalt(String argSalt){
+		this.salt = argSalt;
 	}
 	
 	/**

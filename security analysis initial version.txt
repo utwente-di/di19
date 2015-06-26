@@ -21,8 +21,9 @@ We expect the sanitizing of the user input, aswell as using prepared statements 
 To elaborate on the choice of the hashing algorithm, we consider the following: 
 -Using MD5 is a bad idea, not necessarily because of its cryptographic weakness but rather because it is really fast, so that it is quite easy to try a lot of passwords in a short period of time, even on a slow computer.
 -We don't really have time to make the passwords super-secure. 
-Given these two considerations, we decided to use medium security, which resulted in us choosing to use the SHA-1 algorithm.
+Given these two considerations, we decided to use medium security, which resulted in us choosing to use the SHA-512 algorithm.
 
-The SHA-1 algorithm is not really safe enough, as many important companies such as Microsoft, Google as well as Mozilla, announced that they consider it to be not that secure, and would like to use a more secure algorithm. That is unfortunate, but we consider that outside of our scope thusfar. 
+The SHA-512 algorithm is not the safest choice, as there are algorithms which provide more advanced security such as PBKDF2, scrypt or bcrypt. Nevertheless, using SHA-512, we can provide quite secure encryption of passwords, given that we generate a random hash for every password aswell.
 
-Unfortunately we have to keep some things out of our scope. This is because we don't have enough time to think about security, or do research about security, let aside implement it. But we consider our system moderately protected, to our knowledge.
+Unfortunately we have to keep some things out of our scope. This is because we don't have enough time to think about security, or do research about security, let aside implement it. But we consider our system moderately protected, to our knowledge. Additionally, some of the subjects we decided to keep out of our scope, were not part of the Data and Information module.
+ 

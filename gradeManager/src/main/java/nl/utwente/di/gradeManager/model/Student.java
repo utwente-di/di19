@@ -14,9 +14,10 @@ public class Student extends Person {
 	 * @param argFirstname the first name of the student.
 	 * @param argSurname the surname of the student.
 	 * @param argPassword the password of the student.
+	 * @param argSalt the salt of the student.
 	 */
-	public Student(int argStudentID, String argFirstname, String argSurname, String argPassword) {
-		super("s" + String.valueOf(argStudentID), argFirstname, argSurname, argPassword);
+	public Student(int argStudentID, String argFirstname, String argSurname, String argPassword, String argSalt) {
+		super("s" + String.valueOf(argStudentID), argFirstname, argSurname, argPassword, argSalt);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -14,21 +14,16 @@ public class Teacher extends Person{
 	 * @param argFirstname the first name of the teacher
 	 * @param argSurname the surname of the teacher
 	 * @param argPassword the password of the teacher
+	 * @param argSalt the salt of the teacher
 	 * @param argManager true/false whether the teacher is a manager.
 	 * 
 	 */
-	//Constructor for when entering a manager field.
-	public Teacher(int argTeacherID, String argFirstname, String argSurname, String argPassword, boolean argManager) {
-		super("m" + String.valueOf(argTeacherID), argFirstname, argSurname, argPassword);
+	public Teacher(int argTeacherID, String argFirstname, String argSurname, String argPassword, String argSalt, boolean argManager) {
+		super("m" + String.valueOf(argTeacherID), argFirstname, argSurname, argPassword, argSalt);
 		this.manager = argManager;
 		// TODO Auto-generated constructor stub
 	}
 	
-	//Constructor for not entering manager field.
-	public Teacher(int argTeacherID, String argFirstname, String argSurname, String argPassword){
-		super("m" + String.valueOf(argTeacherID), argFirstname, argSurname, argPassword);
-		this.manager = false;
-	}
 
 	/**
 	 * Tells whether the teacher is a manager or not.

@@ -1,4 +1,6 @@
 package nl.utwente.di.gradeManager.pages;
+import java.security.NoSuchAlgorithmException;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -56,7 +58,22 @@ public class Create {
 	 */
 	public String createStudent(@FormParam("studentid") String personID, @FormParam("firstname") String firstname, @FormParam("surname") String surname, @FormParam("password") String password){
 		Debug.logln(personID + ":" + firstname + ":" + surname + ":" + password);
-		Student s = new Student(Integer.parseInt(personID), firstname, surname, password);
+		Student s = null;
+		String salt= "";
+		String hashedpass ="";
+		try {
+			salt = Security.getSalt();
+			hashedpass = Security.getSHA512(password, salt);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			s = new Student(Integer.parseInt(personID), firstname, surname, hashedpass, salt);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		GradesDB gradesDB = new GradesDB();
 		gradesDB.addStudent(s);
 		
@@ -109,7 +126,17 @@ public class Create {
 	 */
 	public String createTeacher(@FormParam("teacherid") String personID, @FormParam("firstname") String firstname, @FormParam("surname") String surname, @FormParam("password") String password, @FormParam("manager") String manager){
 		Debug.logln(personID + ":" + firstname + ":" + surname + ":" + password + ":" + manager);
-		Teacher t = new Teacher(Integer.parseInt(personID), firstname, surname, password,manager != null); //manager!=null -> manager checkbox was checked.
+		String salt= "";
+		String hashedpass ="";
+		try {
+			salt = Security.getSalt();
+			hashedpass = Security.getSHA512(password, salt);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Teacher t = new Teacher(Integer.parseInt(personID), firstname, surname, hashedpass, salt,manager != null); //manager!=null -> manager checkbox was checked.
 		GradesDB gradesDB = new GradesDB();
 		gradesDB.addTeacher(t);
 		
