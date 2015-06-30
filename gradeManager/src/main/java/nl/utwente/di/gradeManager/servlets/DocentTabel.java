@@ -22,15 +22,16 @@ import nl.utwente.di.gradeManager.model.Teacher;
 
 public class DocentTabel extends HttpServlet {
 	
+	//Variabelen aanmaken die gebruikt worden in deze klasse
 	private final String jsp_address = "Docent.jsp";
 	private List<AssignmentResult> results;
 	private List<Assignment> assignments;
-	private Module module;
 	private List<Course> courses;
 	private List<Module> docentmodules;
-	private Teacher docent;
 	private StudentModules naam;
 	private List<Student> students;
+	private Module module;
+	private Teacher docent;
 	
 	protected void setInfo(int personID, int moduleID, int moduleYear){
 		//Database connectie aanmaken
@@ -79,7 +80,7 @@ public class DocentTabel extends HttpServlet {
 					}
 				}
 			students = studentList;
-			System.out.println(students.get(0).toString() + "  " + students.get(1).toString() + " " + students.size());
+			
 			naam = new StudentModules(personID, docentmodules);
 		}finally{
 			//Database connectie sluiten
