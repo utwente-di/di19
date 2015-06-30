@@ -910,7 +910,8 @@ public class GradesDB extends DB {
 		//No dependencies
 		
 		try{
-			//prepare the two queries.
+			//prepare the two queries && set auto-commit to false;
+			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(query);
 			PreparedStatement ps2 = conn.prepareStatement(query2);
 			ps.setInt(1, personid_int);
@@ -919,13 +920,17 @@ public class GradesDB extends DB {
 			ps.setString(4, t.getPassword());
 			ps.setString(5, t.getSalt());
 			ps2.setInt(1,personid_int);
-			ps2.setBoolean(2, t.isManager()); 
+			ps2.setBoolean(2, t.isManager());
+			//Exequte the two queries
 			Debug.logln("GradesDB: Executing query 1 : " + ps.toString());
 			ps.executeUpdate();
 			Debug.logln("GradesDB: Executing query 2 : " + ps2.toString());
 			ps2.executeUpdate();
 			ps.close();
 			ps2.close();
+			//commit the queries && reset auto-commit
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
@@ -946,7 +951,8 @@ public class GradesDB extends DB {
 		
 		
 		try{
-			//prepare the two queries.
+			//prepare the two queries && set autocommit to false
+			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(query);
 			PreparedStatement ps2 = conn.prepareStatement(query2);
 			ps.setInt(1, personid_int);
@@ -955,12 +961,16 @@ public class GradesDB extends DB {
 			ps.setString(4, s.getPassword());
 			ps.setString(5, s.getSalt());
 			ps2.setInt(1,personid_int);
+			//exequte the queries
 			Debug.logln("GradesDB: Executing prepared statement 1.");
 			ps.executeUpdate();
 			Debug.logln("GradesDB: Executing prepared statement 2.");
 			ps2.executeUpdate();
 			ps.close();
 			ps2.close();
+			//commit the queries && reset autocommit
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
