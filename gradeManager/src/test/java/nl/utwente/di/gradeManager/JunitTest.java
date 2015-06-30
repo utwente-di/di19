@@ -19,8 +19,9 @@ public class JunitTest {
 		t = new Teacher(14325, "Henk", "Henkmans", pass, salt, false);
 		String salt2 = Security.getSalt();
 		String pass2 = Security.getSHA512("w8w00rd", salt2);
-		s = new Student(12345, "Harry", "Henkmans", pass2, salt2);
+		s = new Student(1234534, "Harry", "Henkmans", pass2, salt2);
 	}
+
 
 	
 	@Test
@@ -30,5 +31,8 @@ public class JunitTest {
 		gradesDB.addStudent(s);
 		gradesDB.DeleteStudent(s.getPersonID());
 		gradesDB.DeleteTeacher(t.getPersonID());
+		gradesDB.DeletePerson(s.getPersonID());
+		gradesDB.DeletePerson(t.getPersonID());
 		}
+		
 }

@@ -1160,10 +1160,11 @@ public class GradesDB extends DB {
 	 * @param personid The ID of this teacher
 	 */
 	public void DeleteTeacher(String personid){
-		String query = "DELETE FROM Testi.Teacher t WHERE t.personid = (?)";
+		int personid_int = Integer.parseInt(personid.substring(1));
+		String query = "DELETE FROM Testi.Teacher t WHERE t.teacherid = (?)";
 		try{
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, personid);
+			ps.setInt(1, personid_int);
 			Debug.logln("GradesDB: Executing statement: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
@@ -1178,10 +1179,11 @@ public class GradesDB extends DB {
 	 * @param personid The ID of this Student
 	 */
 	public void DeleteStudent(String personid){
-		String query = "DELETE FROM Testi.Student s WHERE s.personid = (?)";
+		int personid_int = Integer.parseInt(personid.substring(1));
+		String query = "DELETE FROM Testi.Student s WHERE s.studentid = (?)";
 		try{
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, personid);
+			ps.setInt(1, personid_int);
 			Debug.logln("GradesDB: Executing statement: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
@@ -1189,7 +1191,21 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
 		}
+	}
 		
+	public void DeletePerson(String personid){
+		int personid_int = Integer.parseInt(personid.substring(1));
+		String query = "DELETE FROM Testi.Person p WHERE p.personid = (?)";
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, personid_int);
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+	}
 	}
 
 }
