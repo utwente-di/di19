@@ -35,55 +35,56 @@ public class DocentTabel extends HttpServlet {
 	protected void setInfo(int personID, int moduleID, int moduleYear){
 		//Database connectie aanmaken
 		GradesDB gradesDB = new GradesDB();
-		
-		module = gradesDB.getModule(moduleID, moduleYear);
-		
-		courses = gradesDB.getCoursesForModule(moduleID);
-		
-		docent = gradesDB.getTeacher(personID);
-		
-		List<Assignment> assignmentList = new ArrayList<Assignment>();
-		for(int i = 0; i < courses.size(); i++){
-			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCourseCode(), courses.get(i).getYear());
-			if (assignments != null){
-				for (int j = 0; j < assignments.size(); j++) {
-					if(assignments.get(j) != null){
-						assignmentList.add(assignments.get(j));
+		try{
+			module = gradesDB.getModule(moduleID, moduleYear);
+			
+			courses = gradesDB.getCoursesForModule(moduleID);
+			
+			docent = gradesDB.getTeacher(personID);
+			
+			List<Assignment> assignmentList = new ArrayList<Assignment>();
+			for(int i = 0; i < courses.size(); i++){
+				assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCourseCode(), courses.get(i).getYear());
+				if (assignments != null){
+					for (int j = 0; j < assignments.size(); j++) {
+						if(assignments.get(j) != null){
+							assignmentList.add(assignments.get(j));
+						}
 					}
 				}
 			}
+			assignments = assignmentList;
+			
+			List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
+			for(int i = 0; i < assignments.size(); i++){
+				results = gradesDB.getResultsForAssignment(assignments.get(i).getAssignmentID());
+				if (results != null){
+					for (int j = 0; j < results.size(); j++) {
+						if(results.get(j) != null){
+							resultList.add(results.get(j));
+						}
+					}
+				}
+			}
+			results = resultList;
+	
+			
+			List<Student> studentList = new ArrayList<Student>();
+				students = gradesDB.getStudents();
+				if (students != null){
+					for (int j = 0; j < students.size(); j++) {
+						if(students.get(j) != null){
+							studentList.add(students.get(j));
+						}
+					}
+				}
+			students = studentList;
+			System.out.println(students.get(0).toString() + "  " + students.get(1).toString() + " " + students.size());
+			naam = new StudentModules(personID, docentmodules);
+		}finally{
+			//Database connectie sluiten
+			gradesDB.closeConnection();
 		}
-		assignments = assignmentList;
-		
-		List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
-		for(int i = 0; i < assignments.size(); i++){
-			results = gradesDB.getResultsForAssignment(assignments.get(i).getAssignmentID());
-			if (results != null){
-				for (int j = 0; j < results.size(); j++) {
-					if(results.get(j) != null){
-						resultList.add(results.get(j));
-					}
-				}
-			}
-		}
-		results = resultList;
-
-		
-		List<Student> studentList = new ArrayList<Student>();
-			students = gradesDB.getStudents();
-			if (students != null){
-				for (int j = 0; j < students.size(); j++) {
-					if(students.get(j) != null){
-						studentList.add(students.get(j));
-					}
-				}
-			}
-		students = studentList;
-		System.out.println(students.get(0).toString() + "  " + students.get(1).toString() + " " + students.size());
-		naam = new StudentModules(personID, docentmodules);
-		
-		//Database connectie sluiten
-		gradesDB.closeConnection();
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -92,19 +93,26 @@ public class DocentTabel extends HttpServlet {
 		//HttpSession session = request.getSession(false);
 		//String sessionid = session.getId();
 		//LoginDB logindb = new LoginDB();
-		//Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
-		//logindb.closeConnection();
+		//try{
+		//	Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
+		//}finally{
+		//	logindb.closeConnection();
+		//}
 		
 		Integer SID  = 9876;
 		Integer moduleid;
 		Integer moduleyear;
+		
 		//Als alleen gradeManager/docenttabel zonder parameters wordt aangeroepen, automatisch doorsturen naar de meest recente module. Anders gewoon de gespecifeerde parameters volgen.	
 		if (request.getParameter("moduleid") == null || request.getParameter("moduleyear") == null){
 			GradesDB gradesDB = new GradesDB();
-			docentmodules = gradesDB.getModulesForDocent(SID);
-			moduleid = docentmodules.get(0).getModulecode();
-			moduleyear = docentmodules.get(0).getYear();
-			gradesDB.closeConnection();
+			try{
+				docentmodules = gradesDB.getModulesForDocent(SID);
+				moduleid = docentmodules.get(0).getModulecode();
+				moduleyear = docentmodules.get(0).getYear();
+			}finally{
+				gradesDB.closeConnection();
+			}
 		}else{
 			moduleid = Integer.parseInt(request.getParameter("moduleid"));
 			moduleyear = Integer.parseInt(request.getParameter("moduleyear"));

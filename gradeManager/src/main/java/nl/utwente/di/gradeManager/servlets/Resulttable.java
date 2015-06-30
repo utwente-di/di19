@@ -37,70 +37,80 @@ public class Resulttable extends HttpServlet {
 	protected void setInfo(int personID, int moduleID, int moduleYear){
 		
 		GradesDB gradesDB = new GradesDB();
-		
-		if(studentmodules == null){
-			studentmodules = gradesDB.getModulesForStudent(personID);
-		}
-		
-		module = gradesDB.getModule(moduleID, moduleYear);
-		
-		courses = gradesDB.getCoursesForModule(moduleID);
-		
-		student = gradesDB.getStudent(personID);
-		
-		List<Assignment> assignmentList = new ArrayList<Assignment>();
-		for(int i = 0; i < courses.size(); i++){
-			assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCourseCode(), courses.get(i).getYear());
-			if (assignments != null){
-				for (int j = 0; j < assignments.size(); j++) {
-					if(assignments.get(j) != null){
-						assignmentList.add(assignments.get(j));
+		try{
+			if(studentmodules == null){
+				studentmodules = gradesDB.getModulesForStudent(personID);
+			}
+			
+			module = gradesDB.getModule(moduleID, moduleYear);
+			
+			courses = gradesDB.getCoursesForModule(moduleID);
+			
+			student = gradesDB.getStudent(personID);
+			
+			List<Assignment> assignmentList = new ArrayList<Assignment>();
+			for(int i = 0; i < courses.size(); i++){
+				assignments = gradesDB.getAssignmentsForCourse(courses.get(i).getCourseCode(), courses.get(i).getYear());
+				if (assignments != null){
+					for (int j = 0; j < assignments.size(); j++) {
+						if(assignments.get(j) != null){
+							assignmentList.add(assignments.get(j));
+						}
 					}
 				}
 			}
-		}
-		assignments = assignmentList;
-		
-		List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
-		for(int i = 0; i < assignments.size(); i++){
-			occasions = gradesDB.getResultsForAssignmentAndStudent(personID, assignments.get(i).getAssignmentID());
-			if (occasions != null){
-				for (int j = 0; j < occasions.size(); j++) {
-					if(occasions.get(j) != null){
-						resultList.add(occasions.get(j));
+			assignments = assignmentList;
+			
+			List<AssignmentResult> resultList = new ArrayList<AssignmentResult>();
+			for(int i = 0; i < assignments.size(); i++){
+				occasions = gradesDB.getResultsForAssignmentAndStudent(personID, assignments.get(i).getAssignmentID());
+				if (occasions != null){
+					for (int j = 0; j < occasions.size(); j++) {
+						if(occasions.get(j) != null){
+							resultList.add(occasions.get(j));
+						}
 					}
 				}
 			}
+			occasions = resultList;
+			
+			naam = new StudentModules(personID, studentmodules);
+			
+			moduleResult = gradesDB.getModuleResult(personID, module.getModulecode(), module.getYear());
+		}finally{
+			gradesDB.closeConnection();
 		}
-		occasions = resultList;
-		
-		naam = new StudentModules(personID, studentmodules);
-		
-		moduleResult = gradesDB.getModuleResult(personID, module.getModulecode(), module.getYear());
-		
-		gradesDB.closeConnection();
 	}
 	
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		Integer moduleid;
+		Integer moduleyear;
+		Integer SID;
+		
 		HttpSession session = request.getSession(false);
 		String sessionid = session.getId();
 		LoginDB logindb = new LoginDB();
-		Integer SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
-		logindb.closeConnection();
+		try{
+			SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
+		}finally{
+			logindb.closeConnection();
+		}
 		
-		Integer moduleid;
-		Integer moduleyear;
+		
 		
 		
 		if (request.getParameter("moduleid") == null || request.getParameter("moduleyear") == null){
 			GradesDB gradesDB = new GradesDB();
-			studentmodules = gradesDB.getModulesForStudent(SID);
-			moduleid = studentmodules.get(0).getModulecode();
-			moduleyear = studentmodules.get(0).getYear();
-			gradesDB.closeConnection();
+			try{
+				studentmodules = gradesDB.getModulesForStudent(SID);
+				moduleid = studentmodules.get(0).getModulecode();
+				moduleyear = studentmodules.get(0).getYear();
+			}finally{
+				gradesDB.closeConnection();
+			}
 		}else{
 			moduleid = Integer.parseInt(request.getParameter("moduleid"));
 			moduleyear = Integer.parseInt(request.getParameter("moduleyear"));

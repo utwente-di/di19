@@ -38,58 +38,60 @@ public class Login extends HttpServlet {
 			String sessionid = session.getId();
 			Debug.logln("The id is: " + sessionid);
 			LoginDB loginDB = new LoginDB();
-			String personid = loginDB.getLoggedInPersonid(sessionid);
-			Debug.logln("The personid is " + personid);
-			if (personid != "" ){
-				List<Person> persons = loginDB.getLogins();
-				for(Person p : persons) {
-					
-					if (p.getPersonID().equals(personid)){
-
-						Debug.logln("He is logged in as " + p.getFirstname() + " " + p.getSurname());
-						int personid_asinteger = Integer.parseInt(personid.substring(1));
-						boolean student = loginDB.isStudent(personid_asinteger);
-						boolean teacher = loginDB.isTeacher(personid_asinteger);
-						boolean manager = loginDB.isManager(personid_asinteger);
+			try{
+				String personid = loginDB.getLoggedInPersonid(sessionid);
+				Debug.logln("The personid is " + personid);
+				if (personid != "" ){
+					List<Person> persons = loginDB.getLogins();
+					for(Person p : persons) {
 						
-						Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
-						if(manager){
-							//redirect naar manager pagina.
-							Debug.logln("Login: Redirecting to manager page!");
-							try {
-								response.sendRedirect(manager_address);
-							} catch (IOException e) {
-								e.printStackTrace();
+						if (p.getPersonID().equals(personid)){
+	
+							Debug.logln("He is logged in as " + p.getFirstname() + " " + p.getSurname());
+							int personid_asinteger = Integer.parseInt(personid.substring(1));
+							boolean student = loginDB.isStudent(personid_asinteger);
+							boolean teacher = loginDB.isTeacher(personid_asinteger);
+							boolean manager = loginDB.isManager(personid_asinteger);
+							
+							Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
+							if(manager){
+								//redirect naar manager pagina.
+								Debug.logln("Login: Redirecting to manager page!");
+								try {
+									response.sendRedirect(manager_address);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								return;
+							} 
+							if(teacher){
+								//redirect naar teacher pagina.
+								Debug.logln("Login: Redirecting to teacher page!");
+								try {
+									response.sendRedirect(teacher_address);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								return;
+							} else {
+								//redirect naar student pagina.
+	
+								Debug.logln("Login: Redirecting to student page!");
+								try {
+									response.sendRedirect(student_address);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								return;
 							}
-							return;
-						} 
-						if(teacher){
-							//redirect naar teacher pagina.
-							Debug.logln("Login: Redirecting to teacher page!");
-							try {
-								response.sendRedirect(teacher_address);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							return;
-						} else {
-							//redirect naar student pagina.
-
-							Debug.logln("Login: Redirecting to student page!");
-							try {
-								response.sendRedirect(student_address);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							return;
+						
+						
 						}
-					
-					
 					}
 				}
+			}finally{	
+				loginDB.closeConnection();
 			}
-			
-			loginDB.closeConnection();
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
 		try {
@@ -119,54 +121,56 @@ public class Login extends HttpServlet {
 		LoginDB loginDB = new LoginDB();
 		
 		//it does not take into account whether the user already has a session here.
-		for(Person p : loginDB.getLogins()){
-			if (p.getPersonID().toLowerCase().equals(username.toLowerCase())){
-				int personid_asinteger = Integer.parseInt(username.substring(1));
-				if(loginDB.checkPassword(personid_asinteger, password)){
-					Debug.logln("Login servlet: login was a success.. creating session for you right now!");
-					HttpSession session = request.getSession(true);
-					LoginSession ls = new LoginSession(session.getId(),username);
-					loginDB.addSession(ls);
-					boolean student = loginDB.isStudent(personid_asinteger);
-					boolean teacher = loginDB.isTeacher(personid_asinteger);
-					boolean manager = loginDB.isManager(personid_asinteger);
-					
-					Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
-					if(manager){
-						//redirect naar manager pagina.
-						Debug.logln("Login: Redirecting to manager page!");
-						try {
-							response.sendRedirect(manager_address);
-						} catch (IOException e) {
-							e.printStackTrace();
+		try{
+			for(Person p : loginDB.getLogins()){
+				if (p.getPersonID().toLowerCase().equals(username.toLowerCase())){
+					int personid_asinteger = Integer.parseInt(username.substring(1));
+					if(loginDB.checkPassword(personid_asinteger, password)){
+						Debug.logln("Login servlet: login was a success.. creating session for you right now!");
+						HttpSession session = request.getSession(true);
+						LoginSession ls = new LoginSession(session.getId(),username);
+						loginDB.addSession(ls);
+						boolean student = loginDB.isStudent(personid_asinteger);
+						boolean teacher = loginDB.isTeacher(personid_asinteger);
+						boolean manager = loginDB.isManager(personid_asinteger);
+						
+						Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
+						if(manager){
+							//redirect naar manager pagina.
+							Debug.logln("Login: Redirecting to manager page!");
+							try {
+								response.sendRedirect(manager_address);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							return;
+						} 
+						if(teacher){
+							//redirect naar teacher pagina.
+							Debug.logln("Login: Redirecting to teacher page!");
+							try {
+								response.sendRedirect(teacher_address);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							return;
+						} else {
+							//redirect naar student pagina.
+	
+							Debug.logln("Login: Redirecting to student page!");
+							try {
+								response.sendRedirect(student_address);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							return;
 						}
-						return;
-					} 
-					if(teacher){
-						//redirect naar teacher pagina.
-						Debug.logln("Login: Redirecting to teacher page!");
-						try {
-							response.sendRedirect(teacher_address);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						return;
-					} else {
-						//redirect naar student pagina.
-
-						Debug.logln("Login: Redirecting to student page!");
-						try {
-							response.sendRedirect(student_address);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						return;
-					}
-				}				
-			}			
-		}
-		
+					}				
+				}			
+			}
+		}finally{
 		loginDB.closeConnection();
+		}
 		
 	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
