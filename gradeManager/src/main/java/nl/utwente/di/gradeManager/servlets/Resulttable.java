@@ -35,6 +35,7 @@ public class Resulttable extends HttpServlet {
 	private Student student;
 	private StudentModules modules;
 	
+	//Alle informatie uit de database halen en in de locale variablen zetten zodat ze doorgestuurd kunnen worden
 	protected void setInfo(int personID, int moduleID, int moduleYear){
 		
 		//Database connectie opzetten
@@ -43,8 +44,9 @@ public class Resulttable extends HttpServlet {
 		//Alle database operaties uitvoeren in try-finally zodat de connectie ook wordt afgesloten mocht er iets fout gaan in de queries
 		try{
 			
-			//De modules van de ingelogde student opzoeken
+			//Als de module niet gespecificeerd zijn in de URL, wordt in de 'DoGet' alvast alle modules van de student opgezocht, dus hoeft dat hier niet meer
 			if(studentmodules == null){
+				//Alle modules van de student opzoeken
 				studentmodules = gradesDB.getModulesForStudent(personID);
 			}
 			
