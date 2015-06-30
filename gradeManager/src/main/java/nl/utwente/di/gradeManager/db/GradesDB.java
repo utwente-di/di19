@@ -1152,5 +1152,46 @@ public class GradesDB extends DB {
 //		
 //	}
 //	
+	/*
+	 *DELETE 
+	 */
+	/**
+	 * Deletes a Teacher from the database
+	 * @param personid The ID of this teacher
+	 */
+	public void DeleteTeacher(String personid){
+		String query = "DELETE FROM Testi.Teacher t WHERE t.personid = (?)";
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, personid);
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+		}
+		
+	}
 	
+	/** Deletes a Student from the database
+	 * @param personid The ID of this Student
+	 */
+	public void DeleteStudent(String personid){
+		String query = "DELETE FROM Testi.Student s WHERE s.personid = (?)";
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, personid);
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+		}
+		
+	}
+
 }
+
+
