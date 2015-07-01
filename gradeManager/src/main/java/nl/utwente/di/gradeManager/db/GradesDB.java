@@ -35,13 +35,14 @@ public class GradesDB extends DB {
 	 */
 	public Course getCourse(int argCoursecode, int argCourseyear){
 		Course result = null;
-		String query = "SELECT * FROM Testi.course c WHERE " +
+		String query = "SELECT * FROM Testi.course c, Testi.supercourse sc WHERE " +
+		"c.coursecode = sc.coursecode AND " +
 		"c.coursecode = " + argCoursecode + " AND " +
 		"c.year = " + argCourseyear;	
 		
-		//SELECT * FROM Testi.course c WHERE 
-		//c.coursecode = argCoursecode  AND 
-		//c.year = argCourseyear
+//		SELECT * FROM Testi.course c, Testi.supercourse sc WHERE c.coursecode = sc.coursecode AND
+//				c.coursecode =  AND
+//				c.year = 
 		
 		try{
 			//execute query in the connected database.
