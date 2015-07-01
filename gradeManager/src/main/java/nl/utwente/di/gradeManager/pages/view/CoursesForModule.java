@@ -15,7 +15,7 @@ import nl.utwente.di.gradeManager.model.Module;
 @Path("coursesformodule")
 public class CoursesForModule {
 	@GET
-	@Path("/{moduleid}")
+	@Path("{moduleid}/{moduleyear}")
 	@Produces(MediaType.TEXT_HTML)
 	/**
 	 * Shows the courses which are part of a given module.

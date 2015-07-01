@@ -16,7 +16,7 @@ import nl.utwente.di.gradeManager.model.Student;
 public class ModulesForStudents {
 
 	@GET
-	@Path("/{studentid}")
+	@Path("{studentid}")
 	@Produces(MediaType.TEXT_HTML)
 	/**
 	 * Show the modules which a certain student is being taught.
