@@ -136,73 +136,86 @@ public class Resulttable extends HttpServlet {
 		//De sessie van de gebruiker opvragen. Als er geen sessie bestaat, deze niet aanmaken
 		HttpSession session = request.getSession(false);
 		//Het ID van de sessie opvragen
-		String sessionid = session.getId();
-		//Database connectie aanmaken
-		LoginDB logindb = new LoginDB();
-		try{
-			//Het studentnummer verbonden aan de huidige sessie in de variabele 'SID' zetten
-			SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
-		}finally{
-			//Database connectie afsluiten
-			logindb.closeConnection();
-		}
-		
-		
-		
-		//Als er geen moduleid en moduleyear in de URL wordt gespecificeerd, de meest recente module van de student opzoeken en die tonen
-		if (request.getParameter("moduleid") == null || request.getParameter("moduleyear") == null){
+		if(session != null){	
+			String sessionid = session.getId();
 			//Database connectie aanmaken
-			GradesDB gradesDB = new GradesDB();
+			LoginDB logindb = new LoginDB();
 			try{
-				//Alle modules van de gebruiker opvragen
-				studentmodules = gradesDB.getModulesForStudent(SID);
-				//getModulecode sorteert automatisch op de meest recente module, dus eerste resultaat is de module die getoont moet worden
-				moduleid = studentmodules.get(0).getModulecode();
-				moduleyear = studentmodules.get(0).getYear();
+				//Het studentnummer verbonden aan de huidige sessie in de variabele 'SID' zetten
+				SID = Integer.parseInt(logindb.getLoggedInPersonid(sessionid).substring(1));
 			}finally{
 				//Database connectie afsluiten
-				gradesDB.closeConnection();
+				logindb.closeConnection();
 			}
-		}else{
-			//Als er wel een module-id&jaar wordt gespecificeerd, deze uit de URL halen en de locale variabelen stoppen
-			moduleid = Integer.parseInt(request.getParameter("moduleid"));
-			moduleyear = Integer.parseInt(request.getParameter("moduleyear"));
-		}
-		
-		//Alle informatie is nu bekend, dus nu kan 'setInfo' aangeroepen worden.
-		setInfo(SID, moduleid, moduleyear);
-		
-		//De informatie van de student meegeven aan de JSP pagina
-		request.setAttribute("student", student);
-		
-		//De lijst van alle modules meegeven aan de JSP pagina
-		request.setAttribute("studentModules", modules);
-		
-		//De informatie van de module meegeveen aan de JSP pagina
-		request.setAttribute("moduletoShow", module);
-		
-		//Het uiteindelijke moduleresulaat meegeven aan de JSP pagina
-		request.setAttribute("moduleresulttoShow", moduleResult);
-		
-		//Bean aanmaken met de lijst van vakken die de student volgt
-		StudentCourses beanSC = new StudentCourses(SID, courses);
-		//De bean meegeven aan de JSP pagina
-		request.setAttribute("coursestoShow", beanSC);
-
-		//Bean aanmaken met de lijst van alle assignments van alle vakken van de module
-		CourseAssignments beanCA = new CourseAssignments("Dit is een vak", assignments);
-		//De bean meegeven voor de JSP pagina
-		request.setAttribute("assignmentstoShow", beanCA);
-		
-		//Bean aanmaken van alle behaalde resultaten van de student
-		StudentAssignments beanSA = new StudentAssignments("Dit is een resultaat", occasions);
-		//Bean meegeven aan de JSP pagina
-		request.setAttribute("resultstoShow", beanSA);
-		
-		//Juiste JSP pagina specificeren om naar door te sturen
-		RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
-		//Daadwerkelijk alles doorsturen
-		dispatcher.forward(request, response);
 			
+			
+			
+			//Als er geen moduleid en moduleyear in de URL wordt gespecificeerd, de meest recente module van de student opzoeken en die tonen
+			if (request.getParameter("moduleid") == null || request.getParameter("moduleyear") == null){
+				//Database connectie aanmaken
+				GradesDB gradesDB = new GradesDB();
+				try{
+					//Alle modules van de gebruiker opvragen
+					studentmodules = gradesDB.getModulesForStudent(SID);
+					//getModulecode sorteert automatisch op de meest recente module, dus eerste resultaat is de module die getoont moet worden
+					moduleid = studentmodules.get(0).getModulecode();
+					moduleyear = studentmodules.get(0).getYear();
+				}finally{
+					//Database connectie afsluiten
+					gradesDB.closeConnection();
+				}
+			}else{
+				//Als er wel een module-id&jaar wordt gespecificeerd, deze uit de URL halen en de locale variabelen stoppen
+				moduleid = Integer.parseInt(request.getParameter("moduleid"));
+				moduleyear = Integer.parseInt(request.getParameter("moduleyear"));
+			}
+			
+			//Alle informatie is nu bekend, dus nu kan 'setInfo' aangeroepen worden.
+			setInfo(SID, moduleid, moduleyear);
+			
+			if(student!= null && modules != null && module != null && moduleResult != null && courses != null && assignments != null && occasions != null){
+				//De informatie van de student meegeven aan de JSP pagina
+				request.setAttribute("student", student);
+				
+				//De lijst van alle modules meegeven aan de JSP pagina
+				request.setAttribute("studentModules", modules);
+				
+				//De informatie van de module meegeveen aan de JSP pagina
+				request.setAttribute("moduletoShow", module);
+				
+				//Het uiteindelijke moduleresulaat meegeven aan de JSP pagina
+				request.setAttribute("moduleresulttoShow", moduleResult);
+				
+				//Bean aanmaken met de lijst van vakken die de student volgt
+				StudentCourses beanSC = new StudentCourses(SID, courses);
+				//De bean meegeven aan de JSP pagina
+				request.setAttribute("coursestoShow", beanSC);
+		
+				//Bean aanmaken met de lijst van alle assignments van alle vakken van de module
+				CourseAssignments beanCA = new CourseAssignments("Dit is een vak", assignments);
+				//De bean meegeven voor de JSP pagina
+				request.setAttribute("assignmentstoShow", beanCA);
+				
+				//Bean aanmaken van alle behaalde resultaten van de student
+				StudentAssignments beanSA = new StudentAssignments("Dit is een resultaat", occasions);
+				//Bean meegeven aan de JSP pagina
+				request.setAttribute("resultstoShow", beanSA);
+				
+				//Juiste JSP pagina specificeren om naar door te sturen
+				RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
+				//Daadwerkelijk alles doorsturen
+				dispatcher.forward(request, response);
+				} else {
+					//Juiste JSP pagina specificeren om naar door te sturen
+					RequestDispatcher dispatcher = request.getRequestDispatcher("login");
+					//Daadwerkelijk alles doorsturen
+					dispatcher.forward(request, response);
+				}
+			}else{
+				//Juiste JSP pagina specificeren om naar door te sturen
+				RequestDispatcher dispatcher = request.getRequestDispatcher("login");
+				//Daadwerkelijk alles doorsturen
+				dispatcher.forward(request, response);
+			}
 		}
 	}
