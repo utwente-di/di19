@@ -393,7 +393,7 @@ public class GradesDB extends DB {
 			while(rs.next()){
 				int assignmentid = rs.getInt("assignmentid");
 				int coursecode = rs.getInt("coursecode");
-				int courseyear = rs.getInt("courseyear");
+				int courseyear = rs.getInt("year");
 				String name = rs.getString("name");
 				boolean isgradedassignment = rs.getBoolean("isgradedassignment");
 				int weight = rs.getInt("weight");
@@ -921,7 +921,7 @@ public class GradesDB extends DB {
 			ps.setString(5, t.getSalt());
 			ps2.setInt(1,personid_int);
 			ps2.setBoolean(2, t.isManager());
-			//Exequte the two queries
+			//Execute the two queries
 			Debug.logln("GradesDB: Executing query 1 : " + ps.toString());
 			ps.executeUpdate();
 			Debug.logln("GradesDB: Executing query 2 : " + ps2.toString());
@@ -930,16 +930,23 @@ public class GradesDB extends DB {
 			ps2.close();
 			//commit the queries && reset auto-commit
 			conn.commit();
-			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
-		}		
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}	
 	
 	/**
 	 * Adds a student to the database.
 	 * @param s the student to add.
+	 * @throws  
 	 */
 	public void addStudent(Student s){
 		//because student numbers always start with a s, remove it in order to get the integer; personid.
@@ -962,19 +969,26 @@ public class GradesDB extends DB {
 			ps.setString(5, s.getSalt());
 			ps2.setInt(1,personid_int);
 			//exequte the queries
-			Debug.logln("GradesDB: Executing prepared statement 1.");
+			Debug.logln("GradesDB: Executing statement:" + ps.toString());
 			ps.executeUpdate();
-			Debug.logln("GradesDB: Executing prepared statement 2.");
+			Debug.logln("GradesDB: Executing statement:" + ps2.toString());
 			ps2.executeUpdate();
 			ps.close();
 			ps2.close();
 			//commit the queries && reset autocommit
 			conn.commit();
-			conn.setAutoCommit(true);
+			
 		} catch (SQLException e) {
 			Debug.logln("GradesDB: Oops: " + e.getMessage());
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
-		}		
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}	
 	
 	//TODO:
@@ -1020,7 +1034,7 @@ public class GradesDB extends DB {
 	
 	//TODO: test
 	public void addAssignment(Assignment a){
-		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode, courseyear, name,isgradedassignment, weight, minimumresult)" + 
+		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode,year, name,isgradedassignment, weight, minimumresult)" + 
 		"VALUES(?,?,?,?,?,?,?)";
 		//Note that, when creating an assignment, it has to be part of a course,
 		//therefore, a valid (coursecode,courseyear) tuple has to be given for the assignment to be added succesfully!
@@ -1046,16 +1060,17 @@ public class GradesDB extends DB {
 
 	//TODO: test
 	public void addAssignmentOccasion(AssignmentOccasion ao){
-		String query = "INSERT INTO Testi.assignmentoccasion(assignmentid,occasiondate) " + 
-		"VALUES (?,?)";
+		String query = "INSERT INTO Testi.assignmentoccasion(assignmentid, occasionid, occasiondate) " + 
+		"VALUES (?,?,?)";
 		//Assignmentid for which the ao counts must exist beforehand
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1,ao.getAssignmentid());
-			ps.setDate(2,ao.getOccasiondate());
+			ps.setInt(1, ao.getAssignmentid());
+			ps.setInt(2, ao.getOccasionid());
+			ps.setDate(3, ao.getOccasiondate());
 			//execute it
-			Debug.logln("GradesDB: Executing statement : " + ps.toString());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -1156,10 +1171,10 @@ public class GradesDB extends DB {
 	 *DELETE 
 	 */
 	/**
-	 * Deletes a Teacher from the database
+	 * Deletes a Teacher from the database (but not the actual person)
 	 * @param personid The ID of this teacher
 	 */
-	public void DeleteTeacher(String personid){
+	public void deleteTeacher(String personid){
 		int personid_int = Integer.parseInt(personid.substring(1));
 		String query = "DELETE FROM Testi.Teacher t WHERE t.teacherid = (?)";
 		try{
@@ -1175,10 +1190,10 @@ public class GradesDB extends DB {
 		
 	}
 	
-	/** Deletes a Student from the database
+	/** Deletes a Student from the database (but not the actual person)
 	 * @param personid The ID of this Student
 	 */
-	public void DeleteStudent(String personid){
+	public void deleteStudent(String personid){
 		int personid_int = Integer.parseInt(personid.substring(1));
 		String query = "DELETE FROM Testi.Student s WHERE s.studentid = (?)";
 		try{
@@ -1192,13 +1207,57 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
 		}
 	}
-		
-	public void DeletePerson(String personid){
+	/** Deletes a Person from the database 
+	 * @param personid
+	 */
+	public void deletePerson(String personid){
 		int personid_int = Integer.parseInt(personid.substring(1));
-		String query = "DELETE FROM Testi.Person p WHERE p.personid = (?)";
+		String query3 = "DELETE FROM Testi.Person p WHERE p.personid = (?)";
+		String query1 = "DELETE FROM Testi.Student s WHERE s.studentid = (?)";
+		String query2 = "DELETE FROM Testi.Teacher t WHERE t.teacherid = (?)";
+		try{
+			conn.setAutoCommit(false);
+			PreparedStatement ps1 = conn.prepareStatement(query1);
+			PreparedStatement ps2 = conn.prepareStatement(query2);
+			PreparedStatement ps3 = conn.prepareStatement(query3);
+			ps1.setInt(1, personid_int);
+			ps2.setInt(1, personid_int);
+			ps3.setInt(1, personid_int);
+			Debug.logln("GradesDB: Executing statement: " + ps1.toString());
+			ps1.executeUpdate();
+			Debug.logln("GradesDB: Executing statement: " + ps2.toString());
+			ps2.executeUpdate();
+			Debug.logln("GradesDB: Executing statement: " + ps3.toString());
+			ps3.executeUpdate();
+			conn.commit();
+			ps1.close();
+			ps2.close();
+			ps3.close();
+			
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+	} finally {
+		try {
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	}
+	/**
+	 * Delete a Module from the Database
+	 * @param modulecode The code of the Module
+	 * @param year The Year of the Module
+	 */
+	public void deleteModule(int modulecode, int year){
+		String query = "DELETE FROM Testi.Module m WHERE m.modulecode = (?) " +
+					"AND m.year = (?)";
 		try{
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1, personid_int);
+			ps.setInt(1, modulecode);
+			ps.setInt(2, year);
 			Debug.logln("GradesDB: Executing statement: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
@@ -1208,6 +1267,140 @@ public class GradesDB extends DB {
 	}
 	}
 
+	/**
+	 * Delete a Supermodule from the DataBase (alongside its regular modules
+	 * 
+	 */
+	public void deleteSuperModule(int modulecode){
+		String query1 = "DELETE FROM Testi.SuperModule sm WHERE sm.modulecode = (?)";
+		String query2 = "DELETE FROM Testi.Module m WHERE m.modulecode = (?)";
+		try{
+			conn.setAutoCommit(false);
+			PreparedStatement ps1 = conn.prepareStatement(query2);
+			PreparedStatement ps2 = conn.prepareStatement(query1);
+			ps1.setInt(1, modulecode);
+			ps2.setInt(1, modulecode);
+			Debug.logln("GradesDB: Executing statement: " + ps1.toString());
+			ps1.executeUpdate();
+			Debug.logln("GradesDB: Executing statement: " + ps2.toString());
+			ps2.executeUpdate();
+			conn.commit();
+			ps1.close();
+			ps2.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+	} finally {
+		try {
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	}
+	/**
+	 * Delete a single course from the DataBase
+	 * @param coursecode
+	 * @param year
+	 */
+	public void deleteCourse(int coursecode, int year){
+		String query = "DELETE FROM Testi.Course c WHERE c.coursecode = (?) AND c.year = (?)";
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, coursecode);
+			ps.setInt(2, year);
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+	}
+	}
+	
+	public void deleteSuperCourse(int coursecode){
+		String query1 = "DELETE FROM Testi.Course c WHERE c.coursecode = (?)";
+		String query2 = "DELETE FROM Testi.SuperCourse sc WHERE sc.coursecode = (?)";
+		try{
+			conn.setAutoCommit(false);
+			PreparedStatement ps1 = conn.prepareStatement(query1);
+			PreparedStatement ps2 = conn.prepareStatement(query2);
+			ps1.setInt(1, coursecode);
+			ps2.setInt(1, coursecode);
+			Debug.logln("GradesDB: Executing statement: " + ps1.toString());
+			ps1.executeUpdate();
+			Debug.logln("GradesDB: Executing statement: " + ps2.toString());
+			ps2.executeUpdate();
+			conn.commit();
+			ps1.close();
+			ps2.close();	
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+	} finally {
+		try {
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	}
+	
+	/**
+	 * Delete an assignment occasion
+	 * @param OccasionID
+	 * @param AssignmentID
+	 */
+	public void deleteAssignmentOccasion(int OccasionID, int AssignmentID){
+		String query = "DELETE FROM Testi.AssignmentOccasion ao WHERE ao.occasionid = (?) " +
+					"AND ao.assingmentid = (?)";
+		try{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, OccasionID);
+			ps.setInt(2, AssignmentID);
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+	}
+	}
+	
+	/**
+	 * Delete an assignment and its occasions from the database
+	 * @param assignmentID
+	 */
+	public void deleteAssignment(int assignmentID){
+		String query1 = "DELETE FROM Testi.AssignmentOccasion ao WHERE ao.assignmentid = (?)";
+		String query2 = "DELETE FROM Testi.Assignment a WHERE a.assignmentid = (?)";
+		try{
+			conn.setAutoCommit(false);
+			PreparedStatement ps1 = conn.prepareStatement(query1);
+			PreparedStatement ps2 = conn.prepareStatement(query2);
+			ps1.setInt(1, assignmentID);
+			ps2.setInt(1, assignmentID);
+			Debug.logln("GradesDB: Executing statement: " + ps1.toString());
+			ps1.executeUpdate();
+			Debug.logln("GradesDB: Executing statement: " + ps2.toString());
+			ps2.executeUpdate();
+			conn.commit();
+			ps1.close();
+			ps2.close();	
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
+	} finally {
+		try {
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	}
 }
 
 

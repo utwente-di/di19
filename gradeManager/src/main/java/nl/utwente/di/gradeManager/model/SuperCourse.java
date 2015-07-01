@@ -3,7 +3,7 @@ package nl.utwente.di.gradeManager.model;
  * 
  * Class for supercourses, which a course has to instantiate.
  */
-public abstract class SuperCourse {
+public class SuperCourse {
 
 	private int coursecode;
 	private String name;

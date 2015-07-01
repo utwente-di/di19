@@ -4,7 +4,7 @@ package nl.utwente.di.gradeManager.model;
 /**
  * Class for super modules.
  */
-public abstract class SuperModule {
+public class SuperModule {
 	private int modulecode;
 	private String name;
 	
