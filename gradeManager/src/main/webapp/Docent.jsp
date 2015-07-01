@@ -44,25 +44,36 @@
     <!-- Right Nav Section -->
     <ul class="left">
     
-    <%List<Module> modules = docentModules.getModules();
-    List<Integer> years = new ArrayList<Integer>();
-    for (Module module : modules){
-    	if (!years.contains(module.getYear())){
-    		years.add(module.getYear());
-    	}
-    }
-    for (int i = 0; i <years.size(); i++ ){
-    	out.println("<li class=\"has-dropdown\">" +
-    					"<a href=\"#\">" + years.get(i) + "</a>" +
-    					"<ul class=\"dropdown\">");
-    	for (Module module : modules){
-    		if (module.getYear() == years.get(i)){
-    			out.println("<li><a href=\"Resulttabel?moduleid=" +  module.getModulecode() + "&moduleyear=" + module.getYear() + "\">" +
-    							module.getName() + "</a></li>");
-    		}
-    	}
-    	out.println("</ul></li>");		
-    }
+ <%
+	//Lijst met modules uit de bean halen en opslaan in variabele
+	 List<Module> modules = docentModules.getModules();
+		//Lijst aanmaken voor alle jaren waarin de student een module heeft gedaan
+	 List<Integer> years = new ArrayList<Integer>();
+		//Loop over alle modules heen
+	 for (Module module : modules){
+	 	//Check of jaartal al in de lijst staat
+	 	if (!years.contains(module.getYear())){
+	 		//Jaartal toevoegen aan de lijst
+	 		years.add(module.getYear());
+	 	}
+	 }
+		//For loop over alle jaren heen
+	 for (int i = 0; i <years.size(); i++ ){
+	 	//Voor elk jaar een dropdownmenu genereren
+	 	out.println("<li class=\"has-dropdown\">" +
+	 					"<a href=\"#\">" + years.get(i) + "</a>" +
+	 					"<ul class=\"dropdown\">");
+	 	//For loop over alle modules heen
+	 	for (Module module : modules){
+	 		//Check of het jaar van de module overeenkomt met het jaar in het dropdown menu
+	 		if (module.getYear() == years.get(i)){
+	 			//Module toevoegen aan het dropdowm menu
+	 			out.println("<li><a href=\"Resulttabel?moduleid=" +  module.getModulecode() + "&moduleyear=" + module.getYear() + "\">" +
+	 							module.getName() + "</a></li>");
+	 		}
+	 	}
+	 	out.println("</ul></li>");		
+	 }
     	%>
 
   </section>

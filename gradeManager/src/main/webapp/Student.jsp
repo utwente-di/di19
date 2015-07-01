@@ -41,19 +41,29 @@
     <!-- Right Nav Section -->
     <ul class="left">
     
-    <%List<Module> modules = studentModules.getModules();
+<%	//Lijst met modules uit de bean halen en opslaan in variabele
+    List<Module> modules = studentModules.getModules();
+	//Lijst aanmaken voor alle jaren waarin de student een module heeft gedaan
     List<Integer> years = new ArrayList<Integer>();
+	//Loop over alle modules heen
     for (Module module : modules){
+    	//Check of jaartal al in de lijst staat
     	if (!years.contains(module.getYear())){
+    		//Jaartal toevoegen aan de lijst
     		years.add(module.getYear());
     	}
     }
+	//For loop over alle jaren heen
     for (int i = 0; i <years.size(); i++ ){
+    	//Voor elk jaar een dropdownmenu genereren
     	out.println("<li class=\"has-dropdown\">" +
     					"<a href=\"#\">" + years.get(i) + "</a>" +
     					"<ul class=\"dropdown\">");
+    	//For loop over alle modules heen
     	for (Module module : modules){
+    		//Check of het jaar van de module overeenkomt met het jaar in het dropdown menu
     		if (module.getYear() == years.get(i)){
+    			//Module toevoegen aan het dropdowm menu
     			out.println("<li><a href=\"Resulttabel?moduleid=" +  module.getModulecode() + "&moduleyear=" + module.getYear() + "\">" +
     							module.getName() + "</a></li>");
     		}
@@ -61,7 +71,7 @@
     	out.println("</ul></li>");		
     }
     	%>
-
+	</ul>
   </section>
   <section class="top-bar-section">
   <ul class="right">
@@ -70,20 +80,35 @@
 	</ul>
 	</section>
 </nav>
-<% String backgroundcolor;
-if (moduleresulttoShow.getResult().doubleValue() < 5.5){
-	backgroundcolor = "FF0000";
-} else {
-	backgroundcolor = "00FF00";}%>
+<% 	//Variabele aanmaken voor de achtergrondkleur van het module eindcijfer
+	String backgroundcolor;
+	//Als het cijger lager is dan 5.5 wordt de achtergrond rood
+	if (moduleresulttoShow.getResult().doubleValue() < 5.5){
+		backgroundcolor = "e74c3c";
+	//Als het cijfer hoger of gelijk aan 5.5 is wordt de achtergrond groen
+	} else {
+		backgroundcolor = "2ecc71";}
+%>
 
-<%--<script src="js/Navigatiebalk.js"></script>--%>
 <h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"> <div style="float:left; width: 47%"><jsp:getProperty name="moduletoShow" property="name"/></div> <div style="width:4.2%; float:left; background-color:#<%out.println(backgroundcolor);%>"><jsp:getProperty name="moduleresulttoShow" property="result"/></div></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion>
 
-<% List<Course> courses = coursestoShow.getCourses();
+<% 	//Lijst met alle vakken van de student aanmaken
+	List<Course> courses = coursestoShow.getCourses();
+	//Lijst met assignments aanmaken
+	List<Assignment> assignments = assignmentstoShow.getAssignments();
+	//Volledige lijst met resultaten ophalen
+	List<AssignmentResult> results = resultstoShow.getAssResults();
+	//Variabele voor de achtergrondkleur van het cijfer aanmaken
+	String backgroundcolour = "";
+		//Voor elk vak wordt een eigen accordion aangemaakt en gevuld met alle resultaten van dat vak
 		for (Course course : courses) {
+			//Check of het vak in het jaar van de module valt.
+			//Omdat modules dezelfde naam kunnen hebben als SuperModule, moeten we het jaartal checken
 			if(course.getYear() == moduletoShow.getYear()){
+			//Spaties uit de vaknaam trimmen zodat hij gebruikt kan worden als ID in de accordion
 			String courseNameID = course.getName().replaceAll("\\s","");
+			//Standaard accordion html printen
 			out.println("<li class=\"accordion-navigation\">" + 
 							"<a href=\"#" + courseNameID + "\"> " + course.getName() + "</a>"+
 								"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">"+
@@ -96,20 +121,24 @@ if (moduleresulttoShow.getResult().doubleValue() < 5.5){
 											"</tr>"+
 										"</thead>" 
 						);
-			List<Assignment> assignments = assignmentstoShow.getAssignments();
-			List<AssignmentResult> results = resultstoShow.getAssResults();
-			String backgroundcolour = "";
+				//Alle assignments doorlopen
 				for (Assignment assignment : assignments) {
+					//For-loop over alle resultaten heen
 					for(AssignmentResult result : results){
+						//Checken of vak, assignment en resultaat bij elkaar horen door:
+						//Assignment en vak hebben zelfde vakcode
+						//Assignment en vak vallen in hetzelfde jaar ( nodig om we Supercourses hebben, dus jaar is relevant)
+						//Assignment en resultaat hebben hetzelfde assignmentID
+						//Vak en module vallen in hetzelfde jaar
 						if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear()){	
+							//Als resultaat lager is dan 5.4 achtergrond op rood zetten
 							if(result.getResult().doubleValue() < 5.5) {
-							//result is not passing grade.
-								backgroundcolour = "FF0000"; // red
+								backgroundcolour = "e74c3c"; // red
+							//ALs dat niet het geval is achtergrond op groen zetten
 							} else {
-								backgroundcolour = "00FF00"; // green
+								backgroundcolour = "2ecc71"; // green
 					}
-					
-					
+					//Informatie en resultaat van de assignment printen in de accordion
 					out.println(		"<tbody>" + 
 											"<tr>"+
 												"<td>" + assignment.getName() + ":</td>"+
@@ -120,6 +149,7 @@ if (moduleresulttoShow.getResult().doubleValue() < 5.5){
 						}
 					}
 				}
+			//Alles correct afsluiten
 			out.println(
 									"</table>"+
 								"</div>"+
