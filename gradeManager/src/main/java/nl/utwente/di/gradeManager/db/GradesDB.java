@@ -969,9 +969,9 @@ public class GradesDB extends DB {
 			ps.setString(5, s.getSalt());
 			ps2.setInt(1,personid_int);
 			//exequte the queries
-			Debug.logln("GradesDB: Executing prepared statement 1.");
+			Debug.logln("GradesDB: Executing statement:" + ps.toString());
 			ps.executeUpdate();
-			Debug.logln("GradesDB: Executing prepared statement 2.");
+			Debug.logln("GradesDB: Executing statement:" + ps2.toString());
 			ps2.executeUpdate();
 			ps.close();
 			ps2.close();
@@ -1034,7 +1034,7 @@ public class GradesDB extends DB {
 	
 	//TODO: test
 	public void addAssignment(Assignment a){
-		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode, courseyear, name,isgradedassignment, weight, minimumresult)" + 
+		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode,year, name,isgradedassignment, weight, minimumresult)" + 
 		"VALUES(?,?,?,?,?,?,?)";
 		//Note that, when creating an assignment, it has to be part of a course,
 		//therefore, a valid (coursecode,courseyear) tuple has to be given for the assignment to be added succesfully!
@@ -1060,16 +1060,17 @@ public class GradesDB extends DB {
 
 	//TODO: test
 	public void addAssignmentOccasion(AssignmentOccasion ao){
-		String query = "INSERT INTO Testi.assignmentoccasion(assignmentid,occasiondate) " + 
-		"VALUES (?,?)";
+		String query = "INSERT INTO Testi.assignmentoccasion(assignmentid, occasionid, occasiondate) " + 
+		"VALUES (?,?,?)";
 		//Assignmentid for which the ao counts must exist beforehand
 		try{
 			//prepare the query
 			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1,ao.getAssignmentid());
-			ps.setDate(2,ao.getOccasiondate());
+			ps.setInt(1, ao.getAssignmentid());
+			ps.setInt(2, ao.getOccasionid());
+			ps.setDate(3, ao.getOccasiondate());
 			//execute it
-			Debug.logln("GradesDB: Executing statement : " + ps.toString());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -1282,6 +1283,8 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: Executing statement: " + ps1.toString());
 			ps1.executeUpdate();
 			Debug.logln("GradesDB: Executing statement: " + ps2.toString());
+			ps2.executeUpdate();
+			conn.commit();
 			ps1.close();
 			ps2.close();
 		} catch (SQLException e){
@@ -1329,6 +1332,7 @@ public class GradesDB extends DB {
 			ps1.executeUpdate();
 			Debug.logln("GradesDB: Executing statement: " + ps2.toString());
 			ps2.executeUpdate();
+			conn.commit();
 			ps1.close();
 			ps2.close();	
 		} catch (SQLException e){
@@ -1382,6 +1386,7 @@ public class GradesDB extends DB {
 			ps1.executeUpdate();
 			Debug.logln("GradesDB: Executing statement: " + ps2.toString());
 			ps2.executeUpdate();
+			conn.commit();
 			ps1.close();
 			ps2.close();	
 		} catch (SQLException e){

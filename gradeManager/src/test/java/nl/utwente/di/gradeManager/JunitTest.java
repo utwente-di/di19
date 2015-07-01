@@ -48,11 +48,9 @@ public class JunitTest {
 		
 		gradesDB.deletePerson(s.getPersonID());
 		gradesDB.deletePerson(t.getPersonID());
-		gradesDB.deleteSuperModule(m.getModulecode());
-		gradesDB.deleteSuperCourse(c.getCourseCode());
 		gradesDB.deleteAssignment(a.getAssignmentID());
-		
-		
+		gradesDB.deleteSuperCourse(c.getCourseCode());
+		gradesDB.deleteSuperModule(m.getModulecode());
 		} finally {
 			gradesDB.closeConnection();
 		}
