@@ -2,11 +2,20 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>nl.utwente.di.gradeManager.pages</display-name>
  <servlet>
-    <servlet-name>gradeManagerPages</servlet-name>
+    <servlet-name>gradeManagerView</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
         <param-name>jersey.config.server.provider.packages</param-name>
-        <param-value>nl.utwente.di.gradeManager.pages</param-value>
+        <param-value>nl.utwente.di.gradeManager.pages.view</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    </servlet>
+     <servlet>
+    <servlet-name>gradeManagerCreate</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+        <param-name>jersey.config.server.provider.packages</param-name>
+        <param-value>nl.utwente.di.gradeManager.pages.create</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
     </servlet>
@@ -29,8 +38,12 @@
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>gradeManagerPages</servlet-name>
-    <url-pattern>/pages/*</url-pattern>
+    <servlet-name>gradeManagerView</servlet-name>
+    <url-pattern>/pages/view/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>gradeManagerCreate</servlet-name>
+    <url-pattern>/pages/create/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
