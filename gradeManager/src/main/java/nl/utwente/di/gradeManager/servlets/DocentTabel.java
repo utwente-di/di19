@@ -159,38 +159,45 @@ public class DocentTabel extends HttpServlet {
 			//SetInfo aanroepen zodat alle gegevens uit de database getrokken worden en de beans gevuld kunnen worden
 			setInfo(SID, moduleid, moduleyear);
 		
-			//Informatie van de module meegeven voor de JSP pagina
-			request.setAttribute("moduletoShow", module);
-		
-			//Informatie over de docent meegeven aan de JSP pagina
-			request.setAttribute("docent", docent);
-		
-			//Alle modules van de docent meegeven aan de JSP pagina  voor de navigatiebalk
-			request.setAttribute("docentModules", modules);
-		
-			//Bean aanmaken met de lijst van vakken die de docent kan zien
-			StudentCourses beanSC = new StudentCourses(SID, courses);
-			//De bean meegeven aan de JSP pagina
-			request.setAttribute("coursestoShow", beanSC);
-	
-			//Bean aanmaken met alle assignments van alle vakken van de module
-			CourseAssignments beanCA = new CourseAssignments("Dit is een vak", assignments);
-			//De bean meegeven aan de JSP pagina
-			request.setAttribute("assignmentstoShow", beanCA);
+			if(docent!= null && modules != null && module != null  && courses != null && assignments != null && results != null){
+				//Informatie van de module meegeven voor de JSP pagina
+				request.setAttribute("moduletoShow", module);
 			
-			request.setAttribute("docentModules", modules);//Bean aanmaken voor alle resultaten die behaald zijn
-			StudentAssignments beanSA = new StudentAssignments("Dit is een resultaat", results);
-			//De bean meegeven aan de JSP pagina
-			request.setAttribute("resultstoShow", beanSA);
+				//Informatie over de docent meegeven aan de JSP pagina
+				request.setAttribute("docent", docent);
 			
-			//Alle studenten die het vak volgen in een bean stoppen
-			CourseStudents beanCS = new CourseStudents("Dit is een student", students);
-			//De bean meegeven aan de JSP pagina
-			request.setAttribute("studentstoShow", beanCS);
-	
-			//Juiste JSP pagina specificeren om naar door te sturen
-			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
-			//Daadwerkelijk alles doorsturen
-			dispatcher.forward(request, response);
+				//Alle modules van de docent meegeven aan de JSP pagina  voor de navigatiebalk
+				request.setAttribute("docentModules", modules);
+			
+				//Bean aanmaken met de lijst van vakken die de docent kan zien
+				StudentCourses beanSC = new StudentCourses(SID, courses);
+				//De bean meegeven aan de JSP pagina
+				request.setAttribute("coursestoShow", beanSC);
+		
+				//Bean aanmaken met alle assignments van alle vakken van de module
+				CourseAssignments beanCA = new CourseAssignments("Dit is een vak", assignments);
+				//De bean meegeven aan de JSP pagina
+				request.setAttribute("assignmentstoShow", beanCA);
+				
+				request.setAttribute("docentModules", modules);//Bean aanmaken voor alle resultaten die behaald zijn
+				StudentAssignments beanSA = new StudentAssignments("Dit is een resultaat", results);
+				//De bean meegeven aan de JSP pagina
+				request.setAttribute("resultstoShow", beanSA);
+				
+				//Alle studenten die het vak volgen in een bean stoppen
+				CourseStudents beanCS = new CourseStudents("Dit is een student", students);
+				//De bean meegeven aan de JSP pagina
+				request.setAttribute("studentstoShow", beanCS);
+		
+				//Juiste JSP pagina specificeren om naar door te sturen
+				RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
+				//Daadwerkelijk alles doorsturen
+				dispatcher.forward(request, response);
+			}else{
+				//Juiste JSP pagina specificeren om naar door te sturen
+				RequestDispatcher dispatcher = request.getRequestDispatcher("login");
+				//Daadwerkelijk alles doorsturen
+				dispatcher.forward(request, response);
+			}
 	}
 }
