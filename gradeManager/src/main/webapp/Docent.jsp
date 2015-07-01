@@ -72,6 +72,7 @@
 	 							module.getName() + "</a></li>");
 	 		}
 	 	}
+	 	//Alles netjes afsluiten
 	 	out.println("</ul></li>");		
 	 }
     	%>
@@ -88,42 +89,68 @@
 <h1 style="background-color:#EAEAEA; border-style:solid; border-width:2px; border-color:#EAEAEA"><jsp:getProperty name="moduletoShow" property="name"/></h1>
 <ul style="float:left; width: 50%" class="accordion" data-accordion="">
 
-<%List<Course> courses = coursestoShow.getCourses();
-List<Assignment> assignments = assignmentstoShow.getAssignments();
-List<AssignmentResult> results = resultstoShow.getAssResults();
-List<Student> students = studentstoShow.getStudents();
+<%	//Lijst met alle courses van de module maken
+	List<Course> courses = coursestoShow.getCourses();
+	//Lijst met alle assignments van alle vakken
+	List<Assignment> assignments = assignmentstoShow.getAssignments();
+	//Lijst met alle resultaten van alle assignments
+	List<AssignmentResult> results = resultstoShow.getAssResults();
+	//Complete lijst van studenten
+	List<Student> students = studentstoShow.getStudents();
+	
+	//Alle vakken van de module doorlopen
 	for (Course course : courses) {
+		//Check of het vak in het jaar van de module valt.
+		//Omdat modules dezelfde naam kunnen hebben als SuperModule, moeten we het jaartal checken
 		if(course.getYear() == moduletoShow.getYear()){
-			String courseNameID = course.getName().replaceAll("\\s","");
+		//Spaties uit de vaknaam trimmen zodat hij gebruikt kan worden als ID in de accordion
+		String courseNameID = course.getName().replaceAll("\\s","");
+		//Standaard accordion html printen
 		out.println("<li class=\"accordion-navigation\">" +
 						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" +
-		"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">");
-		out.println("<ul class=\"accordion\" data-accordion=\"\">");
+							"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">" + 
+								"<ul class=\"accordion\" data-accordion=\"\">");
+		//Alle assignments van alle vakken doorlopen
 		for (Assignment assignment : assignments) {
-			if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear()){
+			//Checken of assignment en vak bij elkaar horen door:
+			//Assignment en vak hebben zelfde vakcode
+			//Assignment en vak vallen in hetzelfde jaar ( nodig om we Supercourses hebben, dus jaar is relevant)
+			//Vak en module vallen in hetzelfde jaar
+			if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && course.getYear() == moduletoShow.getYear()){
+				//AssignmentID trimmen zodat hij gebruikt kan worden als ID in de sub-accordion
 				String assNameID = assignment.getName().replaceAll("\\s","");
+				//Sub-accordion printen voor de resultaaten per assignment
 				out.println("<li class=\"accordion-navigation\">" +
-							"<a aria-expanded=\"false\" href=\"#" + assNameID + "\">" + assignment.getName() + "</a> " + 
-							"<div style=\"background-color:white\" id=\"" + assNameID + "\" class=\"content\">" +
-							"<table>" +
-							 	"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>");
+								"<a aria-expanded=\"false\" href=\"#" + assNameID + "\">" + assignment.getName() + "</a> " + 
+									"<div style=\"background-color:white\" id=\"" + assNameID + "\" class=\"content\">" +
+										"<table>" +
+							 				"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>");
+				//Alle assignments van de vakken doorlopen
 				for(AssignmentResult result : results){
-					for(Student student : students){
-						if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear() && result.getStudentid() == Integer.parseInt(student.getPersonID().substring(1))){
-						out.println("<tbody>" + 
-										"<tr>" +
-											"<td>" + student.getFirstname() + " " + student.getSurname() + "</td>" + 
-											"<td>" + student.getPersonID() + "</td>" +
-											"<td>" + result.getOccasiondate() + "</td>" +
-											"<td class=\"grade\">" + result.getResult() + "</td>" +
-										"</tr>" +
-									"</tbody>"
-									);
+					//Checken of het een result van het vak is
+					if(result.getAssignmentid() == assignment.getAssignmentID()){
+						//Alle studenten doorlopen
+						for(Student student : students){
+							//Checken of de welke student het resultaat behaald heeft
+							if(result.getStudentid() == Integer.parseInt(student.getPersonID().substring(1))){
+								//Resultaat in de tabel zetten
+								out.println("<tbody>" + 
+												"<tr>" +
+													"<td>" + student.getFirstname() + " " + student.getSurname() + "</td>" + 
+													"<td>" + student.getPersonID() + "</td>" +
+													"<td>" + result.getOccasiondate() + "</td>" +
+													"<td class=\"grade\">" + result.getResult() + "</td>" +
+												"</tr>" +
+											"</tbody>"
+											);
+							}
 						}
 					}
+				//Tabel en de subaccordion afsluiten
 				}out.println("</table>" + 
 						"</div> </li>");
 			}
+		//Accordion afsluiten
 		}out.println("</li></ul>");
 		}
 	}

@@ -123,29 +123,31 @@
 						);
 				//Alle assignments doorlopen
 				for (Assignment assignment : assignments) {
-					//For-loop over alle resultaten heen
-					for(AssignmentResult result : results){
-						//Checken of vak, assignment en resultaat bij elkaar horen door:
-						//Assignment en vak hebben zelfde vakcode
-						//Assignment en vak vallen in hetzelfde jaar ( nodig om we Supercourses hebben, dus jaar is relevant)
-						//Assignment en resultaat hebben hetzelfde assignmentID
-						//Vak en module vallen in hetzelfde jaar
-						if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && result.getAssignmentid() == assignment.getAssignmentID() && course.getYear() == moduletoShow.getYear()){	
-							//Als resultaat lager is dan 5.4 achtergrond op rood zetten
-							if(result.getResult().doubleValue() < 5.5) {
-								backgroundcolour = "e74c3c"; // red
-							//ALs dat niet het geval is achtergrond op groen zetten
-							} else {
-								backgroundcolour = "2ecc71"; // green
-					}
-					//Informatie en resultaat van de assignment printen in de accordion
-					out.println(		"<tbody>" + 
-											"<tr>"+
-												"<td>" + assignment.getName() + ":</td>"+
-												"<td style=\"background-color:#"+ backgroundcolour + "\">" + result.getResult() + "</td>"+
-												"<td>" + result.getOccasiondate() + "</td>" +
-											"</tr>"+
-										"</tbody>");
+					//Checken of vak en assignment bij elkaar horen door:
+					//Assignment en vak hebben zelfde vakcode
+					//Assignment en vak vallen in hetzelfde jaar ( nodig om we Supercourses hebben, dus jaar is relevant)
+					//Vak en module vallen in hetzelfde jaar
+					if(assignment.getCourseCode() == course.getCourseCode() && assignment.getCourseyear() == course.getYear() && course.getYear() == moduletoShow.getYear()){
+						//For-loop over alle resultaten heen
+						for(AssignmentResult result : results){
+							//Checken of het resultaat bij de assignment hoort
+							if(result.getAssignmentid() == assignment.getAssignmentID()){	
+								//Als resultaat lager is dan 5.4 achtergrond op rood zetten
+								if(result.getResult().doubleValue() < 5.5) {
+									backgroundcolour = "e74c3c"; // red
+								//ALs dat niet het geval is achtergrond op groen zetten
+								} else {
+									backgroundcolour = "2ecc71"; // green
+								}
+							//Informatie en resultaat van de assignment printen in de accordion
+							out.println(	"<tbody>" + 
+												"<tr>"+
+													"<td>" + assignment.getName() + ":</td>"+
+													"<td style=\"background-color:#"+ backgroundcolour + "\">" + result.getResult() + "</td>"+
+													"<td>" + result.getOccasiondate() + "</td>" +
+												"</tr>"+
+											"</tbody>");
+							}
 						}
 					}
 				}
