@@ -15,9 +15,6 @@
 				<legend>Importeer uw bestand</legend>
 				<input type="file" name="File Upload" id="txtFileUpload" accept=".csv, .xls" />
 				<select id="tableSelector">
-					<option value="Persons">Personen</option>
-					<option value="Grades">Cijfers</option>
-					<option value="Modules">Modules</option>
 				</select> 
 			</fieldset>
 		</div>
