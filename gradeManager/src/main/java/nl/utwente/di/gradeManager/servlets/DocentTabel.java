@@ -185,7 +185,7 @@ public class DocentTabel extends HttpServlet {
 				request.setAttribute("resultstoShow", beanSA);
 				
 				//Alle studenten die het vak volgen in een bean stoppen
-				CourseStudents beanCS = new CourseStudents("Dit is een student", students);
+				AllStudents beanCS = new AllStudents("Dit is een student", students);
 				//De bean meegeven aan de JSP pagina
 				request.setAttribute("studentstoShow", beanCS);
 		

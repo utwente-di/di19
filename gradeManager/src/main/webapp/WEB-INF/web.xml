@@ -49,6 +49,10 @@
 		<servlet-name>Import</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.Import</servlet-class>
   </servlet>
+  <servlet>
+  		<servlet-name>Manager</servlet-name>
+  		<servlet-class>nl.utwente.di.gradeManager.servlets.ManagerServlet</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>restView</servlet-name>
@@ -87,5 +91,9 @@
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Manager</servlet-name>
+  	<url-pattern>/Manager</url-pattern>
   </servlet-mapping>
 </web-app> 

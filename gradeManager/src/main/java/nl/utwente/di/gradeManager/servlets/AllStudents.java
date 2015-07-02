@@ -5,13 +5,13 @@ import java.util.List;
 import nl.utwente.di.gradeManager.model.Student;
 
 
-public class CourseStudents{
+public class AllStudents{
 
 	private String title;
 	private List<Student> students;
 
 
-	public CourseStudents(String title, List<Student> students) {
+	public AllStudents(String title, List<Student> students) {
 		this.title=title;
 		this.students=students;
 	}
