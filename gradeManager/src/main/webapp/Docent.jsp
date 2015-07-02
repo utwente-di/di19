@@ -143,10 +143,14 @@
 													"<td class=\"grade\">" + result.getResult() + "</td>" +
 													"<td class=\"row collapse postfix-round\">" + 
 											        	"<div class=\"small-9 columns\">" +
-											        		"<input type=\"text\" placeholder=\"Value\">"+
-											        	"</div>" + 
-											       		"<div class=\"small-3 columns\">" +
-											       			"<a href=\"#\" class=\"button postfix\">Go</a>" +
+											        		"<form name=\"UpdateResult\" action=\"UpdateResult\" method=\"post\" accept-charset=\"utf-8\">" +
+											        			"<div class=\"small-9 columns\">" + 
+											        				"<input type=\"text\" name=\"nieuwcijfer\" placeholder=\"Value\">"+
+											        			"</div>" +
+											        			"<div class=\"small-3 columns\">" +
+											        				"<input type=\"submit\" class=\"button postfix\" value=\"Go\">" +
+											        			"</div>" + 
+											        		"</form>" +
 											        	"</div>" +
 											     	"</td>" +
 												"</tr>" +
