@@ -112,11 +112,7 @@ public class Login extends HttpServlet {
 		
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
-		
-
-		//Sanitize the user input.
-		username = Security.sanitizeString(username);
-		password = Security.sanitizeString(password);
+	
 		
 		LoginDB loginDB = new LoginDB();
 		
