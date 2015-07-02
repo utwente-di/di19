@@ -33,6 +33,8 @@ public class ManagerServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException{
+		
+		getStudents();
 		request.setAttribute("students", students);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
 		dispatcher.forward(request, response);
