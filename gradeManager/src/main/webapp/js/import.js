@@ -33,14 +33,14 @@ var mappingTable = {
         }
 
     },
-    'Grades': {
+    'Grades': { //just to fill the dropdown a little bit more
         'show': {
             'name': 'Cijfers'
         },
         'defaults': {
         }
     },
-    'Modules': {
+    'Modules': { //just to fill the dropdown a little bit more
         'show': {
             'name': 'Modules'
         },
@@ -158,7 +158,7 @@ function postData(){
 function updatePage(){
     addDefaults();
     var type = $('#tableSelector')[0].value;
-    var title = "<h5>"+type+"</h5>";
+    var title = "<h5>"+mappingTable[type]['show']['name']+"</h5>";
     var table = "<table><thead><tr>";
     var keys = Object.keys(globalData[0]);
     for(var i = 0; i < keys.length; i++){
@@ -184,7 +184,7 @@ function updatePage(){
         }
     }
     var warningMsg = 
-    importDataHTML += '<input type="submit" value="Voeg deze items aan de tabel ' + type + ' toe"  onClick="return confirm(\'Weet je zeker dat je deze waardes toe wilt voegen?\');"></form>';
+    importDataHTML += '<input type="submit" value="Voeg deze items aan de tabel ' + mappingTable[type]['show']['name'] + ' toe"  onClick="return confirm(\'Weet je zeker dat je deze waardes toe wilt voegen?\');"></form>';
     $("#importData")[0].innerHTML = importDataHTML;
 }
 
