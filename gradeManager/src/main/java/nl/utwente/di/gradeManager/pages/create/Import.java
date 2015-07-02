@@ -15,18 +15,7 @@ public class Import{
 	@Produces(MediaType.TEXT_HTML)
 	public String showImport(){
 		HTMLGenerator html = new HTMLGenerator(2);
-		html.addLine("<html>");
-		html.addLine("<head>");
-		html.addLine("<link rel=\"stylesheet\" href=\"css/foundation.css\">");
-		html.addLine("<script src=\"js/d3.js\"></script>");;
-		html.addLine("<script src=\"js/d3.min.js\"></script>");
-		html.addLine("<script src=\"js/import.js\"></script>");
-		html.addLine("<script src=\"js/modernizr.js\"></script>");
-		html.addLine("<script src=\"js/jquery.js\"></script>");
-		html.addLine("<script src=\"js/fastclick.js\"></script>");
-		html.addLine("<script src=\"js/foundation.js\"></script>);");
-		html.addLine("</head>");
-		html.addLine("<body>");
+		html.addScript("import.js");
 		html.addLine("<div id=\"dvImportSegments\" class=\"fileupload \">");
 		html.addLine("<fieldset>");
 		html.addLine("<legend>Importeer uw bestand</legend>");
@@ -45,8 +34,6 @@ public class Import{
 		html.addLine("<script>");
 		html.addLine("<$(document).ready(addListeners());");
 		html.addLine("</script>");
-		html.addLine("</body>");
-		html.addLine("</html>");
 		
 		return html.getHTML();
 		
