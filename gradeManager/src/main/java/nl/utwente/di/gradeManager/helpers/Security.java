@@ -47,11 +47,4 @@ public class Security {
 		return salt.toString();
 	}
 	
-	public static String sanitizeString(String in){
-		String out = in;
-		
-		
-		
-		return out;
-	}
 }

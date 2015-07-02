@@ -12,7 +12,7 @@ import nl.utwente.di.gradeManager.model.*;
 
 /**
  * Helper class for Database connection for use for grades page.
- *
+ * Queries in comments are useful for testing the queries outside of java.
  */
 public class GradesDB extends DB {
 
@@ -71,7 +71,43 @@ public class GradesDB extends DB {
 		
 		return result;
 	}
+
+	/**
+	 * Gets all the courses from this supercourse(basically, the years in which they were given)
+	 * and returns them in a list
+	 * @param argCoursecode The code of this SuperCourse
+	 * @return A List of courses that belong to this supercourse
+	 */
+
 	
+	public SuperCourse getSuperCourse(int argCoursecode){
+		SuperCourse result = null;
+		String query = "SELECT * FROM Testi.supercourse sc WHERE sc.coursecode = " + argCoursecode;
+		//SELECT * FROM Testi.supercourse sc WHERE sc.coursecode = argCoursecode
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int coursecode = rs.getInt("coursecode");
+				String name = rs.getString("name");
+				int weight = rs.getInt("weight");
+				result = new SuperCourse(coursecode, name, weight);				
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	
+		return result;
+	}
+	
+
 	public List<Course> getCoursesForSuperCourse(int argCoursecode){
 		List<Course> result = new ArrayList<Course>();
 		
@@ -154,7 +190,7 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Gets the students from the database.
+	 * Gets all the students from the database.
 	 * @return A list of students, as in the database.
 	 */
 	public List<Student> getStudents(){
@@ -235,8 +271,8 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Gets the teachers from the database.	
-	 * @return A list of teachers, as in the database.
+	 * Gets all the teachers from the database.	
+	 * @return A list of Teacher classes of all teachers in the database
 	 */
 	public List<Teacher> getTeachers(){
 		List<Teacher> result = new ArrayList<Teacher>();
@@ -269,7 +305,45 @@ public class GradesDB extends DB {
 		
 		return result;
 	}
+
+	/**
+	 * Gets a module according to a given code and year
+	 * @param argmoduleCode The Modulecode to look for
+	 * @param argmoduleYear The Year to look for
+	 * @return A class module which corresponds to the given modulecode and year
+	 */
+
 	
+	public SuperModule getSuperModule(int argModulecode){
+		SuperModule result = null;
+		
+		String query = "SELECT * FROM Testi.supermodule sm WHERE sm.modulecode = " + argModulecode;
+		//SELECT * FROM Testi.supermodule sm WHERE sm.modulecode = argModulecode
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int modulecode = rs.getInt("modulecode");
+				String name = rs.getString("name");
+				result = new SuperModule(modulecode, name);
+			}
+			
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		return result;
+	}
+	
+
 	public Module getModule(int argmoduleCode, int argmoduleYear){
 		Module result = null;
 		String query = "SELECT m.moduleCode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE " +
@@ -288,8 +362,8 @@ public class GradesDB extends DB {
 				int moduleCode = rs.getInt("moduleCode");
 				int year = rs.getInt("year");
 				String name = rs.getString("name");
-				Module a = new Module(moduleCode, year, name);
-				result = a;
+				Module m = new Module(moduleCode, year, name);
+				result = m;
 			}
 		
 			rs.close();
@@ -307,7 +381,7 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Gets modules for a certain super module.
+	 * Gets all modules for a certain super module.
 	 * @param argSupermodulecode The id of the supermodule
 	 * @return A list of modules, which are an instance of a the supermodule.
 	 */
@@ -418,7 +492,7 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Gets the assignments from the database.
+	 * Gets all the assignments from the database.
 	 * @return An arraylist, containing all the assignments in the database.
 	 */
 	public List<Assignment> getAssignments(){
@@ -455,6 +529,7 @@ public class GradesDB extends DB {
 	}
 	/**
 	 * Gets the AssignmentResults corresponding to the assignmentid
+	 * @param assignmentID The ID of the assignment to look for
 	 * @return an ArrayList, containing assignmentresults with the given assignmentid's
 	 */
 	public List<AssignmentResult> getResultsForAssignment(int assignmentid){
@@ -527,9 +602,9 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Gets the modules, which docent teaches is doing.
+	 * Gets the modules that this teacher is working on
 	 * @param argDocentID The ID of the teacher.
-	 * @return A list of modules, which in which the docent teaches.
+	 * @return A list of modules where this teacher is working on
 	 */
 	public List<Module> getModulesForDocent(int argDocentID){
 		List<Module> result = new ArrayList<Module>();
@@ -563,9 +638,9 @@ public class GradesDB extends DB {
 	
 	
 	/**
-	 * Gets the modules, which a student is doing.
+	 * Gets the modules that a student is doing.
 	 * @param argStudentID The ID of the student.
-	 * @return A list of modules, which the student is doing.
+	 * @return A list of the modules that the student is doing.
 	 */
 	public List<Module> getModulesForStudent(int argStudentID){
 		List<Module> result = new ArrayList<Module>();
@@ -607,9 +682,9 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Gets the courses which are part of a certain module.
+	 * Gets the courses that are part of a certain module.
 	 * @param argModulecode The code of the module.
-	 * @return The courses which are part of the module.
+	 * @return A list of course that are part of this module.
 	 */
 	public List<Course> getCoursesForModule(int argModulecode){
 		List<Course> result = new ArrayList<Course>();
@@ -651,7 +726,7 @@ public class GradesDB extends DB {
 	 * Gets the assignments for a certain course.
 	 * @param argCoursecode The code of the course.
 	 * @param argCourseyear The year in which this course is held.
-	 * @return A list of assignments, which are part of the course.
+	 * @return A list of the assignments that are part of the course.
 	 */
 	public List<Assignment> getAssignmentsForCourse(int argCoursecode, int argCourseyear){
 		List<Assignment> result = new ArrayList<Assignment>();
@@ -734,7 +809,8 @@ public class GradesDB extends DB {
 	 * Gets the assignment results for a specific student and assignment.
 	 * @param argStudentid The id of the student who made the assignment
 	 * @param argAssignmentid The id of the made assignment.
-	 * @return
+	 * @return A list of AssigmentResults (this should be all the results a student got for one assignment,
+	 * including re-sits etc.)
 	 */
 	public List<AssignmentResult> getResultsForAssignmentAndStudent(int argStudentid, int argAssignmentid){
 		List<AssignmentResult> result = new ArrayList<AssignmentResult>();
@@ -900,7 +976,7 @@ public class GradesDB extends DB {
 	
 	/**
 	 * Adds a teacher to the database.
-	 * @param s The teacher to add.
+	 * @param t The teacher to add.
 	 */
 	public void addTeacher(Teacher t){
 		//because student numbers always start with a s, remove it in order to get the integer; personid.
@@ -992,7 +1068,10 @@ public class GradesDB extends DB {
 		}
 	}	
 	
-	//TODO:
+	/**
+	 * Adds a SuperCourse to the Database
+	 * @param sc The SuperCourse to add to the Database
+	 */
 	public void addSuperCourse(SuperCourse sc){
 			String query = "INSERT INTO Testi.supercourse(coursecode,name,weight)" +  
 			"VALUES(?,?,?)";
@@ -1012,7 +1091,10 @@ public class GradesDB extends DB {
 			
 	}
 	
-	//TODO: test
+	/**
+	 * Adds a Course to the Database
+	 * @param c The Course to be added to the Database
+	 */
 	public void addCourse(Course c){
 		String query = "INSERT INTO Testi.Course(coursecode,year) " + 
 		"VALUES (?,?)";
@@ -1033,7 +1115,10 @@ public class GradesDB extends DB {
 		
 	}
 	
-	//TODO: test
+	/**
+	 * Adds an Assignment to the Database
+	 * @param a The assignment to be added to the Database
+	 */
 	public void addAssignment(Assignment a){
 		String query = "INSERT INTO Testi.assignment(assignmentid, coursecode,year, name,isgradedassignment, weight, minimumresult)" + 
 		"VALUES(?,?,?,?,?,?,?)";
@@ -1058,8 +1143,11 @@ public class GradesDB extends DB {
 		}	
 		
 	}
-
-	//TODO: test
+	
+	/**
+	 * Adds an AssignmentOccasion to the Database
+	 * @param ao The AssignmentOccasion to be added to the Database
+	 */
 	public void addAssignmentOccasion(AssignmentOccasion ao){
 		String query = "INSERT INTO Testi.assignmentoccasion(assignmentid, occasionid, occasiondate) " + 
 		"VALUES (?,?,?)";
@@ -1079,6 +1167,11 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 	}
+	
+	/**
+	 * Adds an AssignmentResult to the Database
+	 * @param ar The AssignmentResult to be added to the Database
+	 */
 	//TODO: test
 	public void addAssignmentResult(AssignmentResult ar){
 		String query = "INSERT INTO Testi.assignmentresult(occasionid,studentid,result) "+ 
@@ -1099,7 +1192,10 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 	}
-	//TODO: test
+	/**
+	 * Adds a SuperModule to the Database
+	 * @param sm The SuperModule to be added to the Database
+	 */
 	public void addSuperModule(SuperModule sm){
 		String query = "INSERT INTO Testi.supermodule(modulecode,name) " +
 		"VALUES(?,?)";
@@ -1116,7 +1212,10 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 	}
-	//TODO: test
+	/**
+	 * Adds a Module to the Database
+	 * @param m The Module to be added to the Database
+	 */
 	public void addModule(Module m){
 		String query = "INSERT INTO Testi.module(modulecode,year) " + 
 		"VALUES(?,?)";
@@ -1133,7 +1232,10 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
 		}
 	}
-	//TODO: test
+	/**
+	 * Adds a ModuleResult to the Database
+	 * @param mr The ModuleResult to be added to the Database
+	 */
 	public void addModuleResult(ModuleResult mr){
 		String query = "INSERT INTO Testi.moduleresult(studentid,modulecode,year,result) " + 
 		"VALUES(?,?,?,?)";
@@ -1157,7 +1259,11 @@ public class GradesDB extends DB {
 				
 	}
 	
-	
+	/**
+	 * Add a Course to a Module
+	 * @param argModulecode The code of the module
+	 * @param argCoursecode The code of the Course
+	 */
 //	//TODO: AddCourseToModule
 	public void addCourseToModule(int argModulecode, int argCoursecode){
 		String query = "INSERT INTO Testi.hascourses(modulecode, coursecode) " +
@@ -1179,6 +1285,11 @@ public class GradesDB extends DB {
 	
 	}
 	
+	/**
+	 * Add a teacher to a module, according to the TeacherModule class
+	 * @param TeacherModule This class contains a teacher, a module, and the type of teacher
+	 * that they are in this module
+	 */
 	public void addTeacherToModule(TeacherModule TeacherModule){
 		String query = "INSERT INTO Testi.teaches(personid, modulecode, year, type) " +
 	"VALUES(?,?,?,?)";
@@ -1186,7 +1297,7 @@ public class GradesDB extends DB {
 		//1. the modulecode for the module has to exist
 		//2. the year for the module has to exist
 		//3. the personID for the teacher has to exist
-		//4. the type is one of the standard types (Docent, Medewerker, Studentassistent)
+		//4. the type has to be one of the standard types (Docent, Medewerker, Studentassistent)
 		try {
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, Integer.parseInt(TeacherModule.getTeacher().getPersonID().substring(1)));
@@ -1242,8 +1353,8 @@ public class GradesDB extends DB {
 			Debug.logln("GradesDB: SQLState:" + e.getSQLState());
 		}
 	}
-	/** Deletes a Person from the database 
-	 * @param personid
+	/** Deletes a Person from the database
+	 * @param personid the ID of this person
 	 */
 	public void deletePerson(String personid){
 		int personid_int = Integer.parseInt(personid.substring(1));
@@ -1304,7 +1415,7 @@ public class GradesDB extends DB {
 
 	/**
 	 * Delete a Supermodule from the DataBase (alongside its regular modules
-	 * 
+	 * @param modulecode The code of the Supermodule to be deleted
 	 */
 	public void deleteSuperModule(int modulecode){
 		String query1 = "DELETE FROM Testi.SuperModule sm WHERE sm.modulecode = (?)";
@@ -1336,8 +1447,8 @@ public class GradesDB extends DB {
 	}
 	/**
 	 * Delete a single course from the DataBase
-	 * @param coursecode
-	 * @param year
+	 * @param coursecode The code of this Course
+	 * @param year The year of this course
 	 */
 	public void deleteCourse(int coursecode, int year){
 		String query = "DELETE FROM Testi.Course c WHERE c.coursecode = (?) AND c.year = (?)";
@@ -1354,6 +1465,10 @@ public class GradesDB extends DB {
 	}
 	}
 	
+	/**
+	 * Delete a SuperCourse from the Database
+	 * @param coursecode The code of the SuperCourse
+	 */
 	public void deleteSuperCourse(int coursecode){
 		String query1 = "DELETE FROM Testi.Course c WHERE c.coursecode = (?)";
 		String query2 = "DELETE FROM Testi.SuperCourse sc WHERE sc.coursecode = (?)";
@@ -1384,9 +1499,9 @@ public class GradesDB extends DB {
 	}
 	
 	/**
-	 * Delete an assignment occasion
-	 * @param OccasionID
-	 * @param AssignmentID
+	 * Delete an assignment occasion from the Database
+	 * @param OccasionID The OccasionID of this AssigmentOccasion
+	 * @param AssignmentID The AssignmentID of this AssignmentOccasion
 	 */
 	public void deleteAssignmentOccasion(int OccasionID, int AssignmentID){
 		String query = "DELETE FROM Testi.AssignmentOccasion ao WHERE ao.occasionid = (?) " +
@@ -1406,7 +1521,7 @@ public class GradesDB extends DB {
 	
 	/**
 	 * Delete an assignment and its occasions from the database
-	 * @param assignmentID
+	 * @param assignmentID The ID of the assignment to be removed
 	 */
 	public void deleteAssignment(int assignmentID){
 		String query1 = "DELETE FROM Testi.AssignmentOccasion ao WHERE ao.assignmentid = (?)";
