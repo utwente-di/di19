@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>TOSTi GradeManager applicatie groep di9</display-name>
+  <display-name>TOSTi GradeManager applicatie groep di19</display-name>
  <servlet>
     <servlet-name>gradeManagerView</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
@@ -37,6 +37,11 @@
 		<servlet-class>nl.utwente.di.gradeManager.servlets.DocentTabel</servlet-class>
   </servlet>
   
+  <servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>nl.utwente.di.gradeManager.servlets.Logout</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>gradeManagerView</servlet-name>
     <url-pattern>/pages/view/*</url-pattern>
@@ -62,5 +67,9 @@
 <servlet-mapping>
     <servlet-name>DocentTabel</servlet-name>
     <url-pattern>/DocentTabel</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
 </web-app> 

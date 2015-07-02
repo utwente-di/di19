@@ -82,6 +82,7 @@
   <ul class="right">
 	<li><a href="#">My account</a></li>
 	<li><a href="#">Settings</a></li>
+	<li><a href="Logout">Logout</a></li>
 	</ul>
   </section>
 </nav>

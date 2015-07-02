@@ -71,15 +71,17 @@ public class Students {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		
 		GradesDB gradesDB = new GradesDB();
-		gradesDB.addStudent(s);
+		try{gradesDB.addStudent(s);
+		}finally{
+			gradesDB.closeConnection();		
+		}
 		
 		HTMLGenerator response = new HTMLGenerator(2);
 		response.addLine("<h1> Student succesfully added to database. </h1>");
-		
-		
-		gradesDB.closeConnection();		
 		return response.getHTML();
+		
 	}
 	
 }
