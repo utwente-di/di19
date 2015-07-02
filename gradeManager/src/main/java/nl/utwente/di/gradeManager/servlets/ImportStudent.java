@@ -30,11 +30,14 @@ public class ImportStudent extends HttpServlet{
 		GradesDB db = new GradesDB();
 		
 		try{
-			for(int i = 0; i < 3; i++){
-				firstname = request.getParameter(i + "-firstname");
+			int i = 0;
+			firstname = request.getParameter(i + "-firstname");
+			while(firstname != null){
 				surname = request.getParameter(i + "-surname");
 				personID = request.getParameter(i + "-personID").substring(1);
 				password = request.getParameter(i + "-password");
+				
+				i++;
 				Debug.logln(firstname + " " + surname + " " + personID + " " + password);
 				try {
 					salt = Security.getSalt();
@@ -46,6 +49,8 @@ public class ImportStudent extends HttpServlet{
 				Student student = new Student(Integer.parseInt(personID), firstname, surname, hashedpass, salt);
 				
 				db.addStudent(student);
+			
+				firstname = request.getParameter(i + "-firstname");		
 			}
 		}finally{
 			db.closeConnection();
