@@ -22,6 +22,9 @@ var mappingTable = {
             'sql': 'administator',
             'display': 'Administator?' 
         },
+        'show': {
+            'name': 'Personen'
+        },
         'defaults': {
             'First Name': 'voornaam',
             'Last Name': 'achternaam',
@@ -31,10 +34,16 @@ var mappingTable = {
 
     },
     'Grades': {
+        'show': {
+            'name': 'Cijfers'
+        },
         'defaults': {
         }
     },
     'Modules': {
+        'show': {
+            'name': 'Modules'
+        },
         'defaults': {
         }
     }
@@ -78,6 +87,16 @@ function upload(evt) {
             alert('Unable to read ' + file.fileName);
         };
     }
+}
+
+function addDropDown(){
+    var dropdownHTML = '';
+    var keys = Object.keys(mappingTable);
+    for(var i = 0; i < keys.length; i++){
+       dropdownHTML += '<option value="' + keys[i] + '">' +  mappingTable[keys[i]]['show']['name'] + '</option>'
+    }
+
+    $('#tableSelector')[0].innerHTML = dropdownHTML;
 }
 
 function addDefaults(){
@@ -171,6 +190,7 @@ function updatePage(){
 
 
 function addListeners(){
+	addDropDown();
     $('#txtFileUpload')[0].addEventListener('change', upload, false);
     $('#tableSelector')[0].addEventListener('change', typeChange, false);
 }

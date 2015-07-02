@@ -16,7 +16,11 @@ public class HTMLGenerator {
 		this.depth = depth;
 		html = "";
 		scripts = DepthGenerator.generateCSSLink(depth);
-		scripts += DepthGenerator.generateJSLink(depth, "foundation.min.js");
+		addScript("foundation.min.js");
+		addScript("foundation.js");
+		addScript("modernizr.js");
+		addScript("jquery.js");
+		addScript("fastclick.js");
 	}
 	
 	public HTMLGenerator(int depth, boolean addNavbar){
@@ -24,6 +28,10 @@ public class HTMLGenerator {
 		if(addNavbar){
 			html = navbar;
 		}
+	}
+	
+	public void addScript(String name){
+		scripts += DepthGenerator.generateJSLink(depth, name);
 	}
 	
 	public String getHTML(){
