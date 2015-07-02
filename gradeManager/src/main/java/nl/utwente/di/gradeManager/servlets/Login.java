@@ -110,9 +110,9 @@ public class Login extends HttpServlet {
 		Debug.logln("Login servlet: doPost.");
 		
 		
-		String username = (String) request.getParameter("username");
-		String password = (String) request.getParameter("password");
-	
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String loginals = request.getParameter("loginals");
 		
 		LoginDB loginDB = new LoginDB();
 		
@@ -131,7 +131,8 @@ public class Login extends HttpServlet {
 						boolean manager = loginDB.isManager(personid_asinteger);
 						
 						Debug.logln("Permissions: student: " + student + " teacher: " + teacher + " manager: " + manager);
-						if(manager){
+						Debug.logln("Gekozen:" + loginals);
+						if(manager && loginals.equals("Manager")){
 							//redirect naar manager pagina.
 							Debug.logln("Login: Redirecting to manager page!");
 							try {
@@ -141,7 +142,7 @@ public class Login extends HttpServlet {
 							}
 							return;
 						} 
-						if(teacher){
+						if(teacher && loginals.equals("Teacher")){
 							//redirect naar teacher pagina.
 							Debug.logln("Login: Redirecting to teacher page!");
 							try {
@@ -150,12 +151,23 @@ public class Login extends HttpServlet {
 								e.printStackTrace();
 							}
 							return;
-						} else {
-							//redirect naar student pagina.
-	
-							Debug.logln("Login: Redirecting to student page!");
+						} 
+						if(student && loginals.equals("Student")){
+							//redirect naar teacher pagina.
+							Debug.logln("Login: Redirecting to teacher page!");
 							try {
 								response.sendRedirect(student_address);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							return;
+						}
+						else {
+							//redirect naar student pagina.
+	
+							Debug.logln("Login: Verkeerde combinatie!");
+							try {
+								response.sendRedirect(jsp_address);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
