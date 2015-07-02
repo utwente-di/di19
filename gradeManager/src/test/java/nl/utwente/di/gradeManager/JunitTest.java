@@ -117,6 +117,7 @@ public class JunitTest {
 		GradesDB gradesDB = new GradesDB();
 		try{
 			//Test adding the course to the database.
+			gradesDB.addSuperCourse(sc);
 			gradesDB.addCourse(c);
 			Course c_db = gradesDB.getCourse(c.getCourseCode(), c.getYear());
 			assertEquals(c_db.getCourseCode(), c.getCourseCode());
@@ -153,6 +154,7 @@ public class JunitTest {
 		GradesDB gradesDB = new GradesDB();
 		try{
 				//Test adding the module to the database.
+				gradesDB.addSuperModule(sm);
 				gradesDB.addModule(m);
 				Module m_db = gradesDB.getModule(m.getModulecode(), m.getYear());
 				assertEquals(m_db.getModulecode(),m.getModulecode());
