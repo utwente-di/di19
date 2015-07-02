@@ -125,7 +125,7 @@
 								"<a aria-expanded=\"false\" href=\"#" + assNameID + "\">" + assignment.getName() + "</a> " + 
 									"<div style=\"background-color:white\" id=\"" + assNameID + "\" class=\"content\">" +
 										"<table>" +
-							 				"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th></tr></thead>");
+							 				"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th><th>Update</th></tr></thead>");
 				//Alle assignments van de vakken doorlopen
 				for(AssignmentResult result : results){
 					//Checken of het een result van het vak is
@@ -141,6 +141,14 @@
 													"<td>" + student.getPersonID() + "</td>" +
 													"<td>" + result.getOccasiondate() + "</td>" +
 													"<td class=\"grade\">" + result.getResult() + "</td>" +
+													"<td class=\"row collapse postfix-round\">" + 
+											        	"<div class=\"small-9 columns\">" +
+											        		"<input type=\"text\" placeholder=\"Value\">"+
+											        	"</div>" + 
+											       		"<div class=\"small-3 columns\">" +
+											       			"<a href=\"#\" class=\"button postfix\">Go</a>" +
+											        	"</div>" +
+											     	"</td>" +
 												"</tr>" +
 											"</tbody>"
 											);
