@@ -23,6 +23,14 @@
             <input id="username" type="text" name="username" size="15" placeholder="s0000000" required autofocus>
 		    <label for="password"><h3>Wachtwoord</h3></label>
 		    <input id="password" type="password" name="password" placeholder="Wachtwoord" required>
+        	<div class="row">
+      			<h3>Inloggen als</h3>
+       				<select name="loginals">
+         				<option value="Student">Student</option>
+          				<option value="Docent">Docent</option>
+          				<option value="Manager">Manager</option>
+        			</select>
+      		</div>
             <input type="submit" class="button expand" value="Login">
         </form>
     </div>
