@@ -15,7 +15,7 @@
 		scope="request"/>
 	<jsp:useBean id="docentModules" type="nl.utwente.di.gradeManager.servlets.StudentModules"
 		scope="request"/>
-	<jsp:useBean id="studentstoShow" type="nl.utwente.di.gradeManager.servlets.CourseStudents"
+	<jsp:useBean id="studentstoShow" type="nl.utwente.di.gradeManager.servlets.AllStudents"
 		scope="request"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOSTi GradeManagement</title>
