@@ -17,15 +17,10 @@ public class ManagerServlet extends HttpServlet{
 	private final String jsp_address = "Manager.jsp";
 	private AllStudents students;
 	
-	
-	
-	
 	protected void getStudents(){
 		GradesDB gradesDB = new GradesDB();
 		try {
-			List<Student> studentlist = gradesDB.getStudents();
-			students.setItems(studentlist);
-			students.setTitle("Dit zijn alle studenten");
+			students = new AllStudents("Een lijst van alle studenten", gradesDB.getStudents());
 		}finally{
 			gradesDB.closeConnection();
 		}
