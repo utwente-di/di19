@@ -142,7 +142,7 @@ public class Login extends HttpServlet {
 							}
 							return;
 						} 
-						if(teacher && loginals.equals("Teacher")){
+						if(teacher && loginals.equals("Docent")){
 							//redirect naar teacher pagina.
 							Debug.logln("Login: Redirecting to teacher page!");
 							try {
