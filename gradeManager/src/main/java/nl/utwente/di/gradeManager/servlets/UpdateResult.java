@@ -13,7 +13,7 @@ import nl.utwente.di.gradeManager.debug.Debug;
 public class UpdateResult extends HttpServlet{
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Integer nieuwcijfer = Integer.parseInt(request.getParameter("nieuwcijfer"));
+		Double nieuwcijfer = Double.parseDouble(request.getParameter("nieuwcijfer"));
 		String studentid = request.getParameter("studentid");
 		String occasionid = request.getParameter("occasionid");
 		String occasiondate = request.getParameter("occasiondate");
