@@ -1,7 +1,7 @@
 var rawData = {};
 var globalData = {};
 var mappingTable = {
-    'Persons': {
+    'Student': {
         'Last Name': {
             'sql': 'surname',
             'display': 'Achternaam'
@@ -156,7 +156,7 @@ function updatePage(){
     table += "</tbody></table>";
     $("#showHash")[0].innerHTML = title + table;
 
-    var importDataHTML = '';
+    var importDataHTML = '<form action="Import'+type+'" method="POST">';
     var importData = postData();
     for(var i = 0; i < importData.length; i++){
         var keys = Object.keys(importData[i]);
@@ -165,7 +165,7 @@ function updatePage(){
         }
     }
     var warningMsg = 
-    importDataHTML += '<input type="submit" value="Voeg deze items aan de tabel ' + type + ' toe" method="POST" action="ImportStudent" onClick="return confirm(\'Weet je zeker dat je deze waardes toe wilt voegen?\');">';
+    importDataHTML += '<input type="submit" value="Voeg deze items aan de tabel ' + type + ' toe"  onClick="return confirm(\'Weet je zeker dat je deze waardes toe wilt voegen?\');"></form>';
     $("#importData")[0].innerHTML = importDataHTML;
 }
 

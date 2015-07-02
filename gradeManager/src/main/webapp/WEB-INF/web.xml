@@ -45,6 +45,10 @@
 		<servlet-name>ImportStudent</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.ImportStudent</servlet-class>
   </servlet>
+  <servlet>
+		<servlet-name>Import</servlet-name>
+		<servlet-class>nl.utwente.di.gradeManager.servlets.Import</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>gradeManagerView</servlet-name>
@@ -75,6 +79,10 @@
   <servlet-mapping>
     <servlet-name>ImportStudent</servlet-name>
     <url-pattern>/ImportStudent</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>Import</servlet-name>
+    <url-pattern>/Import</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>

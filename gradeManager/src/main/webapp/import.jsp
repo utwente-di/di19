@@ -4,10 +4,10 @@
 		<script src="js/d3.js"></script>
 		<script src="js/d3.min.js"></script>
 		<script src="js/import.js"></script>
-		<script src="js/modernizr.js"></script>
-		<script src="js/jquery.js"></script>
-		<script src="js/fastclick.js"></script>
-		<script src="js/foundation.js"></script>
+		<script src="js/vendor/modernizr.js"></script>
+		<script src="js/vendor/jquery.js"></script>
+		<script src="js/vendor/fastclick.js"></script>
+		<script src="js/foundation/foundation.js"></script>
 	</head>
 	<body>
 		<div id="dvImportSegments" class="fileupload ">
@@ -25,8 +25,9 @@
 		<div id="showHash">
 		</div>
 
-		<form id="importData">
-		</form>
+		<div id="importData">
+			
+		</div>
 
 		<script>
 			$(document).ready(addListeners());
