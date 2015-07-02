@@ -347,10 +347,9 @@ public class GradesDB extends DB {
 	public Module getModule(int argmoduleCode, int argmoduleYear){
 		Module result = null;
 		String query = "SELECT m.moduleCode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE " +
-		"m.moduleCode = sm.moduleCode AND " + 
 		"m.year = " + argmoduleYear + " AND " + 
-		"m.moduleCode = " + argmoduleCode
-		;
+		"m.moduleCode = " + argmoduleCode + " AND " +
+		"sm.modulecode = m.modulecode";
 		
 		try{
 			//execute the query
@@ -375,7 +374,7 @@ public class GradesDB extends DB {
 		
 		
 		if (result == null){
-			Debug.logln("I tried looking for an assignment with id : " + argmoduleCode + " but didn't find anything.");
+			Debug.logln("I tried looking for a module with id : " + argmoduleCode + " but didn't find anything.");
 		}
 		return result;
 	}

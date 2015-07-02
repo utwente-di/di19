@@ -18,15 +18,12 @@ public class JunitTest {
 	private Course c;
 	private Assignment a;
 	private AssignmentOccasion ao;
-<<<<<<< HEAD
 	private SuperCourse sc;
 	private SuperModule sm;
-=======
 	private AssignmentResult ar;
 	private ModuleResult mr;
 	private TeacherModule tm;
 	
->>>>>>> origin/master
 	
 	@Before
 	public void setup() throws Exception{
@@ -41,14 +38,10 @@ public class JunitTest {
 		c = new Course(sc.getCourseCode(), 2015, sc.getName(), sc.getWeight());
 		m = new Module(sm.getModulecode(), 2014, sm.getName());
 		a = new Assignment(1111, c.getCourseCode(), 2014, "Parel 1 Toets", false, 40, BigDecimal.valueOf(4.5));
-		ao = new AssignmentOccasion(123, a.getAssignmentID(), Date.valueOf("2014-04-06"));
-<<<<<<< HEAD
-		
-=======
+		ao = new AssignmentOccasion(123, a.getAssignmentID(), Date.valueOf("2014-04-06"));		
 		ar = new AssignmentResult(ao.getOccasionid(), Integer.parseInt(s.getPersonID().substring(1)), ao.getOccasiondate(), BigDecimal.valueOf(8.5), ao.getAssignmentid());
 		mr = new ModuleResult(Integer.parseInt(s.getPersonID().substring(1)), m.getModulecode(), m.getYear(), BigDecimal.valueOf(7,2));
 		tm = new TeacherModule(t,m, "Docent");
->>>>>>> origin/master
 	}
 
 
@@ -119,6 +112,7 @@ public class JunitTest {
 		GradesDB gradesDB = new GradesDB();
 		try{
 			//Test adding the course to the database.
+			gradesDB.addSuperCourse(sc);
 			gradesDB.addCourse(c);
 			Course c_db = gradesDB.getCourse(c.getCourseCode(), c.getYear());
 			assertEquals(c_db.getCourseCode(), c.getCourseCode());
@@ -155,7 +149,9 @@ public class JunitTest {
 		GradesDB gradesDB = new GradesDB();
 		try{
 				//Test adding the module to the database.
+				gradesDB.addSuperModule(sm);
 				gradesDB.addModule(m);
+
 				Module m_db = gradesDB.getModule(m.getModulecode(), m.getYear());
 				assertEquals(m_db.getModulecode(),m.getModulecode());
 				assertEquals(m_db.getName(), m.getName());
