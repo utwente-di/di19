@@ -72,6 +72,33 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	public SuperCourse getSuperCourse(int argCoursecode){
+		SuperCourse result = null;
+		String query = "SELECT * FROM Testi.supercourse sc WHERE sc.coursecode = " + argCoursecode;
+		//SELECT * FROM Testi.supercourse sc WHERE sc.coursecode = argCoursecode
+		
+		try{
+			//execute query in the connected database.
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int coursecode = rs.getInt("coursecode");
+				String name = rs.getString("name");
+				int weight = rs.getInt("weight");
+				result = new SuperCourse(coursecode, name, weight);				
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	
+		return result;
+	}
+	
 	public List<Course> getCoursesForSuperCourse(int argCoursecode){
 		List<Course> result = new ArrayList<Course>();
 		
@@ -270,6 +297,35 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
+	public SuperModule getSuperModule(int argModulecode){
+		SuperModule result = null;
+		
+		String query = "SELECT * FROM Testi.supermodule sm WHERE sm.modulecode = " + argModulecode;
+		//SELECT * FROM Testi.supermodule sm WHERE sm.modulecode = argModulecode
+		
+		try{
+			//execute the query
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query : " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int modulecode = rs.getInt("modulecode");
+				String name = rs.getString("name");
+				result = new SuperModule(modulecode, name);
+			}
+			
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		
+		
+		return result;
+	}
+	
 	public Module getModule(int argmoduleCode, int argmoduleYear){
 		Module result = null;
 		String query = "SELECT m.moduleCode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE " +
@@ -288,8 +344,8 @@ public class GradesDB extends DB {
 				int moduleCode = rs.getInt("moduleCode");
 				int year = rs.getInt("year");
 				String name = rs.getString("name");
-				Module a = new Module(moduleCode, year, name);
-				result = a;
+				Module m = new Module(moduleCode, year, name);
+				result = m;
 			}
 		
 			rs.close();

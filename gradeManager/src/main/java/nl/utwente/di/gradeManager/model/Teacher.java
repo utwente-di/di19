@@ -23,7 +23,6 @@ public class Teacher extends Person{
 		this.manager = argManager;
 		// TODO Auto-generated constructor stub
 	}
-	
 
 	/**
 	 * Tells whether the teacher is a manager or not.
