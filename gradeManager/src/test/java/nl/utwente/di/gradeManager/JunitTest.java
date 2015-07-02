@@ -18,10 +18,10 @@ public class JunitTest {
 	private Course c;
 	private Assignment a;
 	private AssignmentOccasion ao;
-<<<<<<< HEAD
+
 	private SuperCourse sc;
 	private SuperModule sm;
-=======
+
 	private AssignmentResult ar;
 	private ModuleResult mr;
 	private TeacherModule tm;
