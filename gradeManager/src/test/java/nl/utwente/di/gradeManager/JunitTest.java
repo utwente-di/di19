@@ -16,6 +16,9 @@ public class JunitTest {
 	private Course c;
 	private Assignment a;
 	private AssignmentOccasion ao;
+	private AssignmentResult ar;
+	private ModuleResult mr;
+	private TeacherModule tm;
 	
 	
 	@Before
@@ -30,6 +33,9 @@ public class JunitTest {
 		c = new Course(1002314, 2014, "Parel 1: Cryptografie", 15);
 		a = new Assignment(1111, c.getCourseCode(), 2014, "Parel 1 Toets", false, 40, BigDecimal.valueOf(4.5));
 		ao = new AssignmentOccasion(123, a.getAssignmentID(), Date.valueOf("2014-04-06"));
+		ar = new AssignmentResult(ao.getOccasionid(), Integer.parseInt(s.getPersonID().substring(1)), ao.getOccasiondate(), BigDecimal.valueOf(8.5), ao.getAssignmentid());
+		mr = new ModuleResult(Integer.parseInt(s.getPersonID().substring(1)), m.getModulecode(), m.getYear(), BigDecimal.valueOf(7,2));
+		tm = new TeacherModule(t,m, "Docent");
 	}
 
 
@@ -45,6 +51,7 @@ public class JunitTest {
 		gradesDB.addCourse(c);
 		gradesDB.addAssignment(a);
 		gradesDB.addAssignmentOccasion(ao);
+		
 		
 		gradesDB.deletePerson(s.getPersonID());
 		gradesDB.deletePerson(t.getPersonID());

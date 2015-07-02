@@ -1159,15 +1159,49 @@ public class GradesDB extends DB {
 	
 	
 //	//TODO: AddCourseToModule
-//	public void addCourseToModule(int argModulecode, int argCoursecode, int argCourseyear){
-//		String query = "INSERT INTO"
-////		Note that:
-////		1. The modulecode for the module has to exist.
-////		2. The pair (coursecode,courseyear) for the course has to exist.
-//		
-//		
-//	}
-//	
+	public void addCourseToModule(int argModulecode, int argCoursecode){
+		String query = "INSERT INTO Testi.hascourses(modulecode, coursecode) " +
+	"VALUES(?,?)";
+		//Note that:
+		//1. The modulecode for the module has to exist.
+		//2. The coursecode for the course has to exist.
+		try {
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1,argModulecode);
+			ps.setInt(2, argCoursecode);
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	
+	}
+	
+	public void addTeacherToModule(TeacherModule TeacherModule){
+		String query = "INSERT INTO Testi.teaches(personid, modulecode, year, type) " +
+	"VALUES(?,?,?,?)";
+		//Note that:
+		//1. the modulecode for the module has to exist
+		//2. the year for the module has to exist
+		//3. the personID for the teacher has to exist
+		//4. the type is one of the standard types (Docent, Medewerker, Studentassistent)
+		try {
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, Integer.parseInt(TeacherModule.getTeacher().getPersonID().substring(1)));
+			ps.setInt(2, TeacherModule.getModule().getModulecode());
+			ps.setInt(3, TeacherModule.getModule().getYear());
+			ps.setString(4, TeacherModule.getType());
+			Debug.logln("GradesDB: Executing statement: " + ps.toString());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e){
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+	}
+	
 	/*
 	 *DELETE 
 	 */
