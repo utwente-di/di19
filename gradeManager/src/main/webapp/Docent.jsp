@@ -68,7 +68,7 @@
 	 		//Check of het jaar van de module overeenkomt met het jaar in het dropdown menu
 	 		if (module.getYear() == years.get(i)){
 	 			//Module toevoegen aan het dropdowm menu
-	 			out.println("<li><a href=\"Resulttabel?moduleid=" +  module.getModulecode() + "&moduleyear=" + module.getYear() + "\">" +
+	 			out.println("<li><a href=\"DocentTabel?moduleid=" +  module.getModulecode() + "&moduleyear=" + module.getYear() + "\">" +
 	 							module.getName() + "</a></li>");
 	 		}
 	 	}
