@@ -32,7 +32,7 @@ public class Import{
 		html.addLine("<form id=\"importData\">");
 		html.addLine("</form>");
 		html.addLine("<script>");
-		html.addLine("<$(document).ready(addListeners());");
+		html.addLine("$(document).ready(addListeners());");
 		html.addLine("</script>");
 		
 		return html.getHTML();
