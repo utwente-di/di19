@@ -66,6 +66,68 @@
       </section>
     </nav>
 
+    <h1>Default to #Import</h1>
+    ...import...
+
+    <h1>#Show</h1>
+    <table>
+      <thead>
+        <tr>
+          <td>
+            StudentID
+          </td>
+          <td>
+            Voornaam
+          </td>
+          <td>
+            Achternaam
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            s1380087
+          </td>
+          <td>
+            Mark
+          </td>
+          <td>
+            't Hart
+          </td>
+        </tr>
+        <tr>
+          <td>
+            s1380098
+          </td>
+          <td>
+            Henk
+          </td>
+          <td>
+            Jansen
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1>#Create</h1>
+    <form>
+      <input type="text" name="StudentID" required/>
+      <input type="text" name="Voornaam" required/>
+      <input type="text" name="Achternaam" required/>
+      <input type="submit" value="Maak student aan"/>
+    </form>
+
+    <h1>#Edit</h1>
+    <input type="text" value="hier moet een zoekfunctie over studenten, genereert de form hieronder;
+      hou form statisch als je hier niet uit komt, dan maak ik de zoekfunctie wel"/>
+    <form>
+      <input type="text" name="StudentID" value="1380087"/>
+      <input type="text" name="Voornaam" value="Mark"/>
+      <input type="text" name="Achternaam" value="'t Hart"/>
+      <input type="submit" value="Pas aan"/>
+    </form>
+
     
 
     <script>
