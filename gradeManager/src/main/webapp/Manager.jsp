@@ -105,20 +105,32 @@
 
     <h1>#Create</h1>
     <form>
-      <input type="text" name="StudentID" required/>
-      <input type="text" name="Voornaam" required/>
-      <input type="text" name="Achternaam" required/>
-      <input type="submit" value="Maak student aan"/>
+      	<label for="studentID-Create">Student Nr</label>
+      	<input id="studentID-Create" type="text" name="studentID" required/>
+  	  	<label for="firstname-Create">Voornaam</label>
+      	<input id="firstname-Create" type="text" name="firstname" required/>
+  	  	<label for="lastname-Create">Achternaam</label>
+      	<input id="lastname-Create" type="text" name="lastname" required/>
+  	  	<label for="password-Create">Wachtwoord</label>
+      	<input id="password-Create" type="password" name="password" required/>
+      	<input type="submit" value="Maak student aan"/>
     </form>
 
     <h1>#Edit</h1>
     <input type="text" value="hier moet een zoekfunctie over studenten, genereert de form hieronder;
       hou form statisch als je hier niet uit komt, dan maak ik de zoekfunctie wel"/>
-    <form>
-      <input type="text" name="StudentID" value="1380087"/>
-      <input type="text" name="Voornaam" value="Mark"/>
-      <input type="text" name="Achternaam" value="'t Hart"/>
-      <input type="submit" value="Pas aan"/>
+    <form id="edit-field">
+    
+  	  	<label for="studentID-Edit">Student Nr</label>
+      	<input id="studentID-Edit" type="text" name="studentID" value="1380087"/>
+  	  	<label for="firstname-Edit">Voornaam</label>
+      	<input id="firstname-Edit" type="text" name="firstname" value="Mark"/>
+  	  	<label for="lastname-Edit">Achternaam</label>
+      	<input id="lastname-Edit" type="text" name="lastname" value="'t Hart"/>
+  	  	<label for="password-Edit">Wachtwoord</label>
+      	<input id="password-Edit" type="password" name="password" value="randompassword"/>
+      	
+      	<input type="submit" value="Pas aan"/>
     </form>
 
     
