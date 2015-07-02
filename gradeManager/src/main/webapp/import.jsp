@@ -28,6 +28,7 @@
 
 		<script>
 			$(document).ready(addListeners());
+			$(document).foundation();
 		</script>
 
 	</body>
