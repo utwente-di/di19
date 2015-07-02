@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager.pages.create;
+package nl.utwente.di.gradeManager.rest.create;
 
 import java.security.NoSuchAlgorithmException;
 

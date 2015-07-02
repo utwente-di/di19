@@ -5,17 +5,19 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import nl.utwente.di.gradeManager.db.GradesDB;
+import nl.utwente.di.gradeManager.debug.Debug;
 import nl.utwente.di.gradeManager.helpers.Security;
 import nl.utwente.di.gradeManager.model.Student;
 
-public class ImportStudent {
+public class ImportStudent extends HttpServlet{
 	
-	public void doGet(HttpServletRequest request, HttpServletResponse response){
+	public void doPost(HttpServletRequest request, HttpServletResponse response){
 		String firstname = "";
 		String surname = "";
 		String personID = "";
@@ -29,10 +31,11 @@ public class ImportStudent {
 		
 		try{
 			for(int i = 0; i < 3; i++){
-				firstname = request.getParameter(i + "firstname");
-				surname = request.getParameter(i + "surname");
-				personID = request.getParameter(i + "personid");
-				password = request.getParameter(i + "password");
+				firstname = request.getParameter(i + "-firstname");
+				surname = request.getParameter(i + "-surname");
+				personID = request.getParameter(i + "-personID").substring(1);
+				password = request.getParameter(i + "-password");
+				Debug.logln(firstname + " " + surname + " " + personID + " " + password);
 				try {
 					salt = Security.getSalt();
 					hashedpass = Security.getSHA512(password, salt);

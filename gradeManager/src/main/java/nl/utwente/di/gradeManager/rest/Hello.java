@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager.pages;
+package nl.utwente.di.gradeManager.rest;
 
 
 import javax.ws.rs.Path;

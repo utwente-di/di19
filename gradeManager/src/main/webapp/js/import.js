@@ -180,7 +180,7 @@ function updatePage(){
     for(var i = 0; i < importData.length; i++){
         var keys = Object.keys(importData[i]);
         for(var j = 0; j < keys.length; j++){
-            importDataHTML += '<input id="' + i + '-' + keys[j] + '" type="hidden" value="' + importData[i][keys[j]] +'"/>';
+            importDataHTML += '<input name="' + i + '-' + keys[j] + '" type="hidden" value="' + importData[i][keys[j]] +'"/>';
         }
     }
     var warningMsg = 

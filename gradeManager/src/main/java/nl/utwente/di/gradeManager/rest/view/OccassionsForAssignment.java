@@ -1,4 +1,4 @@
-package nl.utwente.di.gradeManager.pages.view;
+package nl.utwente.di.gradeManager.rest.view;
 
 import java.util.List;
 
