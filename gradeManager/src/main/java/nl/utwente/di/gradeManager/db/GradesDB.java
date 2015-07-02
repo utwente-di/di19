@@ -71,14 +71,14 @@ public class GradesDB extends DB {
 		
 		return result;
 	}
-<<<<<<< HEAD
+
 	/**
 	 * Gets all the courses from this supercourse(basically, the years in which they were given)
 	 * and returns them in a list
 	 * @param argCoursecode The code of this SuperCourse
 	 * @return A List of courses that belong to this supercourse
 	 */
-=======
+
 	
 	public SuperCourse getSuperCourse(int argCoursecode){
 		SuperCourse result = null;
@@ -107,7 +107,7 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
->>>>>>> f3213cead93834c1f58d298fed6808b111278e35
+
 	public List<Course> getCoursesForSuperCourse(int argCoursecode){
 		List<Course> result = new ArrayList<Course>();
 		
@@ -305,14 +305,14 @@ public class GradesDB extends DB {
 		
 		return result;
 	}
-<<<<<<< HEAD
+
 	/**
 	 * Gets a module according to a given code and year
 	 * @param argmoduleCode The Modulecode to look for
 	 * @param argmoduleYear The Year to look for
 	 * @return A class module which corresponds to the given modulecode and year
 	 */
-=======
+
 	
 	public SuperModule getSuperModule(int argModulecode){
 		SuperModule result = null;
@@ -343,7 +343,7 @@ public class GradesDB extends DB {
 		return result;
 	}
 	
->>>>>>> f3213cead93834c1f58d298fed6808b111278e35
+
 	public Module getModule(int argmoduleCode, int argmoduleYear){
 		Module result = null;
 		String query = "SELECT m.moduleCode, m.year, sm.name FROM Testi.module m, Testi.supermodule sm WHERE " +
