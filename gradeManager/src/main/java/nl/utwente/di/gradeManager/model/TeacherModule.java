@@ -8,15 +8,18 @@ public class TeacherModule {
 	
 	private Teacher teacher;
 	private Module module;
+	private String type;
 	
 	/**
 	 * Create a combination between a teacher and a module
 	 * @param argTeacher The teacher that teaches the module
 	 * @param argModule The module that the teacher teaches.
+	 * @param type The type of teacher (Studentassistent, Hulpmedewerker, Docent)
 	 */
-	public TeacherModule(Teacher argTeacher, Module argModule){
+	public TeacherModule(Teacher argTeacher, Module argModule, String type){
 		this.teacher = argTeacher;
 		this.module = argModule;
+		this.type = type;
 	}
 	
 	/**
@@ -49,6 +52,22 @@ public class TeacherModule {
 	 */
 	public Module getModule(){
 		return module;
+	}
+	
+	/**
+	 * 
+	 * @param argtype The association the teacher has with this module
+	 */
+	public void setType(String argtype){
+		this.type = argtype;
+	}
+	
+	/**
+	 * 
+	 * @return The association the teacher has with this module
+	 */
+	public String getType(){
+		return type;
 	}
 	
 }

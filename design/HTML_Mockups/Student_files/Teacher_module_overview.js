@@ -45,5 +45,5 @@ function createBarGraph(assignmentID){
 }
 
 function prepare(){
-	createBarGraph(1);
+	createBarGraph(3);
 }
