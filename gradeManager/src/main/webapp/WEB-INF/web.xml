@@ -41,6 +41,10 @@
 		<servlet-name>Logout</servlet-name>
 		<servlet-class>nl.utwente.di.gradeManager.servlets.Logout</servlet-class>
   </servlet>
+  <servlet>
+		<servlet-name>ImportStudent</servlet-name>
+		<servlet-class>nl.utwente.di.gradeManager.servlets.ImportStudent</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>gradeManagerView</servlet-name>
@@ -67,6 +71,10 @@
 <servlet-mapping>
     <servlet-name>DocentTabel</servlet-name>
     <url-pattern>/DocentTabel</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ImportStudent</servlet-name>
+    <url-pattern>/ImportStudent</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
