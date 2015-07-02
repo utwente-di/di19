@@ -142,15 +142,15 @@
 													"<td>" + student.getPersonID() + "</td>" +
 													"<td>" + result.getOccasiondate() + "</td>" +
 													"<td class=\"grade\">" + result.getResult() + "</td>" +
-													"<form name=\"UpdateResult\" action=\"UpdateResult\" method=\"post\" accept-charset=\"utf-8\">" +
 													"<td class=\"row collapse postfix-round\">" +
+															"<form name=\"UpdateResult\" action=\"UpdateResult\" method=\"post\" accept-charset=\"utf-8\">" +
 											        			"<div class=\"small-9 columns\">" + 
 											        				"<input type=\"value\" name=\"nieuwcijfer\" placeholder=\"Value\">" +
 											        			"</div>" +
 											        			"<input type=\"hidden\" name=\"studentid\" value=\"" + result.getStudentid() + "\">" +
 										        				"<input type=\"hidden\" name=\"occasionid\" value=\"" + result.getOccasionid() + "\">" +
 										        				"<input type=\"hidden\" name=\"occasiondate\" value=\"" + result.getOccasiondate() + "\">" +
-										        				"<input type=\"hidden\" name=\"terugnaarmodule\" value=\"" + url + "\">" +
+										        				"<input type=\"hidden\" name=\"terugnaar\" value=\"" + url + "\">" +
 											        			"<div class=\"small-3 columns\">" +
 											        				"<input type=\"submit\" class=\"button postfix\" value=\"Go\">" +
 											        			"</div>" + 

@@ -3,7 +3,6 @@ package nl.utwente.di.gradeManager.servlets;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +12,7 @@ import nl.utwente.di.gradeManager.debug.Debug;
 
 public class UpdateResult extends HttpServlet{
 	
-	public void doPost(HttpServletRequest request, HttpServletResponse response){
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Integer nieuwcijfer = Integer.parseInt(request.getParameter("nieuwcijfer"));
 		String studentid = request.getParameter("studentid");
 		String occasionid = request.getParameter("occasionid");
@@ -28,16 +27,7 @@ public class UpdateResult extends HttpServlet{
 		//	gradesDB.closeConnection();
 		//}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("DocentTabel?" + terugnaar);
-		//Daadwerkelijk alles doorsturen
-		try {
-			dispatcher.forward(request, response);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String url = "DocentTabel?" + terugnaar;
+		response.sendRedirect(url);
 	}
 }

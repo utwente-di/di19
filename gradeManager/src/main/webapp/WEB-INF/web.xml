@@ -53,7 +53,15 @@
   		<servlet-name>Manager</servlet-name>
   		<servlet-class>nl.utwente.di.gradeManager.servlets.ManagerServlet</servlet-class>
   </servlet>
+  <servlet>
+  		<servlet-name>UpdateResult</servlet-name>
+  		<servlet-class>nl.utwente.di.gradeManager.servlets.UpdateResult</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+    <servlet-name>UpdateResult</servlet-name>
+    <url-pattern>/UpdateResult</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>restView</servlet-name>
     <url-pattern>/rest/view/*</url-pattern>
