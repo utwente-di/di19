@@ -41,7 +41,7 @@ public class Import{
 	
 	@POST
 	public void stuurDoor(){
-		iets met doorsturen
+		//iets met doorsturen
 	}
 		
 	
