@@ -20,10 +20,10 @@
 <div class="loginbox">
     <form name="login" action="login" method="post" accept-charset="utf-8">
 		    <label for="username"><h3>Student of medewerkernummer</h3></label>
-                    <input id="username" type="text" name="username" size="15" placeholder="s0000000" required autofocus>
+            <input id="username" type="text" name="username" size="15" placeholder="s0000000" required autofocus>
 		    <label for="password"><h3>Wachtwoord</h3></label>
 		    <input id="password" type="password" name="password" placeholder="Wachtwoord" required>
-                    <input type="submit" class="button expand" value="Login">
+            <input type="submit" class="button expand" value="Login">
         </form>
     </div>
 
