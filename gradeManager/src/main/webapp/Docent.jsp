@@ -135,18 +135,22 @@
 							//Checken of de welke student het resultaat behaald heeft
 							if(result.getStudentid() == Integer.parseInt(student.getPersonID().substring(1))){
 								//Resultaat in de tabel zetten
+								String url = "moduleid=" + moduletoShow.getModulecode() + "&moduleyear=" + moduletoShow.getYear() ;
 								out.println("<tbody>" + 
 												"<tr>" +
 													"<td>" + student.getFirstname() + " " + student.getSurname() + "</td>" + 
 													"<td>" + student.getPersonID() + "</td>" +
 													"<td>" + result.getOccasiondate() + "</td>" +
 													"<td class=\"grade\">" + result.getResult() + "</td>" +
-													"<td class=\"row collapse postfix-round\">" + 
-											        	"<div class=\"small-9 columns\">" +
-											        		"<form name=\"UpdateResult\" action=\"UpdateResult\" method=\"post\" accept-charset=\"utf-8\">" +
+													"<form name=\"UpdateResult\" action=\"UpdateResult\" method=\"post\" accept-charset=\"utf-8\">" +
+													"<td class=\"row collapse postfix-round\">" +
 											        			"<div class=\"small-9 columns\">" + 
-											        				"<input type=\"text\" name=\"nieuwcijfer\" placeholder=\"Value\">"+
+											        				"<input type=\"value\" name=\"nieuwcijfer\" placeholder=\"Value\">" +
 											        			"</div>" +
+											        			"<input type=\"hidden\" name=\"studentid\" value=\"" + result.getStudentid() + "\">" +
+										        				"<input type=\"hidden\" name=\"occasionid\" value=\"" + result.getOccasionid() + "\">" +
+										        				"<input type=\"hidden\" name=\"occasiondate\" value=\"" + result.getOccasiondate() + "\">" +
+										        				"<input type=\"hidden\" name=\"terugnaarmodule\" value=\"" + url + "\">" +
 											        			"<div class=\"small-3 columns\">" +
 											        				"<input type=\"submit\" class=\"button postfix\" value=\"Go\">" +
 											        			"</div>" + 
