@@ -197,17 +197,6 @@ public class DocentTabel extends HttpServlet {
 					//Daadwerkelijk alles doorsturen
 					dispatcher.forward(request, response);
 					}
-				
-
-				//Alle studenten die het vak volgen in een bean stoppen
-				AllStudents beanCS = new AllStudents("Dit is een student", students);
-				//De bean meegeven aan de JSP pagina
-				request.setAttribute("studentstoShow", beanCS);
-		
-				//Juiste JSP pagina specificeren om naar door te sturen
-				RequestDispatcher dispatcher = request.getRequestDispatcher(jsp_address);
-				//Daadwerkelijk alles doorsturen
-				dispatcher.forward(request, response);
 
 			}else{
 					//Juiste JSP pagina specificeren om naar door te sturen
