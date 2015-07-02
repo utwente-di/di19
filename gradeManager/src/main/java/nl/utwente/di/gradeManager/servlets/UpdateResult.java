@@ -27,7 +27,7 @@ public class UpdateResult extends HttpServlet{
 		//	gradesDB.closeConnection();
 		//}
 		
-		String url = "DocentTabel?" + terugnaar;
+		String url = "DocentTabel?" + terugnaar + "#Toets1";
 		response.sendRedirect(url);
 	}
 }

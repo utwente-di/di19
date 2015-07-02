@@ -122,8 +122,8 @@
 				String assNameID = assignment.getName().replaceAll("\\s","");
 				//Sub-accordion printen voor de resultaaten per assignment
 				out.println("<li class=\"accordion-navigation\">" +
-								"<a aria-expanded=\"false\" href=\"#" + assNameID + "\">" + assignment.getName() + "</a> " + 
-									"<div style=\"background-color:white\" id=\"" + assNameID + "\" class=\"content\">" +
+								"<a role=\"tab\" aria-controls=\"Toets1\" href=\"#" + assNameID + "\">" + assignment.getName() + "</a> " + 
+									"<div aria-labelledby=\"Toets1-heading\" style=\"background-color:white\" id=\"" + assNameID + "\" class=\"content\">" +
 										"<table>" +
 							 				"<thead><tr><th>Name</th><th>ID</th><th>Date</th><th>Grade</th><th>Update</th></tr></thead>");
 				//Alle assignments van de vakken doorlopen
