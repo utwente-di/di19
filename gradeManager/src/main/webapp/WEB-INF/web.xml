@@ -65,7 +65,15 @@
   		<servlet-name>UpdateResult</servlet-name>
   		<servlet-class>nl.utwente.di.gradeManager.servlets.UpdateResult</servlet-class>
   </servlet>
+   <servlet>
+  		<servlet-name>AddStudentsToAssignment</servlet-name>
+  		<servlet-class>nl.utwente.di.gradeManager.servlets.AddStudentsToAssignment</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+    <servlet-name>AddStudentsToAssignment</servlet-name>
+    <url-pattern>/AddStudentsToAssignment</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>UpdateResult</servlet-name>
     <url-pattern>/UpdateResult</url-pattern>

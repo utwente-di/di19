@@ -108,7 +108,7 @@
 		String courseNameID = course.getName().replaceAll("\\s","");
 		//Standaard accordion html printen
 		out.println("<li class=\"accordion-navigation\">" +
-						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" +
+						"<a id=\""+ courseNameID + "\" aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" +
 							"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">" + 
 								"<ul class=\"accordion\" data-accordion=\"\">");
 		//Alle assignments van alle vakken doorlopen
@@ -158,14 +158,26 @@
 											        		"</form>" +
 											        	"</div>" +
 											     	"</td>" +
-												"</tr>" +
-											"</tbody>"
+												"</tr>" 
+											
 											);
 							}
 						}
 					}
 				//Tabel en de subaccordion afsluiten
-				}out.println("</table>" + 
+				}out.println("<tbody>" +
+								"<tr>" +
+								"<div class=\"small-9 columns\">" + 
+									"<form name=\"AddStudentsToAssignment\" action=\"AddStudentsToAssignment\" method=\"post\" accept-charset=\"utf-8\">" +
+										"<input type=\"hidden\" name=\"assignmentid\" value=\"" + assignment.getAssignmentID() + "\">" +
+										"<input type=\"hidden\" name=\"courseid\" value=\"" + course.getCourseCode() + "\">" +
+										"<input type=\"hidden\" name=\"courseyear\" value=\"" + course.getYear() + "\">" +
+										"<input type=\"submit\" class=\"button\" value=\"Iedereen toevoegen\">" +
+									"</form>" + 
+								"</div>" +
+								"</tr>" +
+							"</tbody>" +
+						"</table>" + 
 						"</div> </li>");
 			}
 		//Accordion afsluiten
