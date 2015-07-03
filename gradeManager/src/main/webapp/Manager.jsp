@@ -15,7 +15,6 @@
     <script src="js/vendor/fastclick.js"></script>
     <script src="js/foundation/foundation.js"></script>
     <script src="js/foundation.min.js"></script>
-	<script src="js/import.js"></script>
     <title>TOSTi Manager</title>
   </head>
   <body>
@@ -36,15 +35,32 @@
             <a href="#">Studenten</a>
             <ul class="dropdown">
               <li> 
-                <a href="/gradeManager/Manager/ShowStudent">Zien</a>
+                <a href="#ShowStudent">Zien</a>
               </li>
               <li> 
-                <a href="/gradeManager/Manager/CreateStudent">Nieuw</a>
+                <a href="#CreateStudent">Nieuw</a>
+              </li>
+              <li> 
+                <a href="#EditStudent">Pas aan</a>
+              </li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">Modules</a>
+            <ul class="dropdown">
+              <li> 
+                <a href="#ShowModule">Zien</a>
+              </li>
+              <li> 
+                <a href="#CreateModule">Nieuw</a>
+              </li>
+              <li> 
+                <a href="#EditModule">Pas aan</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="/gradeManager/Manager" class="">Bestand importeren</a>
+            <a href="#Import" class="">Bestand importeren</a>
           </li>
         </ul>
       </section>
@@ -56,28 +72,11 @@
       </ul>
       </section>
     </nav>
-    
-    <div id="Import">
-    <div class="panel left" style="height:500px; width:29%;">
-    <div id="dvImportSegments" class="fileupload ">
-				<h1>Importeer uw bestand</h1>
-				<input type="file" name="File Upload" id="txtFileUpload" accept=".csv, .xls" />
-				<select id="tableSelector">
-				</select>
-		</div>
-		</div>
-	<div class="panel right" style="height:500px; width:70%;">
-	
-		<div id="showHash">
-		</div>
-		<div id="importData">
-		</div>
-		</div>
-		</div>
-		
-		
-		<div id="ShowStudent">
-    <h1>Alle studenten</h1>
+
+    <h1>Default to #Import</h1>
+    ...import...
+
+    <h1>#Show</h1>
     <table>
       <thead>
         <tr>
@@ -103,28 +102,42 @@
         
       </tbody>
     </table>
-    </div>
-    <div id="CreateStudent">
-    <h1>Maak een student aan</h1>
-    <form>
-      	<label for="studentID-Create">Student Nr
+
+    <h1>#Create</h1>
+    <form name="MakeStudent" action="MakeStudent" method="post" accept-charset="utf-8">
+      	<label for="studentID-Create">Student Nr</label>
       	<input id="studentID-Create" type="text" name="studentID" required/>
-      	</label>
-  	  	<label for="firstname-Create">Voornaam
+  	  	<label for="firstname-Create">Voornaam</label>
       	<input id="firstname-Create" type="text" name="firstname" required/>
-      	</label>
-  	  	<label for="lastname-Create">Achternaam
+  	  	<label for="lastname-Create">Achternaam</label>
       	<input id="lastname-Create" type="text" name="lastname" required/>
-      	</label>
-  	  	<label for="password-Create">Wachtwoord
+  	  	<label for="password-Create">Wachtwoord</label>
       	<input id="password-Create" type="password" name="password" required/>
-      	</label>
-      	<input type="submit" value="Maak student aan"/>
+      	<input type="submit" class=value="Maak student aan"/>
     </form>
-    </div>
-		<script>
-			$(document).ready(addListeners());
-			$(document).foundation();
-		</script>
+
+    <h1>#Edit</h1>
+    <input type="text" value="hier moet een zoekfunctie over studenten, genereert de form hieronder;
+      hou form statisch als je hier niet uit komt, dan maak ik de zoekfunctie wel"/>
+    <form id="edit-field">
+    
+  	  	<label for="studentID-Edit">Student Nr</label>
+      	<input id="studentID-Edit" type="text" name="studentID" value="1380087"/>
+  	  	<label for="firstname-Edit">Voornaam</label>
+      	<input id="firstname-Edit" type="text" name="firstname" value="Mark"/>
+  	  	<label for="lastname-Edit">Achternaam</label>
+      	<input id="lastname-Edit" type="text" name="lastname" value="'t Hart"/>
+  	  	<label for="password-Edit">Wachtwoord</label>
+      	<input id="password-Edit" type="password" name="password" value="randompassword"/>
+      	
+      	<input type="submit" value="Pas aan"/>
+    </form>
+
+    
+
+    <script>
+      $(document).foundation();
+    </script>
+
   </body>
 </html>
