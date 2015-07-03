@@ -1551,6 +1551,159 @@ public class GradesDB extends DB {
 		}
 	}
 	}
+	
+	/*
+	 *  UPDATE
+	 */
+	
+	/**
+	 * Modify an AssignmentResult
+	 * @param argOccasionid The occasion id for the AssignmentResult
+	 * @param argStudentid The student id for the AssignmentResult
+	 * @param argAssignmentResult The AssignmentResult object containing the new values for the database.
+	 */
+	public void modifyAssignmentResult(int argOccasionid, int argStudentid, AssignmentResult argAssignmentResult){
+		//UPDATE Testi.assignmentresult ar SET result =  WHERE 
+		//ar.occasionid = AND
+		//		ar.studentid = 
+		String query = "UPDATE Testi.assignmentresult ar SET result = (?) WHERE " + 
+		"ar.occasionid = (?) AND " +
+		"ar.studentid = (?)";
+		
+		try{
+			Debug.logln("GradesDB : Preparing statement : " + query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			//Prepare the statement
+			ps.setBigDecimal(1, argAssignmentResult.getResult()); 
+			ps.setInt(2, argOccasionid); 
+			ps.setInt(3, argStudentid);
+			Debug.logln("GradesDB: Executing statement " + ps.toString());
+			//Execute and close the prepared statement.
+			ps.executeUpdate();
+			ps.close();
+			
+		} catch (SQLException e){
+		Debug.logln("GradesDB: Oops: " + e.getMessage());
+		Debug.logln("GradesDB: SQLState:" + e.getSQLState());	
+		}
+	}
+	
+	/**
+	 * Modifies an assignment occasion.
+	 * @param argOccasionid The identifier of the assignment occasion.
+	 * @param argAssignmentOccasion The AssignmentOccasion object containing the new information for the database.
+	 */
+	public void modifyAssignmentOccasion(int argOccasionid, AssignmentOccasion argAssignmentOccasion){
+		String query = "UPDATE Testi.assignmentoccasion ao SET assignmentid = (?), occasiondate = (?) " +
+		"WHERE ao.occasionid (?)";
+		
+		try{
+			Debug.logln("GradesDB : Preparing statement : " + query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			//Prepare the statement.
+			ps.setInt(1, argAssignmentOccasion.getAssignmentid()); 
+			ps.setDate(2, argAssignmentOccasion.getOccasiondate()); 
+			ps.setInt(3, argOccasionid);
+			Debug.logln("GradesDB: Executing statement " + ps.toString());
+			//Execute and close the prepared statement.
+			ps.executeUpdate();
+			ps.close();
+			
+		} catch (SQLException e){
+		Debug.logln("GradesDB: Oops: " + e.getMessage());
+		Debug.logln("GradesDB: SQLState:" + e.getSQLState());	
+		}
+	}
+	
+	/**
+	 * Modify an assignment.
+	 * @param argAssignmentid The Identifier for the assignment to be modified.
+	 * @param argAssignment The Assignment object containing the new information to be added to the database.
+	 */
+	public void modifyAssignment(int argAssignmentid, Assignment argAssignment){
+		String query = "UPDATE Testi.assignment a SET coursecode = (?), year = (?), name = (?), isgradedassignment=(?), weight = (?), minimumresult=(?) " + 
+		"WHERE a.assignmentid = (?)";
+		
+		try{
+			Debug.logln("GradesDB : Preparing statement : " + query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			//Prepare the parameters.
+			ps.setInt(1, argAssignment.getCourseCode());
+			ps.setInt(2, argAssignment.getCourseyear());
+			ps.setString(3, argAssignment.getName());
+			ps.setBoolean(4, argAssignment.getGraded());
+			ps.setInt(5, argAssignment.getWeight());
+			ps.setBigDecimal(6, argAssignment.getMinimumresult());
+			ps.setInt(7,argAssignmentid);
+			Debug.logln("GradesDB: Executing statement " + ps.toString());
+			//Execute and close the prepared statement.
+			ps.executeUpdate();
+			ps.close();
+			
+		} catch (SQLException e){
+		Debug.logln("GradesDB: Oops: " + e.getMessage());
+		Debug.logln("GradesDB: SQLState:" + e.getSQLState());	
+		}
+		
+	}
+	
+	//ModifyCourse is not added, because all of the values stored in the course table
+	//are used as the primary key, therefore, there is nothing to change, without changing the identity of the course.
+	
+	/**
+	 * Modify a SuperCourse
+	 * @param argCoursecode
+	 * @param argSuperCourse
+	 */
+	public void modifySupercourse(int argCoursecode, SuperCourse argSuperCourse){
+		String query = "UPDATE Testi.supercourse sc SET name = (?), weight = (?) WHERE sc.coursecode = (?)";
+		try{
+			Debug.logln("GradesDB : Preparing statement : " + query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			//Prepare the parameters.
+			ps.setString(1, argSuperCourse.getName());
+			ps.setInt(2, argSuperCourse.getWeight());
+			ps.setInt(3, argCoursecode);
+			Debug.logln("GradesDB: Executing statement " + ps.toString());
+			//Execute and close the prepared statement.
+			ps.executeUpdate();
+			ps.close();
+			
+		} catch (SQLException e){
+		Debug.logln("GradesDB: Oops: " + e.getMessage());
+		Debug.logln("GradesDB: SQLState:" + e.getSQLState());	
+		}
+	}
+
+	//ModifyModule is not added, because all of the values stored in the module table
+	//are used as the primary key, therefore, there is nothing to change, without changing the identity of the module.
+		
+	
+	/**
+	 * Modify a SuperModule
+	 * @param argModulecode The module code of the SuperModule to be modified.
+	 * @param argSuperModule The SuperModule-object containing the new information.
+	 */
+	public void modifySuperModule(int argModulecode, SuperModule argSuperModule){
+		String query = "Update Testi.supermodule sm SET name = (?) WHERE sm.modulecode = (?)";
+		try{
+			Debug.logln("GradesDB : Preparing statement : " + query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			//Prepare the parameters.
+			ps.setString(1, argSuperModule.getName());
+			ps.setInt(2, argModulecode);
+			Debug.logln("GradesDB: Executing statement " + ps.toString());
+			//Execute and close the prepared statement.
+			ps.executeUpdate();
+			ps.close();
+			
+		} catch (SQLException e){
+		Debug.logln("GradesDB: Oops: " + e.getMessage());
+		Debug.logln("GradesDB: SQLState:" + e.getSQLState());	
+		}
+	}
+	
+	
 }
 
 
