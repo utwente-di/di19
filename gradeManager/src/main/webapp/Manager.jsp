@@ -33,10 +33,21 @@
             <a href="#">Studenten</a>
             <ul class="dropdown">
               <li> 
-                <a href="/gradeManager/Manager/ShowStudent">Zien</a>
+                <a href="/gradeManager/rest/view/students">Zien</a>
               </li>
               <li> 
-                <a href="/gradeManager/Manager/CreateStudent">Nieuw</a>
+                <a href="/gradeManager/rest/create/students">Nieuw</a>
+              </li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">Docenten</a>
+            <ul class="dropdown">
+              <li> 
+                <a href="/gradeManager/rest/view/teachers">Zien</a>
+              </li>
+              <li> 
+                <a href="/gradeManager/rest/create/teachers">Nieuw</a>
               </li>
             </ul>
           </li>
