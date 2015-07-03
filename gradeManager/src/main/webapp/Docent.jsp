@@ -150,6 +150,7 @@
 											        			"<input type=\"hidden\" name=\"studentid\" value=\"" + result.getStudentid() + "\">" +
 										        				"<input type=\"hidden\" name=\"occasionid\" value=\"" + result.getOccasionid() + "\">" +
 										        				"<input type=\"hidden\" name=\"occasiondate\" value=\"" + result.getOccasiondate() + "\">" +
+										        				"<input type=\"hidden\" name=\"assignmentid\" value=\"" + result.getAssignmentid() + "\">" +
 										        				"<input type=\"hidden\" name=\"terugnaar\" value=\"" + url + "\">" +
 											        			"<div class=\"small-3 columns\">" +
 											        				"<input type=\"submit\" class=\"button postfix\" value=\"Go\">" +
