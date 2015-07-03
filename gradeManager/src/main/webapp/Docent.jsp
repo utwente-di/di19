@@ -108,7 +108,7 @@
 		String courseNameID = course.getName().replaceAll("\\s","");
 		//Standaard accordion html printen
 		out.println("<li class=\"accordion-navigation\">" +
-						"<a aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" +
+						"<a id=\""+ courseNameID + "\" aria-expanded=\"false\" href=\"#" + courseNameID + "\">" + course.getName() + "</a>" +
 							"<div style=\"background-color:white\" id=\"" + courseNameID + "\" class=\"content\">" + 
 								"<ul class=\"accordion\" data-accordion=\"\">");
 		//Alle assignments van alle vakken doorlopen
