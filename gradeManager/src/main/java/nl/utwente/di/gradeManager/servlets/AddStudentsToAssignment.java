@@ -34,13 +34,14 @@ public class AddStudentsToAssignment extends HttpServlet{
 		
 		GradesDB db = new GradesDB();
 		try{
+			Debug.logln("Vanaf hier is het leuk!");
 			results = db.getResultsForAssignment(assignmentid);
 			allestudentsvancourse = db.getStudentsForCourse(courseid, courseyear);
 			for(int i = 0; i < results.size(); i++){
 				templist.add(results.get(i).getStudentid());
 			}
 			for(int i = 0; i < allestudentsvancourse.size(); i++){
-				if(!templist.contains(allestudentsvancourse.get(i))){
+				if(!templist.contains(allestudentsvancourse.get(i).getPersonID())){
 					toevoegen.add(allestudentsvancourse.get(i));
 				}
 			}
