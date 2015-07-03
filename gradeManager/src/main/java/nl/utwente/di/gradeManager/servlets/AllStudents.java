@@ -26,7 +26,6 @@ public class AllStudents{
 	
 	public void setItems (List<Student> students) {
 		this.students=students;
-		return;
 	}
 	
 	public List<Student> getStudents(){
