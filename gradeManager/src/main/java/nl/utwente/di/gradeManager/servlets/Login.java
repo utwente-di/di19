@@ -16,7 +16,7 @@ public class Login extends HttpServlet {
 	private final String jsp_address = "Login.jsp";
 	private final String student_address = "Resulttabel";
 	private final String teacher_address = "DocentTabel";
-	private final String manager_address = "Manager.jsp";
+	private final String manager_address = "Manager";
 	
 	public void init(ServletConfig config){
 		Debug.logln("Login servlet: init called.");

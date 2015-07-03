@@ -28,19 +28,22 @@ public class ManagerServlet extends HttpServlet{
 		LoginDB loginDB = new LoginDB();
 		String loggedinpersonid = "";
 		try{
-		loggedinpersonid = loginDB.getLoggedInPersonid(session.getId());
-		} finally {
-			loginDB.closeConnection();
-		}
-		if (loggedinpersonid.equals("") ){
+		String sessionid = session.getId();
+		String personid = loginDB.getLoggedInPersonid(sessionid);
+		
+		if (personid.equals("") ){
 			response.sendRedirect("Login.jsp");
 			return;
 		} else {
-			if(!loginDB.isManager(Integer.parseInt(loggedinpersonid.substring(1)))){
+			if(!loginDB.isManager(Integer.parseInt(personid.substring(1)))){
 				response.sendRedirect("Login.jsp");
 				return;
 			}
 		}
+		} finally {
+			loginDB.closeConnection();
+		}
+		
 		
 	}
 	

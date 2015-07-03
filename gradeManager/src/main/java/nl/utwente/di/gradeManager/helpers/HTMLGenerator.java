@@ -16,11 +16,11 @@ public class HTMLGenerator {
 		this.depth = depth;
 		html = "";
 		scripts = DepthGenerator.generateCSSLink(depth);
+		addScript("vendor/jquery.js");
+		addScript("vendor/modernizr.js");
+		addScript("vendor/fastclick.js");
+		addScript("foundation/foundation.js");
 		addScript("foundation.min.js");
-		addScript("foundation.js");
-		addScript("modernizr.js");
-		addScript("jquery.js");
-		addScript("fastclick.js");
 	}
 	
 	public HTMLGenerator(int depth, boolean addNavbar){
