@@ -12,10 +12,10 @@ import nl.utwente.di.gradeManager.model.Student;
 
 public class MakeStudent {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, NoSuchAlgorithmException{
-		Integer studentid = Integer.parseInt(request.getParameter("studentid"));
-		String firstname = request.getParameter("firstname");
-		String surname = request.getParameter("surname");
-		String password = request.getParameter("password");
+		Integer studentid = Integer.parseInt(request.getParameter("studentID-Create"));
+		String firstname = request.getParameter("firstname-Create");
+		String surname = request.getParameter("surname-Create");
+		String password = request.getParameter("password-Create");
 		String salt = Security.getSalt();
 		String terugnaar = request.getParameter("terugnaar");
 		Student newStudent = new Student(studentid, firstname, surname, Security.getSHA512(password, salt), salt);
