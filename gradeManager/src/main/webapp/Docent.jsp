@@ -170,6 +170,8 @@
 								"<div class=\"small-9 columns\">" + 
 									"<form name=\"AddStudentsToAssignment\" action=\"AddStudentsToAssignment\" method=\"post\" accept-charset=\"utf-8\">" +
 										"<input type=\"hidden\" name=\"assignmentid\" value=\"" + assignment.getAssignmentID() + "\">" +
+										"<input type=\"hidden\" name=\"courseid\" value=\"" + course.getCourseCode() + "\">" +
+										"<input type=\"hidden\" name=\"courseyear\" value=\"" + course.getYear() + "\">" +
 										"<input type=\"submit\" class=\"button\" value=\"Iedereen toevoegen\">" +
 									"</form>" + 
 								"</div>" +
