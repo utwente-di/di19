@@ -13,7 +13,6 @@
     <script src="js/vendor/fastclick.js"></script>
     <script src="js/foundation/foundation.js"></script>
     <script src="js/foundation.min.js"></script>
-	<script src="js/import.js"></script>
     <title>TOSTi Manager</title>
   </head>
   <body>
@@ -34,15 +33,32 @@
             <a href="#">Studenten</a>
             <ul class="dropdown">
               <li> 
-                <a href="/gradeManager/Manager/ShowStudent">Zien</a>
+                <a href="#ShowStudent">Zien</a>
               </li>
               <li> 
-                <a href="/gradeManager/Manager/CreateStudent">Nieuw</a>
+                <a href="#CreateStudent">Nieuw</a>
+              </li>
+              <li> 
+                <a href="#EditStudent">Pas aan</a>
+              </li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="#">Modules</a>
+            <ul class="dropdown">
+              <li> 
+                <a href="#ShowModule">Zien</a>
+              </li>
+              <li> 
+                <a href="#CreateModule">Nieuw</a>
+              </li>
+              <li> 
+                <a href="#EditModule">Pas aan</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="/gradeManager/Manager" class="">Bestand importeren</a>
+            <a href="#Import" class="">Bestand importeren</a>
           </li>
         </ul>
       </section>
@@ -54,7 +70,6 @@
       </ul>
       </section>
     </nav>
-    
     <div id="Import">
     <div class="panel left" style="height:500px; width:29%;">
     <div id="dvImportSegments" class="fileupload ">

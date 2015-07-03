@@ -11,7 +11,7 @@ import nl.utwente.di.gradeManager.model.*;
 
 import org.junit.*;
 
-public class JunitTest {
+public class GradeTest {
 	private Teacher t;
 	private Student s;
 	private Module m;
@@ -94,7 +94,7 @@ public class JunitTest {
 	}
 	
 	@Test
-	public void addAndRemoveSuperCourse(){
+	public void addModifyRemoveSuperCourse(){
 		GradesDB gradesDB = new GradesDB();
 		try{
 			//Test for adding a supercourse to the database.
@@ -103,6 +103,13 @@ public class JunitTest {
 			assertEquals(sc_db.getCourseCode(),sc.getCourseCode());
 			assertEquals(sc_db.getName(),sc.getName());
 			assertEquals(sc_db.getWeight(),sc.getWeight());
+			
+			//Test for modifying a supercourse
+			SuperCourse newSuperCourse = new SuperCourse(sc.getCourseCode(), "newname", sc.getWeight());
+			gradesDB.modifySupercourse(sc.getCourseCode(), newSuperCourse);
+			sc_db = gradesDB.getSuperCourse(sc.getCourseCode());
+			assertEquals(sc_db.getName(), newSuperCourse.getName());
+			
 			//Test for removing a supercourse from the database.
 			gradesDB.deleteSuperCourse(sc.getCourseCode());
 			assertEquals(gradesDB.getSuperCourse(c.getCourseCode()), null);
@@ -133,7 +140,7 @@ public class JunitTest {
 	}
 	
 	@Test
-	public void addAndRemoveSuperModule(){
+	public void addModifyRemoveSuperModule(){
 		GradesDB gradesDB = new GradesDB();
 		try {
 			//Test adding the supercourse to the database.
@@ -141,7 +148,14 @@ public class JunitTest {
 			SuperModule sm_db = gradesDB.getSuperModule(sm.getModulecode());
 			assertEquals(sm_db.getModulecode(), sm.getModulecode());
 			assertEquals(sm_db.getName(), sm.getName());
-			//Test removing the supercourse from the database.
+			
+			//Test for modifying the SuperModule
+			SuperModule newSuperModule = new SuperModule(sm.getModulecode(), "newname");
+			gradesDB.modifySuperModule(sm.getModulecode(), newSuperModule);
+			sm_db = gradesDB.getSuperModule(sm.getModulecode());
+			assertEquals(sm_db.getName(), newSuperModule.getName());
+			
+			//Test removing the SuperModule from the database.
 			gradesDB.deleteSuperModule(sm.getModulecode());
 			assertEquals(gradesDB.getSuperModule(sm.getModulecode()), null);
 		} finally {
