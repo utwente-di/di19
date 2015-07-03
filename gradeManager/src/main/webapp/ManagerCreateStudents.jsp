@@ -13,7 +13,6 @@
     <script src="js/vendor/fastclick.js"></script>
     <script src="js/foundation/foundation.js"></script>
     <script src="js/foundation.min.js"></script>
-	<script src="js/import.js"></script>
     <title>TOSTi Manager</title>
   </head>
   <body>
@@ -54,25 +53,24 @@
       </ul>
       </section>
     </nav>
-    
-    <div id="Import">
-    <div class="panel left" style="height:500px; width:29%;">
-    <div id="dvImportSegments" class="fileupload ">
-				<h1>Importeer uw bestand</h1>
-				<input type="file" name="File Upload" id="txtFileUpload" accept=".csv, .xls" />
-				<select id="tableSelector">
-				</select>
-		</div>
-		</div>
-	<div class="panel right" style="height:500px; width:70%;">
-	
-		<div id="showHash">
-		</div>
-		<div id="importData">
-		</div>
-		</div>
-		</div>
-		
+    <div id="CreateStudent">
+    <h1>Maak een student aan</h1>
+    <form>
+      	<label for="studentID-Create">Student Nr
+      	<input id="studentID-Create" type="text" name="studentID" required/>
+      	</label>
+  	  	<label for="firstname-Create">Voornaam
+      	<input id="firstname-Create" type="text" name="firstname" required/>
+      	</label>
+  	  	<label for="lastname-Create">Achternaam
+      	<input id="lastname-Create" type="text" name="lastname" required/>
+      	</label>
+  	  	<label for="password-Create">Wachtwoord
+      	<input id="password-Create" type="password" name="password" required/>
+      	</label>
+      	<input type="submit" value="Maak student aan"/>
+    </form>
+    </div>
 		<script>
 			$(document).ready(addListeners());
 			$(document).foundation();

@@ -4,6 +4,8 @@
   <html>
   <head>
   	<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-1">
+  	<jsp:useBean id="students" type="nl.utwente.di.gradeManager.servlets.AllStudents"
+  	scope="request" />
     <link rel="stylesheet" href="css/foundation.css">
     <script src="js/d3.js"></script>
     <script src="js/d3.min.js"></script>
@@ -13,7 +15,6 @@
     <script src="js/vendor/fastclick.js"></script>
     <script src="js/foundation/foundation.js"></script>
     <script src="js/foundation.min.js"></script>
-	<script src="js/import.js"></script>
     <title>TOSTi Manager</title>
   </head>
   <body>
@@ -54,25 +55,36 @@
       </ul>
       </section>
     </nav>
-    
-    <div id="Import">
-    <div class="panel left" style="height:500px; width:29%;">
-    <div id="dvImportSegments" class="fileupload ">
-				<h1>Importeer uw bestand</h1>
-				<input type="file" name="File Upload" id="txtFileUpload" accept=".csv, .xls" />
-				<select id="tableSelector">
-				</select>
-		</div>
-		</div>
-	<div class="panel right" style="height:500px; width:70%;">
-	
-		<div id="showHash">
-		</div>
-		<div id="importData">
-		</div>
-		</div>
-		</div>
 		
+		
+		<div id="ShowStudent">
+    <h1>Alle studenten</h1>
+    <table>
+      <thead>
+        <tr>
+          <td>
+            StudentID
+          </td>
+          <td>
+            Voornaam
+          </td>
+          <td>
+            Achternaam
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+      <% List<Student> studentlist = students.getStudents();
+      for (Student student : studentlist){
+    	  out.println("<tr><td>" + student.getPersonID() + 
+    			  "</td><td>" + student.getFirstname() + "</td><td>" 
+    			  + student.getSurname() + "</td></tr>");
+      }
+      %>
+        
+      </tbody>
+    </table>
+    </div>
 		<script>
 			$(document).ready(addListeners());
 			$(document).foundation();
