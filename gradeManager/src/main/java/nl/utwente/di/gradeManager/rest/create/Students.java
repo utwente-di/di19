@@ -25,7 +25,7 @@ public class Students {
 	 * @return A HTML form for entering required information for creating a student.
 	 */
 	public String showStudent(){
-		HTMLGenerator html = new HTMLGenerator(2);
+		HTMLGenerator html = new HTMLGenerator(2, true);
 		html.addLine("<h1> Create a student Object </h1>");
 		html.addLine("<form action = \"students\" method =\"post\" accept-charset=\"utf-8\">");
 		html.addLine("<label for=\"studentid\">studentid</label>");

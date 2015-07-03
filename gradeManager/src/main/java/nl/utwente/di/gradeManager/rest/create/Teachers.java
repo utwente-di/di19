@@ -25,7 +25,7 @@ public class Teachers {
 	 * @return A HTML form where necessary information can be entered for adding a teacher object.
 	 */
 	public String showTeacher(){
-		HTMLGenerator html = new HTMLGenerator(2);
+		HTMLGenerator html = new HTMLGenerator(2, true);
 		html.addLine("<h1> Create a Teacher Object </h1>");
 		html.addLine("<form action = \"teachers\" method =\"post\" accept-charset=\"utf-8\">");
 		html.addLine("<label for=\"teacherid\">teacherid</label>");

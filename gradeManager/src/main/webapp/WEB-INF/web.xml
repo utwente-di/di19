@@ -54,6 +54,14 @@
   		<servlet-class>nl.utwente.di.gradeManager.servlets.ManagerServlet</servlet-class>
   </servlet>
   <servlet>
+  		<servlet-name>ManagerShowStudents</servlet-name>
+  		<servlet-class>nl.utwente.di.gradeManager.servlets.ManagerShowStudents</servlet-class>
+  </servlet>
+  <servlet>
+  		<servlet-name>ManagerCreateStudents</servlet-name>
+  		<servlet-class>nl.utwente.di.gradeManager.servlets.ManagerCreateStudents</servlet-class>
+  </servlet>
+  <servlet>
   		<servlet-name>UpdateResult</servlet-name>
   		<servlet-class>nl.utwente.di.gradeManager.servlets.UpdateResult</servlet-class>
   </servlet>
@@ -111,5 +119,13 @@
   <servlet-mapping>
   	<servlet-name>Manager</servlet-name>
   	<url-pattern>/Manager</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ManagerShowStudents</servlet-name>
+  	<url-pattern>/Manager/ShowStudent</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ManagerCreateStudents</servlet-name>
+  	<url-pattern>/Manager/CreateStudent</url-pattern>
   </servlet-mapping>
 </web-app> 
