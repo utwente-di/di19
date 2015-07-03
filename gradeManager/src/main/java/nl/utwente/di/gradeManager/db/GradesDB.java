@@ -27,6 +27,33 @@ public class GradesDB extends DB {
 	 * READ
 	 */
 	
+	
+	public List<AssignmentResult> getAssignmentResultsForStudent(int personid){
+		List<AssignmentResult> result = new ArrayList<AssignmentResult>();
+		String query = "SELECT ar.occasionid, ao.occasiondate, ar.result, ao.assignmentid FROM Testi.assignment a, Testi.assignmentresult ar, Testi.assignmentoccasion ao "+ 
+	"WHERE ar.studentid = " + personid + " AND ar.occasionid = ao.occasionid AND a.assignmentid = ao.assignmentid";
+		try {
+			Statement st = conn.createStatement();
+			Debug.logln("GradesDB: Executing query: " + query);
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()){
+				int occasionid = rs.getInt("occasionid");
+				int studentid = personid;
+				int assignmentid = rs.getInt("assignmentid");
+				Date date = rs.getDate("occasiondate");
+				BigDecimal assresult = rs.getBigDecimal("result");
+				result.add(new AssignmentResult(occasionid, studentid, date, assresult, assignmentid));
+				
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			Debug.logln("GradesDB: Oops: " + e.getMessage());
+			Debug.logln("GradesDB: SQLState: " + e.getSQLState());
+		}
+		return result;
+	}
 	/**
 	 * Gets a course from the database with a given course code and a code year
 	 * @param argCoursecode The code of the course.
