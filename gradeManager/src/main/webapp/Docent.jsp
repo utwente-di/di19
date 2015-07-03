@@ -158,14 +158,24 @@
 											        		"</form>" +
 											        	"</div>" +
 											     	"</td>" +
-												"</tr>" +
-											"</tbody>"
+												"</tr>" 
+											
 											);
 							}
 						}
 					}
 				//Tabel en de subaccordion afsluiten
-				}out.println("</table>" + 
+				}out.println("<tbody>" +
+								"<tr>" +
+								"<div class=\"small-9 columns\">" + 
+									"<form name=\"AddStudentsToAssignment\" action=\"AddStudentsToAssignment\" method=\"post\" accept-charset=\"utf-8\">" +
+										"<input type=\"hidden\" name=\"assignmentid\" value=\"" + assignment.getAssignmentID() + "\">" +
+										"<input type=\"submit\" class=\"button\" value=\"Iedereen toevoegen\">" +
+									"</form>" + 
+								"</div>" +
+								"</tr>" +
+							"</tbody>" +
+						"</table>" + 
 						"</div> </li>");
 			}
 		//Accordion afsluiten
