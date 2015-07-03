@@ -6,6 +6,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import nl.utwente.di.gradeManager.db.GradesDB;
+import nl.utwente.di.gradeManager.helpers.HTMLGenerator;
 import nl.utwente.di.gradeManager.model.Student;
 
 @Path("students")
@@ -19,15 +20,15 @@ public class Students {
 	 */
 	public String showStudents(){
 		GradesDB gradesDB = new GradesDB();
-		String response = "";//"<html> <head> " + Style.generateCSSLink(depth) + "</head> <body> ";
-		response += "<h1> All students in database : </h1> </br>";
-		response += "<table> <tr> <th> Studentid </th> <th> Firstname </th> <th> Surname </th> </tr>";
+		HTMLGenerator html = new HTMLGenerator(2, true);
+		html.addLine("<h1> All students in database : </h1> </br>");
+		html.addLine("<table> <tr> <th> Studentid </th> <th> Firstname </th> <th> Surname </th> </tr>");
 		for (Student s : gradesDB.getStudents()){
-			response += "<tr> <td> " + s.getPersonID() + " </td> <td> " + s.getFirstname() + " </td> <td> " + s.getSurname() + " </td> </tr> ";
+			html.addLine("<tr> <td> " + s.getPersonID() + " </td> <td> " + s.getFirstname() + " </td> <td> " + s.getSurname() + " </td> </tr> ");
 		}
-		response += "</table>";
+		html.addLine("</table>");
 		gradesDB.closeConnection();
-		return response;
+		return html.getHTML();
 	}
 	
 }

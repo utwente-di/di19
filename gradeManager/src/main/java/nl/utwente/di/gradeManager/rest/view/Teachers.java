@@ -6,6 +6,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import nl.utwente.di.gradeManager.db.GradesDB;
+import nl.utwente.di.gradeManager.helpers.HTMLGenerator;
 import nl.utwente.di.gradeManager.model.Teacher;
 
 @Path("teachers")
@@ -18,15 +19,15 @@ public class Teachers {
 	 */
 	public String showTeachers(){
 		GradesDB gradesDB = new GradesDB();
-		String response = "";//"<html> <head> " + Style.generateCSSLink(depth) + "</head> <body> ";
-		response += "<h1> All teachers in database : </h1> </br>";
-		response += "<table> <tr> <th> Teacherid </th> <th> Firstname </th> <th> Surname </th> <th> Is manager </th> </tr>";
+		HTMLGenerator html = new HTMLGenerator(2, true);
+		html.addLine("<h1> All teachers in database : </h1> </br>");
+		html.addLine("<table> <tr> <th> Teacherid </th> <th> Firstname </th> <th> Surname </th> <th> Is manager </th> </tr>");
 		for (Teacher t : gradesDB.getTeachers()){
-			response += "<tr> <td> " + t.getPersonID() + " </td> <td> " + t.getFirstname() + " </td> <td> " + t.getSurname() + "</td> <td> " + t.isManager() + " </td> </tr> ";
+			html.addLine("<tr> <td> " + t.getPersonID() + " </td> <td> " + t.getFirstname() + " </td> <td> " + t.getSurname() + "</td> <td> " + t.isManager() + " </td> </tr> ");
 		}
-		response += "</table>";
+		html.addLine("</table>");
 		gradesDB.closeConnection();
-		return response;
+		return html.getHTML();
 	}
 	
 }
